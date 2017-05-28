@@ -1,0 +1,529 @@
+/* Style.css for GBR Management System */
+
+@media print {
+    .tr_thanks {
+      background-color: darkgreen !important;
+      color: white !important;
+    }
+
+    .td_thanks {
+      color: white !important;
+    }
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+.gbr-header {
+    background: darkgreen;
+    color: white;
+}
+
+.popover {
+    background: #F2DEDF;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #F2DEDF;
+}
+
+.popover{
+    max-width: 500px; /* Max Width of the popover (depending on the container!) */
+}
+
+.fc-more-popover {
+  margin-top: 205px;
+}
+
+.badge-notify{
+   background: red;
+   position:relative;
+   top: -20px;
+   left: -35px;
+}
+
+.float-right{
+  float: right;
+}
+
+.float-left{
+  float: left;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#pac-input {
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+  border: 1px solid #ddd; /* Add a grey border */
+  background-image: url('../img/searchicon.png'); /* Add a search icon to input */
+  background-position: 99% 2px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 50%;
+  margin-left: 30%;
+  margin-top: 10px;
+  height: 30px;
+  padding: 2px 2px 2px 10px; /* Add some padding */
+}
+
+#filterName {
+    background-image: url('../img/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myNavbar {
+    padding-left: 15px;
+}
+
+.navbar-header {
+    padding-top: 14px;
+    padding-left: 15px;
+}
+
+.navbar {
+    border-bottom: 2px solid darkgreen; 
+    box-shadow: 0px 0px 5px #888888;
+}
+
+.main-dropdown-effects {
+    border-bottom: 2px solid darkgreen; 
+    border-left: 2px solid darkgreen;
+    border-right: 2px solid darkgreen;
+    box-shadow: 0px 5px 5px dimgrey;
+}
+
+#sbox {
+    width: 90%; /*can be in percentage also.*/
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+}
+
+
+body {
+    overflow-x: hidden;
+    background-color: lightgrey;
+    padding-top: 52px;
+}
+
+.form-button {
+  margin-top: 7px;
+}
+
+.float-center {
+  float: right;
+
+  position: relative;
+  left: -50%; /* or right 50% */
+  text-align: left;
+}
+
+.float-center > .child {
+  position: relative;
+  left: 50%;
+}
+
+.headerbutton {
+
+}
+
+.cust-navbar-header {
+  margin-top:3px;
+}
+
+.gbr-bar {
+  background-color: darkgreen;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px #888888;
+}
+
+.copyright-text {
+  color: white;
+  font-weight: bold;
+}
+
+
+/* -------------------- Pagination Styles -------------------- */
+.pagination>li>a {
+    color: #ffffff;
+    background-color: darkgreen;
+    border: 1px solid black;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover {
+    background: green;
+    border: 1px solid black;
+    color: white;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover{
+    background: green;
+    border: 1px solid black;
+    color: white;
+}
+
+/* -------------------- Link Styles -------------------- */
+a {
+    color: #006400;
+    text-decoration: underline;
+}
+
+.homeLink {
+    color: white;
+    text-decoration: none;
+}
+
+a:focus, a:hover {
+    color: #6be000;
+    text-decoration: underline;
+}
+
+.containerlink {
+  color: darkgreen;
+}
+
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .6;
+}
+
+/* -------------------- Toggle Styles -------------------- */
+
+#menu-toggler {
+  margin-left: 10px;
+  margin-right: -5px;
+}
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: darkgreen;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    border-right: 1px solid black;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+
+/* -------------------- Breadcrumb -------------------- */
+
+.breadcrumb {
+  background-color: darkgreen;
+  color: white;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px #888888;
+}
+.breadcrumb > .active {
+  color: white;
+}
+
+
+/* -------------------- Alert Style -------------------- */
+.alert {
+    border: 1px solid black;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+.headeralert {
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+.progalert {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+
+/* -------------------- Panel Settings -------------------- */
+
+.panel-default {
+   /*  box-shadow: 0px 0px 5px #888888; */
+}
+
+.panel-default > .panel-heading {
+    background-color: darkgreen;
+    color: white;
+    border: 1px solid black;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+.panel-body {
+    background-color: white;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+
+/* -------------------- Table Style -------------------- */
+
+.table {
+    border: 1px solid lightgrey;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: rgba(50,170,50,1);
+}
+
+
+/* -------------------- Navigation Toggle -------------------- */
+
+.navbar-toggle {
+    background-color: rgb(255, 255, 255);
+    display:block;
+    float: left;
+    margin-top: 0px;
+}
+.icon-bar {
+    background-color:white;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+
+/* -------------------- LockBox --------------------*/
+
+#lockedlogo {
+    margin-left: -30px;
+    margin-bottom: 50px;
+}
+
+#lockedbtn {
+    background-color: darkgreen;
+    color: white;
+}
+
+.green {
+    background-color: green;
+}
+
+.border-1px-solid-black {
+    border: 1px solid black;
+}
+
+.border-1px-solid-custdarkgrey {
+    border: 1px solid rgba(147,147,147,0.9);
+}
+
+.locked-glyph-login {
+    color: white;
+}
+
+#loginbox {
+    margin-top: 30px;
+}
+
+#loginbox > div:first-child {        
+    padding-bottom: 10px;    
+}
+
+.iconmelon {
+    display: block;
+    margin: auto;
+}
+
+#form > div {
+    margin-bottom: 25px;
+}
+
+#form > div:last-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.panel {    
+    background-color: transparent;
+}
+
+.iconmelon,
+.im {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: block;
+  fill: #525151;
+}
+
+.iconmelon:after,
+.im:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* -------------------- Footer Style -------------------- */
+.footer {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    margin-left: -70px;
+    width: 0 auto%;
+    height:20px;
+    background-color: rgba(157,157,157,0.5);
+    border: 1px solid rgba(147,147,147,0.9);
+}
+
+
+
+/* -------------------- Thumbnails -------------------- */
+
+/* remove border from thumbs, override Bootstraps CSS
+Ref: 
+http://jsfiddle.net/jonschlinkert/4NQTp/4/
+*/
+.thumbnail, .thumbnail:hover {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.mapPic {
+  margin-left:15px;
+}
+
+/* -------------------- Form -------------------- */
+.help-block {
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* -------------------- Tables -------------------- */
+ 
+.cust_data_table {
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+ 
+.cust_data_td {
+  width: 40%;
+}
+
+.cust_data_td_left {
+  width: 10%;
+}
+
+.cust_data_td_middle {
+  width: 40%;
+}
+
+.sum_row {
+  background-color: #c3c1c14d;
+  font-weight: bold;
+}
+
+.tr_thanks {
+  background-color: darkgreen;
+  color: white;
+  border: 1px solid black;
+}
+
+.td_thanks {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cust_border {
+  border: 1px solid black;
+}
+
+/* -------------------- Buttons -------------------- */
+ .btn-gbr {
+   color: white;
+   font-weight: bold;
+   background-color: darkgreen;
+   border-color: darkgreen;
+}
+
+/* -------------------- Quote_Page -------------------- */
+
+.manager_sig {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: left;
+}
+
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}
+
+/* Other */
+
+.welcome_msg {
+  color: darkgreen;
+  margin-top: 15px;
+  font-weight: bold;
+  vertical-align: middle;
+  height:100%;
+  margin-right: 10px;
+}
+
+.rightalign {
+  text-align: right;
+}
