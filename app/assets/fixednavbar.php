@@ -19,12 +19,11 @@
 
     $index = HTTP.HTTPURL.PUB.'/index.php';
 
-    $con_array = array(HTTP.HTTPURL.VIEW.'/containers.php',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/resalecontainerlist.php',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals.php',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/masterlist.php',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/rentalcontainers.php',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/createcontainer.php');
+    $con_array = array(HTTP.HTTPURL.PUB.CONTAINERS.'/resalecontainers',
+                        HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals',
+                        HTTP.HTTPURL.PUB.CONTAINERS.'/masterlist',
+                        HTTP.HTTPURL.PUB.CONTAINERS.'/rentalcontainers',
+                        HTTP.HTTPURL.PUB.CONTAINERS.'/createcontainer');
 
     $cust_array = array(HTTP.HTTPURL.VIEW.'/customers.php',
                         HTTP.HTTPURL.VIEW.'/createcustomer.php');
@@ -87,13 +86,13 @@
                     <ul class="nav navbar-nav" id="myNavbar">
                         <li class="'.$index_active.'"><a href="'.$index.'">Home</a></li>
                         <li class="dropdown '.$containers_active.'">
-                            <a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Containers <span class="caret"></span></a>
+                            <a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Containers <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                            	<li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/createcontainer.php">Create Container</a></li>
+                            	<li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/createcontainer">Create Container</a></li>
                                 <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/masterlist">Master List</a></li>
                                 <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/rentalcontainers">Rental Fleet</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/currentrentals.php">Currently Rented</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/resalecontainerlist.php">Resale Fleet</a></li>
+                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/currentrentals">Currently Rented</a></li>
+                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/resalecontainers">Resale Fleet</a></li>
                             </ul>
                         </li>
                         <li class="dropdown '.$customers_active.'">
