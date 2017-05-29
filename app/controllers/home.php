@@ -10,18 +10,20 @@ class Home extends Controller
         $this->checkSession();
 
         if(isset($_POST['username'])){
-            $user = new User();
+            $user = $this->model('User');
             $user->username = $_POST['username'];
             $user->password = $_POST['password'];
             $loggedin = $user->login();
         }
 
         if($loggedin){
-            $this->view('home/dashboard', []);
+            $chart = $this->model('Chart');
+            $this->view('home/dashboard', ['chart'=>$chart]);
         }
 
         $this->checkLogin();
-        $this->view('home/dashboard', []);
+        $chart = $this->model('Chart');
+        $this->view('home/dashboard', ['chart'=>$chart]);
     }
 
     public function logout()
@@ -31,6 +33,11 @@ class Home extends Controller
         session_destroy();
 
         $this->view('home/login', []);
+    }
+
+    public function getChartInfo()
+    {
+        
     }
 
 }

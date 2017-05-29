@@ -32,6 +32,9 @@ if(!defined('APP')){
 if(!defined('ASSETS')){
 	define('ASSETS', 		'/assets');
 }
+if(!defined('CORE')){
+	define('CORE', 		'/core');
+}
 if(!defined('CONTAINERS')){
 	define('CONTAINERS',	'/containers');
 }
