@@ -31,6 +31,8 @@
                 echo $_SESSION['loggedin'];
                 ?>
 
+                <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
+
             </div>
 
         </div>

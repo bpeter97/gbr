@@ -200,6 +200,8 @@
                         </div>
                     </div>
                     <!-- End of 2nd Row. -->
+                    
+                    <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
 
                 </div>
 

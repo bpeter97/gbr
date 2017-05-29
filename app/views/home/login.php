@@ -42,10 +42,10 @@
                     </form>
                 </div>
             </div>
+            <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
         </div>
-    </div>
 
-    <!-- /#wrapper -->
+    </div>
 
     <?php include(HTTP.HTTPURL.APP.ASSETS.'/botjsincludes.php'); ?>
 
