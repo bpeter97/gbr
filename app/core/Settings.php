@@ -1,7 +1,6 @@
 <?php
 
-// Global Variables.
-
+// Still Used
 if(!defined('DBHOST')){
 	define("DBHOST",		"localhost");
 }
@@ -23,6 +22,20 @@ if(!defined('HTTPURL')){
 if(!defined('SELFURL')){
 	define("SELFURL",		$_SERVER['REQUEST_URI']);
 }
+if(!defined('HTTP')){
+	define("HTTP",			"http://"); // Add www. after the // in HTTP if www. is required!
+}
+if(!defined('IMG')){
+	define("IMG",			"/img");
+}
+if(!defined('CSS')){
+	define("CSS",			"/css");
+}
+if(!defined('JS')){
+	define("JS",			"/js");
+}
+
+// MVC Architecture Folders
 if(!defined('PUB')){
 	define("PUB", 			'/public');
 }
@@ -33,7 +46,7 @@ if(!defined('ASSETS')){
 	define('ASSETS', 		'/assets');
 }
 if(!defined('CORE')){
-	define('CORE', 		'/core');
+	define('CORE', 			'/core');
 }
 if(!defined('CONTAINERS')){
 	define('CONTAINERS',	'/containers');
@@ -41,26 +54,20 @@ if(!defined('CONTAINERS')){
 if(!defined('CUSTOMERS')){
 	define('CUSTOMERS',		'/customers');
 }
-if(!defined('HTTP')){
-	define("HTTP",			"http://"); // Add www. after the // in HTTP if www. is required!
-}
-if(!defined('INCLUDES')){
-	define("INCLUDES",		"/includes");
-}
-if(!defined('CFG')){
-	define("CFG",			"/cfg");
-}
-if(!defined('IMG')){
-	define("IMG",		"/img");
-}
 if(!defined('CONTROLLERS')){
 	define("CONTROLLERS",	"/controller");
 }
-if(!defined('CSS')){
-	define("CSS",			"/css");
+
+
+// Not sure if still used.
+if(!defined('CFG')){
+	define("CFG",			"/cfg");
 }
-if(!defined('JS')){
-	define("JS",			"/js");
+if(!defined('CLASSES')){
+	define("CLASSES",		"/classes");
+}
+if(!defined('VIEW')){
+	define("VIEW",			"/view");
 }
 if(!defined('MAP')){
 	define("MAP",			"/map");
@@ -68,11 +75,9 @@ if(!defined('MAP')){
 if(!defined('MODEL')){
 	define("MODEL",			"/model");
 }
-if(!defined('VIEW')){
-	define("VIEW",			"/view");
+if(!defined('INCLUDES')){
+	define("INCLUDES",		"/includes");
 }
-if(!defined('CLASSES')){
-	define("CLASSES",			"/classes");
-}
+
 
 ?>
