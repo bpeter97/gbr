@@ -26,7 +26,7 @@
     $db->connect();
 
     // Select all the rows in the markers table
-    $query = "SELECT * FROM containers WHERE container_address<>''";
+    $query = "SELECT * FROM containers WHERE container_address <> ''";
     $db->sql($query);
     $coninfo = $db->getResult();
 
@@ -39,8 +39,9 @@
     // Iterate through the rows, printing XML nodes for each
     foreach ($coninfo as $con){
 
-      $con['latitude'] = getLat($con['container_address']);
-      $con['longitude'] = getLon($con['container_address']);
+      // Google maps is being a doucher.
+      // $con['latitude'] = getLat($con['container_address']);
+      // $con['longitude'] = getLon($con['container_address']);
       
       // ADD TO XML DOCUMENT NODE
       echo '<marker ';
@@ -59,7 +60,7 @@
     function getLat($addy){
       $address = urlencode($addy);
       if(strlen($address)>0){
-        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$address."&sensor=true";
+        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$address;
         $xml = simplexml_load_file($request_url);
         $status = $xml->status;
         if ($status=="OK") {
@@ -73,7 +74,7 @@
     function getLon($addy){
       $address = urlencode($addy);
       if(strlen($address)>0){
-        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$address."&sensor=true";
+        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$address;
         $xml = simplexml_load_file($request_url);
         $status = $xml->status;
         if ($status=="OK") {

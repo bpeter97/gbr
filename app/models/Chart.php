@@ -16,11 +16,6 @@ class Chart
 
     public function __construct()
     {
-        $this->genChart();
-    }
-
-    public function genChart()
-    {
         $this->db = new Database();
         $this->db->connect();
 

@@ -1,10 +1,4 @@
 <?php
-    // Create URL to CFG/SETTINGS.PHP file.
-    $cfgurl = $_SERVER['DOCUMENT_ROOT'];
-    $cfgurl .= "/app/core/settings.php";
-
-    //Variable Constants
-    include($cfgurl);
     
     echo '
 

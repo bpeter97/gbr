@@ -1,11 +1,11 @@
 <?php
 
-    // Create URL to CFG/SETTINGS.PHP file.
-    $cfgurl = $_SERVER['DOCUMENT_ROOT'];
-    $cfgurl .= "/app/core/settings.php";
+    // // Create URL to CFG/SETTINGS.PHP file.
+    // $cfgurl = $_SERVER['DOCUMENT_ROOT'];
+    // $cfgurl .= "public/app/core/settings.php";
 
-    //Variable Constants
-    include($cfgurl);
+    // //Variable Constants
+    // include($cfgurl);
 
     // This is simply to remove some of the extra <script> tags laying around.
 

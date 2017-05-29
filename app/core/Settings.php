@@ -38,6 +38,9 @@ if(!defined('CORE')){
 if(!defined('CONTAINERS')){
 	define('CONTAINERS',	'/containers');
 }
+if(!defined('CUSTOMERS')){
+	define('CUSTOMERS',		'/customers');
+}
 if(!defined('HTTP')){
 	define("HTTP",			"http://"); // Add www. after the // in HTTP if www. is required!
 }

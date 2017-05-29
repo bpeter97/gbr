@@ -3,7 +3,7 @@
  
 <head>
 
-    <?php include(HTTP.HTTPURL.APP.ASSETS.'/header.php'); ?>
+    <?php include(BASEURL.APP.ASSETS.'/header.php'); ?>
 
 </head>
 
@@ -47,7 +47,7 @@
 
     </div>
 
-    <?php include(HTTP.HTTPURL.APP.ASSETS.'/botjsincludes.php'); ?>
+    <?php include(BASEURL.APP.ASSETS.'/botjsincludes.php'); ?>
 
 </body>
 

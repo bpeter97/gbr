@@ -1,5 +1,4 @@
-
-    var customIcons = {
+var customIcons = {
       restaurant: {
         icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png'
       },
@@ -20,7 +19,7 @@
       var infoWindow = new google.maps.InfoWindow;
 
       // Change this depending on the name of your PHP file
-      downloadUrl("http://localhost/public/js/map/phpsqlajax_genxml2.php", function(data) {
+      downloadUrl("map/phpsqlajax_genxml2.php", function(data) {
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
@@ -102,4 +101,3 @@
     function doNothing() {}
 
     google.maps.event.addDomListener(window, 'load', load);
-    //]]>
