@@ -50,9 +50,7 @@ class User
         if($this->rows == 1){  
             $this->logUserIn();
         } else {
-            echo "<strong>Incorrect username <br>
-            Redirecting back to locked page in 5 seconds....</strong>";
-            header('refresh:5;url='.HTTP.HTTPURL.VIEW.'/locked.php?action=uname');
+            echo "<strong>Incorrect username <br>";
         }
     }
 

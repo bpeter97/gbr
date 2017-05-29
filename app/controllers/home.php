@@ -16,14 +16,12 @@ class Home extends Controller
             $loggedin = $user->login();
         }
 
-        if($loggedin){
+        if($loggedin != ''){
             $chart = $this->model('Chart');
             $this->view('home/dashboard', ['chart'=>$chart]);
         }
 
         $this->checkLogin();
-        $chart = $this->model('Chart');
-        $this->view('home/dashboard', ['chart'=>$chart]);
     }
 
     public function logout()

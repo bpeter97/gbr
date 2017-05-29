@@ -8,11 +8,10 @@
 </head>
 
 <body>
-
     <div class="container">
         <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
             <div class="row">
-                <img id="lockedlogo" src="../img/logo.png">
+                <img id="lockedlogo" src="<?php echo HTTP.HTTPURL.PUB.IMG.'/logo.png'; ?>">
             </div>
             <div class="panel panel-default" >
                 <div class="panel-heading">
