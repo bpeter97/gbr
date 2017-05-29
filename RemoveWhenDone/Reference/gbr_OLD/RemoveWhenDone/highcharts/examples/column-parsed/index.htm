@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+        $(function () {
+            Highcharts.chart('container', {
+                data: {
+                    table: 'datatable'
+                },
+                chart: {
+                    type: 'column'
+                },
+                colors: ['#00ff04','#09b50b'
+                ],
+                title: {
+                    text: ''
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    title: {
+                        text: 'Units'
+                    }
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            this.point.y + ' - ' + this.point.name.toLowerCase();
+                    }
+                }
+            });
+        });
+		</script>
+	</head>
+	<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<table id="datatable" style="display:none;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Rentals</th>
+            <th>Sales</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>10' Containers</th>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>20' Containers</th>
+            <td>2</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th>20' Combos</th>
+            <td>5</td>
+            <td>11</td>
+        </tr>
+        <tr>
+            <th>20' Full Offices</th>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <th>20' Double Door</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>20' Containers w/ Shelves</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>20' High Cube</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>22' DD/HC</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>22' High Cube</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>24' Containers</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>24' High Cube</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>40' Containers</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>40' Combos</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>40' Double Doors</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>40' Full Offices</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>40' High Cubes</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+    </tbody>
+</table>
+	</body>
+</html>

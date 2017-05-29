@@ -1,0 +1,10 @@
+Issue Tracker
+
+- customerinfo.php -> Need to create view details page for orders!
+- customerinfo.php -> Save Changes button is not saving, page has not been built yet.
+- https://www.script-tutorials.com/php-ajax-calendar/
+- Need Create Order button functionality.
+- Need to move create container button to a page and get rid of the modal.
+- Need create customer button functionality.
+- Need to develope search engine within website.
+- Filter customers by first letter of name (A B C D E F G.....).

@@ -1,0 +1,388 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"margint",
+				"margin-top"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"in",
+				"input	Tag"
+			],
+			[
+				"col",
+				"color"
+			],
+			[
+				"marginto",
+				"margin-bottom"
+			],
+			[
+				"ali",
+				"text-align"
+			],
+			[
+				"rgb",
+				"rgba()"
+			],
+			[
+				"di",
+				"div	Tag"
+			],
+			[
+				"border",
+				"border"
+			],
+			[
+				"hea",
+				"header	Tag"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"h",
+				"h4	Tag"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"font-st",
+				"font-style"
+			],
+			[
+				"font-s",
+				"font-size"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "pac",
+		"selected_items":
+		[
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"syntax py",
+				"Set Syntax: Python"
+			],
+			[
+				"set syntax py	",
+				"Set Syntax: Python3"
+			],
+			[
+				"set syntax pyth",
+				"Set Syntax: Python3"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: Install package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 408.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Applications/XAMPP/xamppfiles/htdocs/gbr/index.php",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment_CSS.css",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_contact.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment4_apply.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment4_join.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/index.php",
+		"/U/Back-up Docs/VA Docs/WEBD/Labs/Lesson05/Finished/Lab_5-2/syb_day.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment3_play.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/w3css.css",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment_CSS.css",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment2_play.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment2_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/Lesson04/Lab_4-1/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment_CSS.css",
+		"/C/Users/VHAFREPETERB/Desktop/Lesson04/Lab_4-1/application.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/Peter_Brian_New_Layout.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/Peter_Brian_New_Layout_Learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/andia-agency-v2/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/andia-agency-v2/assets/css/style.css",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2_learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2.css",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2.html",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/sprites.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/main.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Peter_Week8Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week8Assignment.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/6/Peter_Week6Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week6Assignment.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/settings.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week4Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week5Assignment.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/4/Temp1_simpleopengl.zip/simpleopengl/firstopengl.py",
+		"/C/Portable/Projects/AvoidThemAll/ProjectTemplate/main.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/img/spritesheetimg.png",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/pygametemplate.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/img/spritesheetimg.xml",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/donthitit.py",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/ColorHighlighter.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Color Highlighter/ColorHighlighter.sublime-settings",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Context.sublime-menu",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Default.sublime-keymap",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/colors.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/ColorHighlighter.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Main.sublime-menu",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/ColorHighlighter.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/ColorHighlighter.sublime-settings",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/colors.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/Main.sublime-menu",
+		"/C/Portable/Sublime Text Build 3114/Data/Installed Packages/Color Highlighter.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Color Highlighter/Default.sublime-keymap",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Preferences.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Package Control.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Packages/Python.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Packages/Default.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Packages/XML.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Python.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Default/Preferences.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Distraction Free.sublime-settings",
+		"/C/Portable/Projects/AvoidThemAll/donthitit.py",
+		"/C/Portable/Projects/AvoidThemAll/.gitignore",
+		"/C/Users/VHAFREPETERB/Desktop/TheProject/donthitit.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"navbar-fixed-top",
+			"navbar-right",
+			"padding",
+			"margin-right",
+			"hr",
+			"footer",
+			"35",
+			"family",
+			"navbar-fixed-top",
+			"navbar",
+			"navcell",
+			"id=\"postfootercontainer\"",
+			"id=\"postfooter\"",
+			"id=\"authorinfo\"",
+			"id=\"authorcontainer\"",
+			"postborder",
+			"id=\"inner\"",
+			"#inner",
+			"id=\"postcontainer\"",
+			"mainimg",
+			"class=\"mainheader\"",
+			"class=",
+			"id=\"outer\"",
+			"mainimg",
+			"th",
+			"div",
+			"section",
+			"e",
+			"ch1",
+			"chp1",
+			"14",
+			"11",
+			"font-size",
+			"margin-left",
+			"mainPage",
+			"a = 1\nb = a + 1\nc = b + a\nnumberLoop = 0\n\nwhile c < 5:\n	a += 1\n	b = a + 1\n	c = a + b\n	numberLoop += 1\n	print(\"Loop\", numberLoop)\n\nif numberLoop == 0:\n	print(\"The loop was ran 0 times because c was greater than 5 before the loop ran.\")\nelse:\n	print(\"The loop was ran\", numberLoop, \"times.\")",
+			"comment"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"class=\"postfootercontainer\"",
+			"class=\"postfooter\"",
+			"class=\"authorinfo\"",
+			"class=\"authorcontainer\"",
+			"class=\"inner\"",
+			"class=\"postcontainer\"",
+			"class=\"outer\"",
+			"div"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "gbr.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 272.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

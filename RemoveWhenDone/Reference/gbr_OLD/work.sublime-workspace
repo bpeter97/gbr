@@ -1,0 +1,714 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"db",
+				"$db〔variable〕"
+			],
+			[
+				"flag",
+				"flag_reason"
+			],
+			[
+				"container",
+				"container_address"
+			],
+			[
+				"is",
+				"is_rented"
+			],
+			[
+				"container_si",
+				"container_signs"
+			],
+			[
+				"container_size",
+				"container_size_code"
+			],
+			[
+				"back",
+				"background-position"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"bakg",
+				"background-repeat"
+			],
+			[
+				"background",
+				"background-position"
+			],
+			[
+				"margi",
+				"margin-right"
+			],
+			[
+				"margint",
+				"margin-top"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"in",
+				"input\tTag"
+			],
+			[
+				"col",
+				"color"
+			],
+			[
+				"marginto",
+				"margin-bottom"
+			],
+			[
+				"ali",
+				"text-align"
+			],
+			[
+				"rgb",
+				"rgba()"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"border",
+				"border"
+			],
+			[
+				"hea",
+				"header\tTag"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"h",
+				"h4\tTag"
+			],
+			[
+				"font-st",
+				"font-style"
+			],
+			[
+				"font-s",
+				"font-size"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "classes/Container.php",
+			"settings":
+			{
+				"buffer_size": 5403,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "controller/editcontainer.php",
+			"settings":
+			{
+				"buffer_size": 5343,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 273.0,
+		"last_filter": "boxy",
+		"selected_items":
+		[
+			[
+				"boxy",
+				"Boxy Theme: Activation"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"syntax py",
+				"Set Syntax: Python"
+			],
+			[
+				"set syntax py\t",
+				"Set Syntax: Python3"
+			],
+			[
+				"set syntax pyth",
+				"Set Syntax: Python3"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: Install package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 566.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Portable/Projects/gbr",
+		"/C/Portable/Projects/gbr/classes",
+		"/C/Portable/Projects/gbr/controller"
+	],
+	"file_history":
+	[
+		"/C/Portable/Projects/gbr/view/createcontainer.php",
+		"/C/Portable/Projects/gbr/view/currentrentals.php",
+		"/C/Portable/Projects/gbr/view/rentalcontainers.php",
+		"/C/Portable/Projects/gbr/view/resalecontainerlist.php",
+		"/C/Portable/Projects/gbr/view/mastercontainers.php",
+		"/C/Portable/Projects/gbr/model/listallcurrentlyrented.php",
+		"/C/Portable/Projects/gbr/model/listallrentalcontainers.php",
+		"/C/Portable/Projects/gbr/model/listallresales.php",
+		"/C/Portable/Projects/gbr/model/listcontainers.php",
+		"/C/Portable/Projects/gbr/index.php",
+		"/C/Portable/Projects/gbr/css/style.css",
+		"/C/Portable/Projects/gbr/locked.php",
+		"//r01frehsm01.r01.med.va.gov/homedir$/VHAFREPETERB/My Documents/qryCurrentRentals.html",
+		"/C/Portable/Projects/gbr/gbr/index.php",
+		"/C/Portable/Projects/gbr/gbr/css/style.css",
+		"//r01frehsm01.r01.med.va.gov/homedir$/VHAFREPETERB/My Documents/AUDIT.DBF",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment_CSS.css",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_contact.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment4_apply.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment3_learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/stuffff/PeterBrianAssignment4_join.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/index.php",
+		"/U/Back-up Docs/VA Docs/WEBD/Labs/Lesson05/Finished/Lab_5-2/syb_day.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment3_play.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/w3css.css",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment_CSS.css",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment2_play.html",
+		"/U/Back-up Docs/VA Docs/WEBD/thefiles/PeterBrianAssignment2_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/Lesson04/Lab_4-1/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment_CSS.css",
+		"/C/Users/VHAFREPETERB/Desktop/Lesson04/Lab_4-1/application.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/Peter_Brian_New_Layout.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/Peter_Brian_New_Layout_Learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2_home.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/andia-agency-v2/index.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/andia-agency-v2/assets/css/style.css",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2_learn.html",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2.css",
+		"/C/Users/VHAFREPETERB/Desktop/test/thefiles/PeterBrianAssignment2.html",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/sprites.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/main.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Peter_Week8Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week8Assignment.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/6/Peter_Week6Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week6Assignment.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/settings.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week4Assignment.py",
+		"/C/Users/VHAFREPETERB/Desktop/Peter_Week5Assignment.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/4/Temp1_simpleopengl.zip/simpleopengl/firstopengl.py",
+		"/C/Portable/Projects/AvoidThemAll/ProjectTemplate/main.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/img/spritesheetimg.png",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/pygametemplate.py",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/img/spritesheetimg.xml",
+		"/C/Portable/Projects/AvoidThemAll/Project Files/donthitit.py",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/ColorHighlighter.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Color Highlighter/ColorHighlighter.sublime-settings",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Context.sublime-menu",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Default.sublime-keymap",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/colors.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/ColorHighlighter.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp2_Color Highlighter.zip/Main.sublime-menu",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/ColorHighlighter.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/ColorHighlighter.sublime-settings",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/colors.py",
+		"/C/Users/VHAFREPETERB/AppData/Local/Temp/2/Temp1_Color Highlighter.zip/Main.sublime-menu",
+		"/C/Portable/Sublime Text Build 3114/Data/Installed Packages/Color Highlighter.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Color Highlighter/Default.sublime-keymap",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Preferences.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Package Control.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Packages/Python.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Packages/Default.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Packages/XML.sublime-package",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Python.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/Default/Preferences.sublime-settings",
+		"/C/Portable/Sublime Text Build 3114/Data/Packages/User/Distraction Free.sublime-settings",
+		"/C/Portable/Projects/AvoidThemAll/donthitit.py",
+		"/C/Portable/Projects/AvoidThemAll/.gitignore",
+		"/C/Users/VHAFREPETERB/Desktop/TheProject/donthitit.py"
+	],
+	"find":
+	{
+		"height": 48.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"from",
+			"<form",
+			"post",
+			"conpages",
+			"con",
+			";\n",
+			"img",
+			"hr",
+			"footer",
+			"35",
+			"family",
+			"navbar-fixed-top",
+			"navbar",
+			"navcell",
+			"id=\"postfootercontainer\"",
+			"id=\"postfooter\"",
+			"id=\"authorinfo\"",
+			"id=\"authorcontainer\"",
+			"postborder",
+			"id=\"inner\"",
+			"#inner",
+			"id=\"postcontainer\"",
+			"mainimg",
+			"class=\"mainheader\"",
+			"class=",
+			"id=\"outer\"",
+			"mainimg",
+			"th",
+			"div",
+			"section",
+			"e",
+			"ch1",
+			"chp1",
+			"14",
+			"11",
+			"font-size",
+			"margin-left",
+			"mainPage",
+			"a = 1\nb = a + 1\nc = b + a\nnumberLoop = 0\n\nwhile c < 5:\n\ta += 1\n\tb = a + 1\n\tc = a + b\n\tnumberLoop += 1\n\tprint(\"Loop\", numberLoop)\n\nif numberLoop == 0:\n\tprint(\"The loop was ran 0 times because c was greater than 5 before the loop ran.\")\nelse:\n\tprint(\"The loop was ran\", numberLoop, \"times.\")",
+			"comment"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"class=\"postfootercontainer\"",
+			"class=\"postfooter\"",
+			"class=\"authorinfo\"",
+			"class=\"authorcontainer\"",
+			"class=\"inner\"",
+			"class=\"postcontainer\"",
+			"class=\"outer\"",
+			"div"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "classes/Container.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5403,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3494,
+								3494
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4345,
+										4346
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3443,
+										3444
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/php-grammar/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "controller/editcontainer.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5343,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3819,
+								3819
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										3869,
+										3870
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3818,
+										3819
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/php-grammar/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1320.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "work.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 225.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
