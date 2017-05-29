@@ -57,6 +57,9 @@ if(!defined('CUSTOMERS')){
 if(!defined('CONTROLLERS')){
 	define("CONTROLLERS",	"/controller");
 }
+if(!defined('QUOTES')){
+    define('QUOTES',     '/quotes');
+}
 
 
 // Not sure if still used.

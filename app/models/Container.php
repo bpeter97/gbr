@@ -47,11 +47,13 @@ class Container
     // This function pulls the container details from the database and stores it in the object.
     public function getDetails($new_id) {
 
-        $db = new Database();
+        // Database auto connects in the constructor.
+        $this->db = new Database();
+
         // Get the containers details.
         $this->id = $new_id;
-        $db->select('containers','*','','container_ID = ' . $this->id);
-        $this->res = $db->getResult();
+        $this->db->select('containers','*','','container_ID = ' . $this->id);
+        $this->res = $this->db->getResult();
 
         // Assign details to attributes.
         $this->release_number = $this->res[0]['release_number'];
@@ -184,6 +186,8 @@ class Container
     public function countContainers($where = ''){
         $row = '';
         $new_where = '';
+        $this->db->connect();
+
         if($where != ''){
             $new_where = 'WHERE '. $where .' ';
         }
@@ -194,6 +198,7 @@ class Container
             $row = $count['COUNT(container_ID)'];
         }
 
+        $this->db->disconnect();
         return $row;
     }
 
@@ -213,6 +218,7 @@ class Container
         foreach ($this->res as $con) {
             array_push($list, new Container($con['container_ID']));
         }
+        $this->db->disconnect();
         return $list;
     }
 

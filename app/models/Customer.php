@@ -60,12 +60,15 @@ class Customer
         $this->flag = $this->res[0]['flagged'];
         $this->flag_reason = $this->res[0]['flag_reason'];
 
+        $this->db->disconnect();
+
     }
 
     // This function counts the number of customers in the database to be able to set up the number of pages to view.
     public function countCustomers($where = ''){
         $row = '';
         $new_where = '';
+        $this->db->connect();
         if($where != ''){
             $new_where = 'WHERE '. $where .' ';
         }
@@ -76,6 +79,7 @@ class Customer
             $row = $count['COUNT(customer_ID)'];
         }
 
+        $this->db->disconnect();
         return $row;
     }
 
@@ -103,6 +107,7 @@ class Customer
         foreach ($this->res as $cus) {
             array_push($list, new Customer($cus['customer_ID']));
         }
+        $this->db->disconnect();
         return $list;
     }
 }

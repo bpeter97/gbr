@@ -5,18 +5,18 @@ class Home extends Controller
 
     public function index()
     {
-        $loggedin = '';
-
         $this->checkSession();
 
-        if(isset($_POST['username'])){
-            $user = $this->model('User');
-            $user->username = $_POST['username'];
-            $user->password = $_POST['password'];
-            $loggedin = $user->login();
+        if(!isset($_SESSION['loggedin'])){
+            if(isset($_POST['username'])){
+                $user = $this->model('User');
+                $user->username = $_POST['username'];
+                $user->password = $_POST['password'];
+                $loggedin = $user->login();
+            }
         }
-
-        if($loggedin != ''){
+        
+        if(isset($_SESSION['loggedin'])){
             $chart = $this->model('Chart');
             $this->view('home/dashboard', ['chart'=>$chart]);
         }

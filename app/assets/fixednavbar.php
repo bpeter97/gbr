@@ -17,7 +17,7 @@
 
     $curl = getCurrentURL();
 
-    $index = HTTP.HTTPURL.PUB.'/index.php';
+    $index = HTTP.HTTPURL.PUB;
 
     $con_array = array(HTTP.HTTPURL.PUB.CONTAINERS.'/resalecontainers',
                         HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals',
@@ -28,8 +28,8 @@
     $cust_array = array(HTTP.HTTPURL.PUB.CUSTOMERS,
                         HTTP.HTTPURL.VIEW.'/createcustomer.php');
 
-    $quote_array = array(HTTP.HTTPURL.VIEW.'/quotes.php',
-                        HTTP.HTTPURL.VIEW.'/create_quote.php');
+    $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/quotes.php',
+                        HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php');
 
     $order_array = array(HTTP.HTTPURL.VIEW.'/createorder.php',
                         HTTP.HTTPURL.VIEW.'/orders.php');
@@ -105,8 +105,8 @@
                         <li class="dropdown '.$quotes_active.'">
                         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Quotes <span class="caret"></span></a>
                         	<ul class="dropdown-menu main-dropdown-effects">
-                        		<li><a href="'.HTTP.HTTPURL.VIEW.'/create_quote.php">Create Quote</a></li>
-                        		<li><a href="'.HTTP.HTTPURL.VIEW.'/quotes.php">View Quotes</a></li>
+                        		<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php">Create Quote</a></li>
+                        		<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/quotes.php">View Quotes</a></li>
                         	</ul>
                         </li>
                         <li class="dropdown '.$orders_active.'">
