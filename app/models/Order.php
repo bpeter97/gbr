@@ -126,6 +126,8 @@ class Order extends Model
         return $list;
     }
 
+    // Retrieves the ordered products belonging to this order 
+    // and then stores the event in the products array.
     public function getOrderProducts()
     {
 

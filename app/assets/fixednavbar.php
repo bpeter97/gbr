@@ -88,7 +88,7 @@
                         <li class="dropdown '.$containers_active.'">
                             <a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Containers <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                            	<li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/createcontainer">Create Container</a></li>
+                            	<li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/create">Create Container</a></li>
                                 <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/masterlist">Master List</a></li>
                                 <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/rentalcontainers">Rental Fleet</a></li>
                                 <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/currentrentals">Currently Rented</a></li>
@@ -117,7 +117,6 @@
                             </ul>
                         </li>
                         <li class="'.$prod_active.'"><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/">Products</a></li>
-                        <li class="'.$calendar_active.'"><a href="'.HTTP.HTTPURL.PUB.CALENDAR.'/">Calendar</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="welcome_msg">Welcome, '.$_SESSION['userfname'].' '.$_SESSION['userlname'].'!</li>

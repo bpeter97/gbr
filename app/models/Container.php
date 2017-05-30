@@ -11,6 +11,7 @@
 class Container extends Model
 {
     
+    // Unfold to see properties.
     public $release_number;
     public $container_size;
     public $container_serial_number;
@@ -43,7 +44,8 @@ class Container extends Model
     }
 
     // This function pulls the container details from the database and stores it in the object.
-    public function getDetails($new_id) {
+    public function getDetails($new_id) 
+    {
 
         // Database auto connects in the constructor.
         $this->db = new Database();
@@ -75,7 +77,9 @@ class Container extends Model
 
     }
 
-    public function update(){
+    // Simple update function when a container is edited. -- NOT TESTED YET
+    public function update()
+    {
 
         $this->getLatLon($this->container_address);
         // Update the contianers table using the object attributes.
@@ -102,10 +106,11 @@ class Container extends Model
 
         // Return the results of the query.
         return $this->res;
-    }
+    } 
 
-    // This function will remove the container from the database.
-    public function delete(){
+    // This function will remove the container from the database. -- NOT TESTED YET
+    public function delete()
+    {
 
         $this->db = new Database();
 
@@ -122,7 +127,16 @@ class Container extends Model
     }
 
     // This will insert a new container into the database.
-    public function create(){
+    public function create()
+    {
+
+        $result = '';
+
+        // Post data
+        $this->postData(true);
+
+        // Establish DB
+        $this->db = new Database();
 
         // Insert the new container into the database.
         $this->db->insert('containers',array(
@@ -143,16 +157,19 @@ class Container extends Model
             'type'=>$this->type));
 
         // Get the results of the query.
-        $this->res = $this->db->getResult();
+        $result  = $this->db->getResult();
+
+        $this->db->disconnect();
+        $this->resetResDb();
 
         // Return the results of the query.
-        return $this->res;
+        return $result;
     }
 
-
-    // This function updates the containers table to include the 
-    // new address and update the is_rented attribute to true.
-    public function deliver($address, $isRented) {
+    // This function updates the containers table to include the  -- NOT TESTED YET
+    // new address and update the is_rented attribute to true. -- NOT TESTED YET
+    public function deliver($address, $isRented) 
+    {
 
         // Assign variables.
         $this->container_address = $address;
@@ -171,7 +188,8 @@ class Container extends Model
     }
 
     // This function gets the latitude and longitude of the containers address.
-    public function getLatLon($addy){
+    public function getLatLon($addy)
+    {
       
         $address = urlencode($addy);
         
@@ -186,7 +204,9 @@ class Container extends Model
         }
     }
 
-    public function countContainers($where = ''){
+    // Function to count the containers for pagination.
+    public function countContainers($where = '')
+    {
         $row = '';
         $new_where = '';
         $this->db = new Database();
@@ -207,7 +227,9 @@ class Container extends Model
         return $row;
     }
 
-    public function fetchContainers($where = '',$limit = ''){
+    // Function to grab containers depending on params.
+    public function fetchContainers($where = '',$limit = '')
+    {
         $list = array();
         $this->db = new Database();
 
@@ -227,6 +249,78 @@ class Container extends Model
         $this->resetResDB();
         return $list;
     }
+
+    // Simple function to set checkbox values.
+    public function checkboxes($check){
+        if($check == 1){
+            $checkvalue = "Yes";
+        } else {
+            $checkvalue = "No";
+        }
+        return $checkvalue;
+    }
+
+    // Function to post data. This is used by the create function and the edit function.
+    public function postData($checkboxes = false)
+    {
+
+        // Establish DB
+        $this->db = new Database();
+
+        // Check if the container need's to be created or not.
+        if ($checkboxes == false){
+
+            $this->db->sql('SELECT DISTINCT container_size, container_size_code FROM containers');
+            $this->res = $this->db->getResult();
+            foreach ($this->res as $r){
+                if($_POST['container_size'] == $r['container_size']){
+                    $this->container_size_code = $r['container_size_code'];
+                }
+            }
+
+            $this->release_number = $_POST['release_number'];
+            $this->container_size = $_POST['container_size'];
+            $this->container_serial_number = $_POST['container_serial_number'];
+            $this->container_number = $_POST['container_number'];
+            $this->rental_resale = $_POST['rental_resale'];
+            $this->is_rented = $_POST['is_rented'];
+            $this->container_address = $_POST['container_address'];
+            $this->type = "container";
+            $this->flag = $_POST['flag'];
+            $this->flag_reason = $_POST['flag_reason'];
+            $this->getLatLon($_POST['container_address']);
+            $this->container_shelves = $_POST['container_shelves'];
+            $this->container_paint = $_POST['container_paint'];
+            $this->container_onbox_numbers = $_POST['container_onbox_numbers'];
+            $this->container_signs = $_POST['container_signs'];
+            $this->resetResDb();
+
+        // Else if this is a container that is being created.
+        } elseif ($checkboxes == true) {
+
+            $this->db->sql('SELECT DISTINCT container_size, container_size_code FROM containers');
+            $this->res = $this->db->getResult();
+            foreach ($this->res as $r){
+                if($_POST['frmcontainersize'] == $r['container_size']){
+                    $this->container_size_code = $r['container_size_code'];
+                }
+            }
+            $this->rental_resale = $_POST['frmrentalresale'];
+            $this->container_size = $_POST['frmcontainersize'];
+            $this->release_number = $_POST['frmcontainerrelease'];
+            $this->container_shelves = $this->checkboxes($_POST['containershelves']);
+            $this->container_paint = $this->checkboxes($_POST['containerpainted']);
+            $this->container_onbox_numbers = $this->checkboxes($_POST['containergbrnumbers']);
+            $this->container_signs = $this->checkboxes($_POST['containersigns']);
+            $this->container_serial_number = $_POST['frmcontainerserial'];
+            $this->container_number = $_POST['frmcontainernumber'];
+            $this->is_rented = 'FALSE';
+            $this->container_address = "6988 Ave 304, Visalia, CA 93291";
+            $this->getLatLon($this->container_address);
+            $this->resetResDb();            
+        }
+    }
+         
 
 }
 

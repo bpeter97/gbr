@@ -113,6 +113,23 @@ class Containers extends Controller
         $this->view('containers/resalecontainers', ['conList'=>$conList, 'row'=>$row]);
     }
 
+    public function create()
+    {
+        if(isset($_GET['action']))
+        {
+            if($_GET['action'] == 'create')
+            {
+                $container = $this->model('Container');
+                $res = $container->create();
+                if($res)
+                {
+                    $this->masterlist();
+                }
+            }
+        }
+        $this->view('containers/create', []);
+    }
+
     
 }
 
