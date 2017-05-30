@@ -116,8 +116,8 @@
                                 <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/">View Orders</a></li>
                             </ul>
                         </li>
-                        <li class="'.$prod_active.'"><a href="'.HTTP.HTTPURL.VIEW.'/products.php">Products</a></li>
-                        <li class="'.$calendar_active.'"><a href="'.HTTP.HTTPURL.VIEW.'/calendar.php">Calendar</a></li>
+                        <li class="'.$prod_active.'"><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/">Products</a></li>
+                        <li class="'.$calendar_active.'"><a href="'.HTTP.HTTPURL.PUB.CALENDAR.'/">Calendar</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="welcome_msg">Welcome, '.$_SESSION['userfname'].' '.$_SESSION['userlname'].'!</li>

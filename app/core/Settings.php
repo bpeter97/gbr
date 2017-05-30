@@ -48,14 +48,16 @@ if(!defined('ASSETS')){
 if(!defined('CORE')){
 	define('CORE', 			'/core');
 }
-if(!defined('CONTAINERS')){
-	define('CONTAINERS',	'/containers');
-}
-if(!defined('CUSTOMERS')){
-	define('CUSTOMERS',		'/customers');
-}
 if(!defined('CONTROLLERS')){
 	define("CONTROLLERS",	"/controller");
+}
+
+// View Folders
+if(!defined('CONTAINERS')){
+    define('CONTAINERS',    '/containers');
+}
+if(!defined('CUSTOMERS')){
+    define('CUSTOMERS',     '/customers');
 }
 if(!defined('QUOTES')){
     define('QUOTES',        '/quotes');
@@ -63,7 +65,15 @@ if(!defined('QUOTES')){
 if(!defined('ORDERS')){
     define('ORDERS',        '/orders');
 }
-
+if(!defined('ORDERS')){
+    define('ORDERS',        '/orders');
+}
+if(!defined('PRODUCTS')){
+    define('PRODUCTS',        '/products');
+}
+if(!defined('CALENDAR')){
+    define('CALENDAR',        '/calendar');
+}
 
 // Not sure if still used.
 if(!defined('CFG')){
