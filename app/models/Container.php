@@ -8,10 +8,9 @@
  *
  * @class Container
  */
-class Container
+class Container extends Model
 {
     
-    public $res;
     public $release_number;
     public $container_size;
     public $container_serial_number;
@@ -30,7 +29,6 @@ class Container
     public $flag_reason;
     public $id;
     public $container_size_code;
-    public $db;
     
     // Assign the id property the ID and the db property that was passed when the object was created.
     function __construct($id = '') {
@@ -54,6 +52,7 @@ class Container
         $this->id = $new_id;
         $this->db->select('containers','*','','container_ID = ' . $this->id);
         $this->res = $this->db->getResult();
+        $this->db->disconnect();
 
         // Assign details to attributes.
         $this->release_number = $this->res[0]['release_number'];
@@ -108,8 +107,12 @@ class Container
     // This function will remove the container from the database.
     public function delete(){
 
+        $this->db = new Database();
+
         // Delete the container from the database.
         $this->db->delete('containers','container_ID='.$this->id);
+
+        $this->db->disconnect();
 
         // Get the results of the deletion.
         $this->res = $this->db->getResult();
@@ -186,6 +189,7 @@ class Container
     public function countContainers($where = ''){
         $row = '';
         $new_where = '';
+        $this->db = new Database();
         $this->db->connect();
 
         if($where != ''){
@@ -199,6 +203,7 @@ class Container
         }
 
         $this->db->disconnect();
+        $this->resetResDB();
         return $row;
     }
 
@@ -219,6 +224,7 @@ class Container
             array_push($list, new Container($con['container_ID']));
         }
         $this->db->disconnect();
+        $this->resetResDB();
         return $list;
     }
 

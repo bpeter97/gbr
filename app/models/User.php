@@ -3,13 +3,11 @@
 /**
 * 
 */
-class User
+class User extends Model
 {
     
-    private $db;
     public $username;
     public $password;
-    private $res;
     private $rows;
 
     public function __construct()
@@ -72,6 +70,8 @@ class User
         else {
             echo "<strong>Incorrect password.<br/>";
         }
+        $this->db->disconnect();
+        $this->resetResDb();
     }
 
     private function checkSession()

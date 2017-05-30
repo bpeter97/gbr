@@ -17,8 +17,13 @@ class Home extends Controller
         }
         
         if(isset($_SESSION['loggedin'])){
+            // Create a calendar and grab events.
+            $calendar = $this->model('Calendar');
+            $events = $calendar->getEvents();
+
+            // Create the charts for the bottom of the page.
             $chart = $this->model('Chart');
-            $this->view('home/dashboard', ['chart'=>$chart]);
+            $this->view('home/dashboard', ['chart'=>$chart, 'events'=>$events]);
         }
 
         $this->checkLogin();

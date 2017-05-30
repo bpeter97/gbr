@@ -3,7 +3,7 @@
 /**
 * 
 */
-class Order
+class Order extends Model
 {
 
     public $id;
@@ -30,7 +30,7 @@ class Order
     public $delivered;
     public $date_delivered;
     public $container;
-    public $db;
+    public $products = array();
     
     function __construct($id = '')
     {
@@ -50,6 +50,7 @@ class Order
         // Get the quote details.
         $this->db->select('orders','*','','order_id = ' . $this->id);
         $this->res = $this->db->getResult();
+        $this->db->disconnect();
 
         // Assign details to attributes.
         $this->id = $this->res[0]['order_id'];
@@ -76,13 +77,16 @@ class Order
         $this->delivered = $this->res[0]['delivered'];
         $this->date_delivered = $this->res[0]['date_delivered'];
         $this->container = $this->res[0]['container'];
+        $this->getOrderProducts();
 
-        $this->db->disconnect();
+        $this->resetResDb();
+        
     }
 
     public function countOrders($where = ''){
         $row = '';
         $new_where = '';
+        $this->db = new Database();
         $this->db->connect();
         
         if($where != ''){
@@ -96,6 +100,7 @@ class Order
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $row;
     }    
 
@@ -117,7 +122,29 @@ class Order
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $list;
+    }
+
+    public function getOrderProducts()
+    {
+
+        $this->db = new Database();
+
+        $this->db->sql('SELECT * FROM product_orders WHERE order_id = '.$this->id);
+        $this->res = $this->db->getResult();
+        foreach($this->res as $orderedProd)
+        {
+            $product = new Product($orderedProd['product_id']);
+            $product->product_cost = $orderedProd['product_cost'];
+            $product->product_qty = $orderedProd['product_qty'];
+            $product->product_type = $orderedProd['product_type'];
+
+            array_push($this->products, $product);
+        }
+
+        $this->db->disconnect();
+        $this->resetResDb();
     }
 
 }

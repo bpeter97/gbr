@@ -3,7 +3,7 @@
 /**
 * 
 */
-class Quote
+class Quote extends Model
 {
 
     public $id;
@@ -20,7 +20,6 @@ class Quote
     public $total_cost;
     public $sales_tax;
     public $monthly_total;
-    public $db;
     
     function __construct($id = '')
     {
@@ -56,11 +55,13 @@ class Quote
         $this->monthly_total = $this->res[0]['monthly_total'];
         $this->quote_type = $this->res[0]['quote_type'];
         $this->db->disconnect();
+        $this->resetResDb();
     }
 
     public function countQuotes($where = ''){
         $row = '';
         $new_where = '';
+        $this->db = new Database();
         $this->db->connect();
         
         if($where != ''){
@@ -74,6 +75,7 @@ class Quote
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $row;
     }    
 
@@ -95,6 +97,7 @@ class Quote
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $list;
     }
 

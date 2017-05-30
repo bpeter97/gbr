@@ -3,10 +3,9 @@
 /**
 * 
 */
-class Customer
+class Customer extends Model
 {
     
-    public $res;
     public $id;
     public $customer_name;
     public $customer_address1;
@@ -22,7 +21,6 @@ class Customer
     public $customer_notes;
     public $flag;
     public $flag_reason;
-    public $db;
 
     function __construct($id = '')
     {
@@ -61,13 +59,14 @@ class Customer
         $this->flag_reason = $this->res[0]['flag_reason'];
 
         $this->db->disconnect();
-
+        $this->resetResDb();
     }
 
     // This function counts the number of customers in the database to be able to set up the number of pages to view.
     public function countCustomers($where = ''){
         $row = '';
         $new_where = '';
+        $this->db = new Database();
         $this->db->connect();
         if($where != ''){
             $new_where = 'WHERE '. $where .' ';
@@ -80,6 +79,7 @@ class Customer
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $row;
     }
 
@@ -108,6 +108,7 @@ class Customer
             array_push($list, new Customer($cus['customer_ID']));
         }
         $this->db->disconnect();
+        $this->resetResDb();
         return $list;
     }
 }

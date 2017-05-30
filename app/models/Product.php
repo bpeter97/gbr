@@ -3,7 +3,7 @@
 /**
 * 
 */
-class Product
+class Product extends Model
 {
 
     public $id;
@@ -13,7 +13,11 @@ class Product
     public $monthly;
     public $item_type;
     public $rental_type;
-    public $db;
+
+    public $product_qty;
+    public $product_cost;
+    public $product_type;
+
     
     function __construct($id = '')
     {
@@ -44,11 +48,13 @@ class Product
 
         // Don't forget to disconnect the DB connection!
         $this->db->disconnect();
+        $this->resetResDb();
     }
 
     public function countProducts($where = ''){
         $row = '';
         $new_where = '';
+        $this->db = new Database();
         $this->db->connect();
         
         if($where != ''){
@@ -62,6 +68,7 @@ class Product
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $row;
     }    
 
@@ -83,7 +90,14 @@ class Product
         }
 
         $this->db->disconnect();
+        $this->resetResDb();
         return $list;
+    }
+
+    public function getOrderedProduct()
+    {
+        $this->db->disconnect();
+        $this->resetResDb();
     }
 
 }

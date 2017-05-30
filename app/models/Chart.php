@@ -3,9 +3,9 @@
 /**
 * 
 */
-class Chart
+class Chart extends Model
 {
-    public $db;
+    
     public $curmonth = 1;
     public $begmonth = 1;
     public $quotes = array();
@@ -23,6 +23,8 @@ class Chart
         $this->getOrders();
         $this->getRentalContainers();
         $this->getResaleContainers();
+        $this->db->disconnect();
+        $this->resetResDb();
     }
 
     public function getQuotes()
