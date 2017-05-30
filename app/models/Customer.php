@@ -33,7 +33,8 @@ class Customer extends Model
     }
 
     // This function pulls the container details from the database and stores it in the object.
-    public function getDetails($id) {
+    public function getDetails($id) 
+    {
 
         // Get the containers details.
         $this->id = $id;
@@ -63,7 +64,8 @@ class Customer extends Model
     }
 
     // This function counts the number of customers in the database to be able to set up the number of pages to view.
-    public function countCustomers($where = ''){
+    public function countCustomers($where = '')
+    {
         $row = '';
         $new_where = '';
         $this->db = new Database();
@@ -110,6 +112,57 @@ class Customer extends Model
         $this->db->disconnect();
         $this->resetResDb();
         return $list;
+    }
+
+    // Function to insert new customer into database.
+    public function create()
+    {
+        // Returning result, so using $result instead of $this->res.
+        $result = '';
+
+        $this->postData();
+
+        $this->db = new Database();
+        $this->db->insert('customers',array(
+                                        'customer_name'=>$this->customer_name,
+                                        'customer_address1'=>$this->customer_address1,
+                                        'customer_address2'=>$this->customer_address2,
+                                        'customer_city'=>$this->customer_city,
+                                        'customer_zipcode'=>$this->customer_zipcode,
+                                        'customer_state'=>$this->customer_state,
+                                        'customer_phone'=>$this->customer_phone,
+                                        'customer_ext'=>$this->customer_ext,
+                                        'customer_fax'=>$this->customer_fax,
+                                        'customer_email'=>$this->customer_email,
+                                        'customer_rdp'=>$this->customer_rdp,
+                                        'customer_notes'=>$this->customer_notes,
+                                        'flagged'=>$this->flag,
+                                        'flag_reason'=>$this->flag_reason));
+
+        $result = $this->db->getResult();
+        $this->db->disconnect();
+        $this->resetResDb();
+
+        return $result;
+    }
+
+    // Simple function to post data.
+    public function postData()
+    {
+        $this->customer_name = $_POST['frmcname'];
+        $this->customer_address1 = $_POST['frmcaddy1'];
+        $this->customer_address2 = $_POST['frmcaddy2'];
+        $this->customer_city= $_POST['frmccity'];
+        $this->customer_zipcode = $_POST['frmczipcode'];
+        $this->customer_state = $_POST['frmcstate'];
+        $this->customer_phone =  $_POST['frmcpnumber'];
+        $this->customer_ext  = $_POST['frmcext'];
+        $this->customer_fax = $_POST['frmcfnumber'];
+        $this->customer_email = $_POST['frmcemail'];
+        $this->customer_rdp = $_POST['frmcrdp'];
+        $this->customer_notes = $_POST['frmcnotes'];
+        $this->flag = $_POST['frmflaggedq'];
+        $this->flag_reason = $_POST['frmflagreason'];
     }
 }
 

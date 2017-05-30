@@ -18,7 +18,7 @@ class Customers extends Controller
         $this->masterlist();
     }
 
-    // This will be the page that shows all of the current containers.
+    // This will be the page that shows all of the current customers.
     public function masterlist()
     {
         $this->checkSession();
@@ -54,7 +54,25 @@ class Customers extends Controller
         $this->view('customers/masterlist', ['custList'=>$custList, 'row'=>$row, 'page_rows'=>$page_rows]);
     }
 
-    
+    // This page will be used to create customers.
+    public function create()
+    {
+        if(isset($_GET['action']))
+        {
+            if($_GET['action'] == 'create')
+            {
+                $customer = $this->model('Customer');
+                $res = $customer->create();
+                if($res)
+                {
+                    $this->masterlist();
+                }
+            }
+        }
+        $this->view('customers/create');
+    }
+
+
 }
 
 ?>

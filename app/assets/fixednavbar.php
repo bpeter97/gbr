@@ -23,10 +23,10 @@
                         HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals',
                         HTTP.HTTPURL.PUB.CONTAINERS.'/masterlist',
                         HTTP.HTTPURL.PUB.CONTAINERS.'/rentalcontainers',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/createcontainer');
+                        HTTP.HTTPURL.PUB.CONTAINERS.'/create');
 
     $cust_array = array(HTTP.HTTPURL.PUB.CUSTOMERS,
-                        HTTP.HTTPURL.VIEW.'/createcustomer.php');
+                        HTTP.HTTPURL.PUB.CUSTOMERS.'/create');
 
     $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/quotes.php',
                         HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php');
@@ -98,7 +98,7 @@
                         <li class="dropdown '.$customers_active.'">
                         	<a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Customers <span class="caret"></a>
                         	<ul class="dropdown-menu main-dropdown-effects">
-                        		<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/">Create Customer</a></li>
+                        		<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/create">Create Customer</a></li>
                         		<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/">View Customers</a></li>
                         	</ul>
                         </li>

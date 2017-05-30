@@ -293,6 +293,7 @@ class Container extends Model
             $this->container_paint = $_POST['container_paint'];
             $this->container_onbox_numbers = $_POST['container_onbox_numbers'];
             $this->container_signs = $_POST['container_signs'];
+            $this->db->disconnect();
             $this->resetResDb();
 
         // Else if this is a container that is being created.
@@ -317,6 +318,7 @@ class Container extends Model
             $this->is_rented = 'FALSE';
             $this->container_address = "6988 Ave 304, Visalia, CA 93291";
             $this->getLatLon($this->container_address);
+            $this->db->disconnect();
             $this->resetResDb();            
         }
     }
