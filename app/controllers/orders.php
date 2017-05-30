@@ -6,9 +6,9 @@
  * This is the controller page that tells which 
  * views to pull and what models to interact with.
  *
- * @class Quotes
+ * @class Orders
  */
-class Quotes extends Controller
+class Orders extends Controller
 {
     // Index page that references the masterlist page.
     public function index()
@@ -22,7 +22,7 @@ class Quotes extends Controller
         $this->checkSession();
         $this->checkLogin();
 
-        $quote = $this->model('Quote');
+        $order = $this->model('Order');
 
         $pagenum = 1;
 
@@ -33,11 +33,11 @@ class Quotes extends Controller
         $page_rows = 100;
         $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
         // Grab the container information with the limit.
-        $quoteList = $quote->getQuotes('',$limit);
+        $orderList = $order->getOrders('',$limit);
 
-        $row = $quote->countQuotes();
+        $row = $order->countOrders();
 
-        $this->view('quotes/masterlist', ['quoteList'=>$quoteList, 'row'=>$row]);
+        $this->view('orders/masterlist', ['orderList'=>$orderList, 'row'=>$row]);
     }
     
 }

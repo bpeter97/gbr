@@ -31,8 +31,8 @@
     $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/quotes.php',
                         HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php');
 
-    $order_array = array(HTTP.HTTPURL.VIEW.'/createorder.php',
-                        HTTP.HTTPURL.VIEW.'/orders.php');
+    $order_array = array(HTTP.HTTPURL.PUB.ORDERS.'/createorder.php',
+                        HTTP.HTTPURL.PUB.ORDERS.'/orders.php');
 
     $cal_url = HTTP.HTTPURL.VIEW.'/calendar.php';
 
@@ -112,8 +112,8 @@
                         <li class="dropdown '.$orders_active.'">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Orders <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                                <li><a href="'.HTTP.HTTPURL.VIEW.'/createorder.php">Create Order</a></li>
-                                <li><a href="'.HTTP.HTTPURL.VIEW.'/orders.php">View Orders</a></li>
+                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/createorder.php">Create Order</a></li>
+                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/">View Orders</a></li>
                             </ul>
                         </li>
                         <li class="'.$prod_active.'"><a href="'.HTTP.HTTPURL.VIEW.'/products.php">Products</a></li>

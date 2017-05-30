@@ -24,10 +24,10 @@
                                 </div>
                                 <div class="panel-body">
                                     <?php    
-                                    // # of containers in containers table
+                                    // # of quotes in quotes table
                                     $rows = $data['row'];
 
-                                    // # of containers to display per pagination
+                                    // # of quotes to display per pagination
                                     $page_rows = 100;
 
                                     // This tells us the page # of our last page

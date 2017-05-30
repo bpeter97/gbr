@@ -20,14 +20,16 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center">
-                                    <b>Master List of Customers</b>
+                                    <b>Full List of Orders</b>
                                 </div>
                                 <div class="panel-body">
-                                <input type="text" id="filterName" onkeyup="searchNames()" placeholder="Search for names..">
                                     <?php    
-                                    // # of customers in customers table
+                                    // # of orders in orders table
                                     $rows = $data['row'];
-                                    $page_rows = $data['page_rows'];
+
+                                    // # of orders to display per pagination
+                                    $page_rows = 20;
+
                                     // This tells us the page # of our last page
                                     $last = ceil($rows/$page_rows);
 
@@ -59,25 +61,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -85,85 +87,75 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$last.'">Last</a></li>';
                                     }
 
-                                    // Create the array containing the alphabet.
-                                    $letterlist = '';
-                                    $c = 'A';
-                                    $chars = array($c);
-                                    while ($c < 'Z') {
-                                        $chars[] = ++$c;
-                                    }
-
-                                    // Generates the links for the alphebet.
-                                    $counter = 0;
-                                    while ($counter <> 26) {
-                                        $letterlist .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?f='.$chars[$counter].'">'.$chars[$counter].'</a></li> &nbsp;';
-                                        $counter += 1;
-                                    }
-
-                                    if($data['custList']) {
+                                    if($data['orderList']) {
 
                                         echo '
-                                            <ul class="pagination">
-                                                <li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'">ALL</a></li> &nbsp;
-                                                ' . $letterlist . '
-                                            </ul>
-                                        ';
-
-                                        echo '
+                                        <nav aria-label="Page navigation">
                                             <ul class="pagination">
                                                 ' . $paginationCtrls . '
                                             </ul>
+                                        </nav>
                                         ';
 
                                         echo '
 
-                                        <table class="table table-striped table-hover" id="custTable">
+                                        <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Phone</th>
-                                                    <th>Ext</th>
-                                                    <th>Fax</th>
-                                                    <th>Email</th>
+                                                    <th>Order ID</th>
+                                                    <th>Stage</th>
+                                                    <th>Customer</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Rental or Resale</th>
+                                                    <th>Ordered By</th>
+                                                    <th>On-Site Contact</th>
+                                                    <th>On-Site Contact #</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                         ';
 
-                                        $toolcount = 0;
+                                        foreach($data['orderList'] as $order) {
 
-                                        foreach($data['custList'] as $cus) {
-
-                                            if($cus->flag == "Yes"){
-                                                $toolcount += 1;
-                                                $danger = 'danger';
-                                                $flag_reason = $cus->flag_reason;
-                                                $tooltip = ' data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
-                                                echo '
-                                                <div id="a'.$toolcount.'" class="hidden">
-                                                    <div class="popover-body"><b>'.$flag_reason.'</b></div>
-                                                </div>
-                                                ';
-                                            } else {
-                                                $danger = '';
-                                                $flag_reason = '';
-                                                $tooltip = '';
+                                            if($order->stage == 1) {
+                                                $tablebg = '<tr class="warning clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
+                                            } elseif($order->stage == 2) {
+                                                $tablebg = '<tr class="info clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
+                                            } elseif($order->stage == 3){
+                                                $tablebg = '<tr class="success clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
                                             }
 
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.HTTP.HTTPURL.VIEW.'/customerinfo.php?id=' . $cus->id .'" '.$tooltip.'>
-                                                    <td>' . $cus->customer_name . '</td>
-                                                    <td>' . $cus->customer_phone . '</td>
-                                                    <td>' . $cus->customer_ext . '</td>
-                                                    <td>' . $cus->customer_fax . '</td>
-                                                    <td>' . $cus->customer_email . '</td>
+                                                '. $tablebg .'
+                                                    <td>' . $order->id . '</td>
+                                                    <td>' . $order->stage . '</td>
+                                                    <td>' . $order->order_customer . '</td>
+                                                    <td>' . $order->order_date . '</td>
+                                                    <td>' . $order->order_time . '</td>
+                                                    <td>' . $order->order_type . '</td>
+                                                    <td>' . $order->ordered_by . '</td>
+                                                    <td>' . $order->onsite_contact . '</td>
+                                                    <td>' . $order->onsite_contact_phone . '</td>
+                                                    <td>
+                                                        <a class="btn btn-xs btn-warning" href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                        <a class="btn btn-xs btn-info button-link" href="#">
+                                                            <span class="glyphicon glyphicon-print"></span>
+                                                        </a>
+                                                        <a class="btn btn-xs btn-danger" href="#">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             ';

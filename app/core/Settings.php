@@ -58,7 +58,10 @@ if(!defined('CONTROLLERS')){
 	define("CONTROLLERS",	"/controller");
 }
 if(!defined('QUOTES')){
-    define('QUOTES',     '/quotes');
+    define('QUOTES',        '/quotes');
+}
+if(!defined('ORDERS')){
+    define('ORDERS',        '/orders');
 }
 
 
