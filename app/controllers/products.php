@@ -22,7 +22,7 @@ class Products extends Controller
         $this->checkSession();
         $this->checkLogin();
 
-        $order = $this->model('Product');
+        $products = $this->model('Product');
 
         $pagenum = 1;
 
@@ -33,9 +33,9 @@ class Products extends Controller
         $page_rows = 100;
         $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
         // Grab the container information with the limit.
-        $prodList = $order->getProducts('',$limit);
+        $prodList = $products->getProducts('',$limit);
 
-        $row = $order->countProducts();
+        $row = $products->countProducts();
 
         $this->view('products/masterlist', ['prodList'=>$prodList, 'row'=>$row]);
     }

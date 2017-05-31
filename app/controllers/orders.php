@@ -39,7 +39,32 @@ class Orders extends Controller
 
         $this->view('orders/masterlist', ['orderList'=>$orderList, 'row'=>$row]);
     }
+
+    public function create()
+    {
+        $this->checkSession();
+        $this->checkLogin();
+
+        $customer = $this->model('Customer');
+        $custList = $customer->getCustomers();
+
+        $products = $this->model('Product');
+        $shippingProducts = $products->getProducts("item_type = 'pickup' OR item_type = 'delivery'");
+        $containerProducts = $products->getProducts("item_type = 'container' AND monthly = 0");
+        $modificationProducts = $products->getProducts("monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'");
+
+
+        $this->view('orders/create', ['custList'=>$custList, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts]);
+    }
     
+    public function creation($type)
+    {
+        if($type == "sales"){
+            echo 'this is sales';
+        } elseif($type == "rental"){
+            echo 'rental';
+        }
+    }
 }
 
 ?>

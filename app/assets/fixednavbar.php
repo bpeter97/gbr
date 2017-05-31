@@ -28,15 +28,15 @@
     $cust_array = array(HTTP.HTTPURL.PUB.CUSTOMERS,
                         HTTP.HTTPURL.PUB.CUSTOMERS.'/create');
 
-    $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/quotes.php',
-                        HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php');
+    $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/masterlist',
+                        HTTP.HTTPURL.PUB.QUOTES.'/create');
 
-    $order_array = array(HTTP.HTTPURL.PUB.ORDERS.'/createorder.php',
-                        HTTP.HTTPURL.PUB.ORDERS.'/orders.php');
+    $order_array = array(HTTP.HTTPURL.PUB.ORDERS.'/create',
+                        HTTP.HTTPURL.PUB.ORDERS.'/masterlist');
 
     $cal_url = HTTP.HTTPURL.VIEW.'/calendar.php';
 
-    $prod_url = HTTP.HTTPURL.VIEW.'/products.php';
+    $prod_url = HTTP.HTTPURL.PUB.PRODUCTS.'/products';
 
     $index_active = "";
     $containers_active = "";
@@ -112,7 +112,7 @@
                         <li class="dropdown '.$orders_active.'">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Orders <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/createorder.php">Create Order</a></li>
+                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create">Create Order</a></li>
                                 <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/">View Orders</a></li>
                             </ul>
                         </li>

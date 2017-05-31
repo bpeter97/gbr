@@ -21,6 +21,11 @@
     color: white;
 }
 
+.product-tab:focus, .product-tab:hover {
+    color: darkgreen;
+    text-decoration: underline;
+}
+
 .popover {
     background: #F2DEDF;
 }
@@ -496,6 +501,10 @@ http://jsfiddle.net/jonschlinkert/4NQTp/4/
    font-weight: bold;
    background-color: darkgreen;
    border-color: darkgreen;
+}
+
+.btn-gbr:focus, .btn-gbr:hover {
+  color: white;
 }
 
 /* -------------------- Quote_Page -------------------- */
