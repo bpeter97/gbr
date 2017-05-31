@@ -10,36 +10,38 @@
  */
 class Products extends Controller
 {
-    // Index page that references the masterlist page.
-    public function index()
-    {
-        $this->masterlist();
-    }
+	// Index page that references the masterlist page.
+	public function index()
+	{
+		$this->masterlist();
+	}
 
-    // This will be the page that shows all quotes.
-    public function masterlist()
-    {
-        $this->checkSession();
-        $this->checkLogin();
+	// This will be the page that shows all quotes.
+	public function masterlist()
+	{
+		$this->checkSession();
+		if($this->checkLogin())
+		{
+			$products = $this->model('Product');
 
-        $products = $this->model('Product');
+			$pagenum = 1;
 
-        $pagenum = 1;
+			if(isset($_GET['pn'])){
+				$pagenum = $_GET['pn'];
+			} 
 
-        if(isset($_GET['pn'])){
-            $pagenum = $_GET['pn'];
-        } 
+			$page_rows = 100;
+			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+			// Grab the container information with the limit.
+			$prodList = $products->getProducts('',$limit);
 
-        $page_rows = 100;
-        $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
-        // Grab the container information with the limit.
-        $prodList = $products->getProducts('',$limit);
+			$row = $products->countProducts();
 
-        $row = $products->countProducts();
+			$this->view('products/masterlist', ['prodList'=>$prodList, 'row'=>$row]);
+		}
 
-        $this->view('products/masterlist', ['prodList'=>$prodList, 'row'=>$row]);
-    }
-    
+	}
+	
 }
 
 ?>

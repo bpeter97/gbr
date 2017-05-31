@@ -12,125 +12,134 @@
  */
 class Containers extends Controller
 {
-    // Index page that references the masterlist page.
-    public function index()
-    {
-        $this->masterlist();
-    }
+	// Index page that references the masterlist page.
+	public function index()
+	{
+		$this->masterlist();
+	}
 
-    // This will be the page that shows all of the current containers.
-    public function masterlist()
-    {
-        $this->checkSession();
-        $this->checkLogin();
+	// This will be the page that shows all of the current containers.
+	public function masterlist()
+	{
+		$this->checkSession();
+		if($this->checkLogin())
+		{
+			$container = $this->model('Container');
 
-        $container = $this->model('Container');
+			$pagenum = 1;
 
-        $pagenum = 1;
+			if(isset($_GET['pn'])){
+				$pagenum = $_GET['pn'];
+			} 
 
-        if(isset($_GET['pn'])){
-            $pagenum = $_GET['pn'];
-        } 
+			$page_rows = 100;
+			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+			// Grab the container information with the limit.
+			$conList = $container->fetchContainers('',$limit);
 
-        $page_rows = 100;
-        $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
-        // Grab the container information with the limit.
-        $conList = $container->fetchContainers('',$limit);
+			$row = $container->countContainers();
 
-        $row = $container->countContainers();
+			$this->view('containers/masterlist', ['conList'=>$conList, 'row'=>$row]);
+		}
 
-        $this->view('containers/masterlist', ['conList'=>$conList, 'row'=>$row]);
-    }
+		
+	}
 
-    // This page shows all of the rental containers in the database.
-    public function rentalcontainers()
-    {
-        $this->checkSession();
-        $this->checkLogin();
+	// This page shows all of the rental containers in the database.
+	public function rentalcontainers()
+	{
+		$this->checkSession();
+		if($this->checkLogin())
+		{
+			$container = $this->model('Container');
 
-        $container = $this->model('Container');
+			$pagenum = 1;
 
-        $pagenum = 1;
+			if(isset($_GET['pn'])){
+				$pagenum = $_GET['pn'];
+			} 
 
-        if(isset($_GET['pn'])){
-            $pagenum = $_GET['pn'];
-        } 
+			$page_rows = 100;
+			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+			// Grab the container information with the limit.
+			$conList = $container->fetchContainers('rental_resale = "Rental"',$limit);
 
-        $page_rows = 100;
-        $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
-        // Grab the container information with the limit.
-        $conList = $container->fetchContainers('rental_resale = "Rental"',$limit);
+			$row = $container->countContainers('rental_resale = "Rental"');
 
-        $row = $container->countContainers('rental_resale = "Rental"');
+			$this->view('containers/rentalcontainers', ['conList'=>$conList, 'row'=>$row]);
+		}
+		
+	}
 
-        $this->view('containers/rentalcontainers', ['conList'=>$conList, 'row'=>$row]);
-    }
+	// This page shows all of the currently rented containers.
+	public function currentrentals()
+	{
+		$this->checkSession();
+		if($this->checkLogin())
+		{
+			$container = $this->model('Container');
 
-    // This page shows all of the currently rented containers.
-    public function currentrentals()
-    {
-        $this->checkSession();
-        $this->checkLogin();
+			$pagenum = 1;
 
-        $container = $this->model('Container');
+			if(isset($_GET['pn'])){
+				$pagenum = $_GET['pn'];
+			} 
 
-        $pagenum = 1;
+			$page_rows = 100;
+			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+			// Grab the container information with the limit.
+			$conList = $container->fetchContainers('is_rented = "TRUE"',$limit);
 
-        if(isset($_GET['pn'])){
-            $pagenum = $_GET['pn'];
-        } 
+			$row = $container->countContainers('is_rented = "TRUE"');
 
-        $page_rows = 100;
-        $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
-        // Grab the container information with the limit.
-        $conList = $container->fetchContainers('is_rented = "TRUE"',$limit);
+			$this->view('containers/currentrentals', ['conList'=>$conList, 'row'=>$row]);
+		}
 
-        $row = $container->countContainers('is_rented = "TRUE"');
+	}
 
-        $this->view('containers/currentrentals', ['conList'=>$conList, 'row'=>$row]);
-    }
+	public function resalecontainers()
+	{
+		$this->checkSession();
+		if($this->checkLogin())
+		{
+			$container = $this->model('Container');
 
-    public function resalecontainers()
-    {
-        $this->checkSession();
-        $this->checkLogin();
+			$pagenum = 1;
 
-        $container = $this->model('Container');
+			if(isset($_GET['pn'])){
+				$pagenum = $_GET['pn'];
+			} 
 
-        $pagenum = 1;
+			$page_rows = 100;
+			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+			// Grab the container information with the limit.
+			$conList = $container->fetchContainers('rental_resale = "Resale"',$limit);
 
-        if(isset($_GET['pn'])){
-            $pagenum = $_GET['pn'];
-        } 
+			$row = $container->countContainers('rental_resale = "Resale"');
 
-        $page_rows = 100;
-        $limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
-        // Grab the container information with the limit.
-        $conList = $container->fetchContainers('rental_resale = "Resale"',$limit);
+			$this->view('containers/resalecontainers', ['conList'=>$conList, 'row'=>$row]);
+		}
 
-        $row = $container->countContainers('rental_resale = "Resale"');
+	}
 
-        $this->view('containers/resalecontainers', ['conList'=>$conList, 'row'=>$row]);
-    }
+	public function create()
+	{
+		if(isset($_GET['action']))
+		{
+			if($_GET['action'] == 'create')
+			{
+				$container = $this->model('Container');
+				$res = $container->create();
+				if($res)
+				{
+					$this->masterlist();
+				}
+			}
+		}
+		$this->view('containers/create', []);
+	}
 
-    public function create()
-    {
-        if(isset($_GET['action']))
-        {
-            if($_GET['action'] == 'create')
-            {
-                $container = $this->model('Container');
-                $res = $container->create();
-                if($res)
-                {
-                    $this->masterlist();
-                }
-            }
-        }
-        $this->view('containers/create', []);
-    }
-
-    
+	
 }
 
 ?>

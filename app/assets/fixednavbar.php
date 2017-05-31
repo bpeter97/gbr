@@ -112,7 +112,8 @@
                         <li class="dropdown '.$orders_active.'">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Orders <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create">Create Order</a></li>
+                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create/sales">Create Sale Order</a></li>
+                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create/rental">Create Rental Order</a></li>
                                 <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/">View Orders</a></li>
                             </ul>
                         </li>

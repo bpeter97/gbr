@@ -3,45 +3,43 @@
 class Home extends Controller
 {
 
-    public function index()
-    {
-        $this->checkSession();
+	public function index()
+	{
+		$this->checkSession();
 
-        if(!isset($_SESSION['loggedin'])){
-            if(isset($_POST['username'])){
-                $user = $this->model('User');
-                $user->username = $_POST['username'];
-                $user->password = $_POST['password'];
-                $loggedin = $user->login();
-            }
-        }
-        
-        if(isset($_SESSION['loggedin'])){
-            // Create a calendar and grab events.
-            $calendar = $this->model('Calendar');
-            $events = $calendar->getEvents();
+		if(!isset($_SESSION['loggedin'])){
+			if(isset($_POST['username'])){
+				$user = $this->model('User');
+				$user->username = $_POST['username'];
+				$user->password = $_POST['password'];
+				$loggedin = $user->login();
+			}
+		}
+		
+		if(isset($_SESSION['loggedin'])){
+			
+			// Create a calendar and grab events.
+			$calendar = $this->model('Calendar');
+			$events = $calendar->getEvents();
 
-            // Create the charts for the bottom of the page.
-            $chart = $this->model('Chart');
-            $this->view('home/dashboard', ['chart'=>$chart, 'events'=>$events]);
-        }
+			// Create the charts for the bottom of the page.
+			$chart = $this->model('Chart');
 
-        $this->checkLogin();
-    }
+			// Go to the dashboard.
+			$this->view('home/dashboard', ['chart'=>$chart, 'events'=>$events]);
+		}
 
-    public function logout()
-    {
-        $this->checkSession();
-        
-        session_destroy();
+		$this->checkLogin();
+	}
 
-        $this->view('home/login', []);
-    }
+	public function logout()
+	{
+		$this->checkSession();
+		
+		session_destroy();
 
-    public function getChartInfo()
-    {
-        
-    }
+		$this->view('home/login', []);
+	}
 
 }
 

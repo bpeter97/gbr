@@ -330,7 +330,7 @@
                     <!-- End of 1st Row. -->
 
                     
-
+                    <div id="insertAlert"></div>
                     
 
                     <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
