@@ -4,6 +4,61 @@
     <head>
         <?php require_once(BASEURL.APP.ASSETS.'/header.php'); ?>
         <script type="text/javascript" src="<?php echo HTTP.HTTPURL.PUB.JS.'/shoppingCart.js'; ?>"></script>
+
+        <?php 
+        echo '
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var date_input=$(\'input[name="frmorderdate"]\');
+                var container=$(\'.bootstrap-iso form\').length>0 ? $(\'.bootstrap-iso form\').parent() : "body";
+                var options={
+                    format: \'yyyy-mm-dd\',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                    orientation: "top",
+                };
+                date_input.datepicker(options);
+            })
+        </script>
+        ';
+         ?>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#frmordertime').datetimepicker({
+                    format: 'HH:mm:ss'
+                });
+            });
+        </script>
+
+<!--     <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#frmcustomername').change(function(){
+                var value = $(this).val();
+                var jqueryarray = <php echo json_encode($alertvalues); ?>;
+                if ($.inArray(value, jqueryarray)) {
+                    
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: '../controller/flagcust.php',
+                        data: {
+                            cust:value,
+                        },
+                        success: function (response){
+                            $("#alertModal").html(response);
+                            $("#alertModal").modal("show");
+                        }
+                    });
+                    
+                }
+            });
+        });
+
+    </script> -->
+
     </head>
 
     <body>
@@ -25,7 +80,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <!-- Need to fill in action when link is created. -->
-                                    <form action="" method="post">
+                                    <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -153,6 +208,16 @@
                                             </div>
                                         </div><!-- End of 9th Row -->
 
+                                        <div class="row"><!-- 9th Row -->
+                                            <div class="col-lg-12">
+                                                <label class="col-md-4" for="frmtaxrate" control-label>Tax Rate</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text" name="frmtaxrate" onchange="cart.getTaxRate(this.value)">
+                                                <p class="help-block">Fill out the tax rate of the order.</p>
+                                                </div>
+                                            </div>
+                                        </div><!-- End of 9th Row -->
+
                                         <div class="row"><!-- 10th Row -->
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmcontact" control-label>On-Site Contact</label>
@@ -186,153 +251,147 @@
                                                     </div>
                                                     <div class="panel-body">
                                                         <div id='cart'></div>
+                                                        <div class="text-center">
+                                                            <input type="button" onclick='cart.postData();' class="btn btn-gbr" value="Submit Order"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div><!-- End of Delivery and Pickup products. -->
-                                        
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading text-center">
-                                                        <b>Products</b>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <ul class="nav nav-tabs">
-                                                            <li class="active"><a data-toggle="tab" class="gbr-header product-tab" href="#shippingProducts"><strong>Deliver/Pickup</strong></a></li>
-                                                            <li><a data-toggle="tab" class="gbr-header product-tab" href="#containerProducts"><strong>Containers</strong></a></li>
-                                                            <li><a data-toggle="tab" class="gbr-header product-tab" href="#modificationProducts"><strong>Modifications</strong></a></li>
-                                                        </ul>
+                                        <div id="insertCartData"></div>
+                                    </form>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading text-center">
+                                                    <b>Products</b>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="active"><a data-toggle="tab" class="gbr-header product-tab" href="#shippingProducts"><strong>Deliver/Pickup</strong></a></li>
+                                                        <li><a data-toggle="tab" class="gbr-header product-tab" href="#containerProducts"><strong>Containers</strong></a></li>
+                                                        <li><a data-toggle="tab" class="gbr-header product-tab" href="#modificationProducts"><strong>Modifications</strong></a></li>
+                                                    </ul>
 
-                                                        <div class="tab-content">
-                                                            <div id="shippingProducts" class="tab-pane fade in active">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Item Name</th>
-                                                                            <th>Cost</th>
-                                                                            <th>Quantity</th>
-                                                                            <th>Add To Order</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                    <div class="tab-content">
+                                                        <div id="shippingProducts" class="tab-pane fade in active">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Item Name</th>
+                                                                        <th>Cost</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Add To Order</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+
+                                                                        foreach ($data['shippingProducts'] as $shippingProducts) {
+
+                                                                        ?>
+                                                                            <tr>
+                                                                                <!-- Short Name -->
+                                                                                <td width="250"><?php echo $shippingProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250">
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
+                                                                                        <input type="text" id="shippingCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $shippingProducts->mod_cost; ?>"/>
+                                                                                    </div>
+                                                                                </td> <!-- Cost -->
+                                                                                <?php $product = 'cart.addItem(new Product(1, "'.$shippingProducts->mod_name.'", "prod", 110, "rental"), 2);'; ?>
+                                                                                <td width="250"><input type="text" id="shippingQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $shippingProducts->id ?>, "<?= $shippingProducts->mod_name ?>", "<?= $shippingProducts->mod_short_name ?>", document.getElementById("shippingCost<?= $counter ?>").value, "<?= $shippingProducts->rental_type ?>"), document.getElementById("shippingQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                            </tr>
                                                                         <?php
+                                                                        $counter++;
+                                                                        }
+                                                                        $counter=0;
+                                                                    ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div id="containerProducts" class="tab-pane fade in">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Item Name</th>
+                                                                        <th>Cost</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Add To Order</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+                                                                        foreach ($data['containerProducts'] as $containerProducts) {
 
-                                                                            foreach ($data['shippingProducts'] as $shippingProducts) {
-
-                                                                            ?>
-                                                                                <tr>
-                                                                                    <!-- Short Name -->
-                                                                                    <td width="250"><?php echo $shippingProducts->mod_name; ?></td> <!-- Long Name -->
-                                                                                    <td width="250">
-                                                                                        <div class="input-group">
-                                                                                            <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                            <input type="text" id="shippingCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $shippingProducts->mod_cost; ?>"/>
-                                                                                        </div>
-                                                                                    </td> <!-- Cost -->
-                                                                                    <?php $product = 'cart.addItem(new Product(1, "'.$shippingProducts->mod_name.'", "prod", 110, "rental"), 2);'; ?>
-                                                                                    <td width="250"><input type="text" id="shippingQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                    <td width="250"><input type="button" onclick='cart.addItem(new Product(1, "<?= $shippingProducts->mod_name ?>", "prod", document.getElementById("shippingCost<?= $counter ?>").value, "rental"), document.getElementById("shippingQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
-                                                                                </tr>
-                                                                            <?php
-                                                                            $counter++;
-                                                                            }
-                                                                            $counter=0;
                                                                         ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div id="containerProducts" class="tab-pane fade in">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Item Name</th>
-                                                                            <th>Cost</th>
-                                                                            <th>Quantity</th>
-                                                                            <th>Add To Order</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                                            <tr>
+                                                                                <!-- Short Name -->
+                                                                                <td width="250"><?php echo $containerProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250">
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
+                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $containerProducts->mod_cost; ?>"/>
+                                                                                    </div>
+                                                                                </td> <!-- Cost -->
+                                                                                <td width="250"><input type="text" id="containerQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $containerProducts->id ?>, "<?= $containerProducts->mod_name ?>", "<?= $containerProducts->mod_short_name ?>", document.getElementById("containerCost<?= $counter ?>").value, "<?= $containerProducts->rental_type ?>"), document.getElementById("containerQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                            </tr>
                                                                         <?php
-                                                                            foreach ($data['containerProducts'] as $containerProducts) {
-
-                                                                            ?>
-                                                                                <tr>
-                                                                                    <!-- Short Name -->
-                                                                                    <td width="250"><?php echo $containerProducts->mod_name; ?></td> <!-- Long Name -->
-                                                                                    <td width="250">
-                                                                                        <div class="input-group">
-                                                                                            <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                            <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $containerProducts->mod_cost; ?>"/>
-                                                                                        </div>
-                                                                                    </td> <!-- Cost -->
-                                                                                    <td width="250"><input type="text" id="containerQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                    <td width="250"><input type="button" onclick='cart.addItem(new Product(1, "<?= $containerProducts->mod_name ?>", "prod", document.getElementById("containerCost<?= $counter ?>").value, "rental"), document.getElementById("containerQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
-                                                                                </tr>
-                                                                            <?php
-                                                                            $counter++;
-                                                                            }
-                                                                            $counter=0;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div id="modificationProducts" class="tab-pane fade in">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Item Name</th>
-                                                                            <th>Cost</th>
-                                                                            <th>Quantity</th>
-                                                                            <th>Add To Order</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <?php foreach ($data['modificationProducts'] as $modificationProducts) { ?>
-                                                                                <tr>
-                                                                                    <!-- Short Name -->
-                                                                                    <td width="250"><?php echo $modificationProducts->mod_name; ?></td> <!-- Long Name -->
-                                                                                    <td width="250">
-                                                                                        <div class="input-group">
-                                                                                            <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                            <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $modificationProducts->mod_cost; ?>"/>
-                                                                                        </div>
-                                                                                    </td> <!-- Cost -->
-                                                                                    <td width="250"><input id="modQty<?= $counter ?>" type="text" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                    <td width="250"><input type="button" onclick='cart.addItem(new Product(1, "<?= $modificationProducts->mod_name ?>", "prod", document.getElementById("modCost<?= $counter ?>").value, "rental"), document.getElementById("modQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
-                                                                                </tr>
-                                                                            <?php
-                                                                            $counter++;
-                                                                            }
-                                                                            $counter=0;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                                        $counter++;
+                                                                        }
+                                                                        $counter=0;
+                                                                    ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div id="modificationProducts" class="tab-pane fade in">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Item Name</th>
+                                                                        <th>Cost</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Add To Order</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php foreach ($data['modificationProducts'] as $modificationProducts) { ?>
+                                                                            <tr>
+                                                                                <!-- Short Name -->
+                                                                                <td width="250"><?php echo $modificationProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250">
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
+                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $modificationProducts->mod_cost; ?>"/>
+                                                                                    </div>
+                                                                                </td> <!-- Cost -->
+                                                                                <td width="250"><input id="modQty<?= $counter ?>" type="text" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $modificationProducts->id ?>, "<?= $modificationProducts->mod_name ?>", "<?= $modificationProducts->mod_short_name ?>", document.getElementById("modCost<?= $counter ?>").value, "<?= $modificationProducts->rental_type ?>"), document.getElementById("modQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                            </tr>
+                                                                        <?php
+                                                                        $counter++;
+                                                                        }
+                                                                        $counter=0;
+                                                                    ?>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                        <!-- ################################## End of Shopping Cart ################################## -->
-                        <!-- ################################## Beginning of Product List ################################## -->
-                        
-                                        
-
-                        <!-- ################################## End of Product List ################################## -->
-
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- End of 1st Row. -->
 
-                    
+                    <!-- This is the alert for when an item is added or removed from the cart. -->
                     <div id="insertAlert"></div>
                     
-
                     <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
 
                 </div>
