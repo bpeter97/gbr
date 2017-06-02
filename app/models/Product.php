@@ -13,6 +13,7 @@ class Product extends Model
     public $monthly;
     public $item_type;
     public $rental_type;
+    public $order_id;
 
     public $product_qty;
     public $product_cost;
@@ -92,12 +93,6 @@ class Product extends Model
         $this->db->disconnect();
         $this->resetResDb();
         return $list;
-    }
-
-    public function getOrderedProduct()
-    {
-        $this->db->disconnect();
-        $this->resetResDb();
     }
 
 }

@@ -12,7 +12,7 @@ class Event extends Model
     public $start;
     public $end;
     public $order_id;
-    public $order_info;
+    public $order;
 
     function __construct($id = '')
     {
@@ -47,13 +47,41 @@ class Event extends Model
     }
 
     public function getOrderInfo()
-    {
+    {   
         $this->order = new Order($this->order_id);
     }
 
-    public function addEvent()
+    public function addEvent($id = null)
     {
+        $this->db = new Database();
 
+        if($id != null)
+        {
+            $this->order_id = $id;
+        }
+        $this->getOrderInfo();
+
+        $this->title = $this->order->order_customer;
+        $this->color = '#FF1493';
+        $this->start = $this->order->order_date.' '.$this->order->order_time;
+        $latertime = strtotime($this->start) + 60*60;
+        $this->end = date('Y/m/d H:i:s', $latertime);
+
+        $this->db->insert('events',array(
+            'title'=>$this->title,
+            'color'=>$this->color,
+            'start'=>$this->start,
+            'end'=>$this->end,
+            'order_id'=>$this->order_id
+            ));
+        $this->res = $this->db->getResult();
+        if(!$this->res)
+        {
+            echo 'There was an error inserting the event into the calendar!';
+        }
+
+        $this->db->disconnect();
+        $this->resetResDb();
     }
 
     public function editEvent()

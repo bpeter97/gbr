@@ -80,7 +80,8 @@
                                 </div>
                                 <div class="panel-body">
                                     <!-- Need to fill in action when link is created. -->
-                                    <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post">
+                                    <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
+                                    <form action="<?php echo HTTP.HTTPURL.PUB.ORDERS.'/create/sales/create'; ?>" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">

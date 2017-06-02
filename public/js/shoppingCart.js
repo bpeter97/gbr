@@ -18,10 +18,12 @@ var Cart = function ()
 			alert("Please enter a tax rate.");
 		} else {
 			// Add the product to the items array.
+			product.qty = quantity;
+			
 			this.items.push([product, quantity, this.itemCounter]);
 
 			// Add product cost to the total.
-			this.total_before_tax += (product.cost * quantity);
+			this.total_before_tax = round(this.total_before_tax + (product.cost * quantity), 2);
 
 			// Calculate tax.
 			this.calculateTax();
@@ -41,14 +43,14 @@ var Cart = function ()
 	this.calculateTax = function ()
 	{
 		this.tax = 0.00;
-		this.tax = this.total_before_tax * this.tax_rate;
+		this.tax = round((this.total_before_tax * this.tax_rate), 2);
 		this.addTax();
 	}
 
 	this.addTax = function ()
 	{	
 		this.total = 0.00;
-		this.total += (this.tax + this.total_before_tax);
+		this.total += round((this.tax + this.total_before_tax), 2);
 	}
 
 	this.removeItem = function (itemNumber)
@@ -62,7 +64,7 @@ var Cart = function ()
 				// Remove item cost from total.
 				for(var j = 0; j < this.items[i][1]; j++)
 				{
-					this.total_before_tax -= this.items[i][0].cost;
+					this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
 				}
 				this.calculateTax();
 				this.alert(this.items[i][0], 'removed');
@@ -85,9 +87,9 @@ var Cart = function ()
 		for(var i = 0; i < this.items.length; i++)
 		{
 			cartTable+= '<tr><td width="250" id="prod">'+cart.items[i][0].mod_name+'</td>';
-			cartTable+= '<td width="250" id="prodCost">$'+cart.items[i][0].cost+'</td>';
+			cartTable+= '<td width="250" id="prodCost">$'+round(cart.items[i][0].cost, 2)+'</td>';
 			cartTable+= '<td width="250" id="prodCost">'+cart.items[i][1]+'</td>';
-			cartTable+= '<td width="250" id="itemTotal">$'+cart.items[i][0].cost*cart.items[i][1]+'</td>';
+			cartTable+= '<td width="250" id="itemTotal">$'+round(cart.items[i][0].cost*cart.items[i][1], 2)+'</td>';
 			cartTable+= '<td width="50"><button type="button" class="btn btn-gbr" onclick="cart.removeItem('+cart.items[i][2]+');"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 		}
 		cartTable+= '<tr><td width="250"></td><td width="250"></td><td width="250">Total cost before tax:</td><td width="250"><strong>$'+cart.total_before_tax+'</strong></td><td></td>';
@@ -121,17 +123,22 @@ var Cart = function ()
 
 	this.postData = function ()
 	{
-		var cartData = '<select name="cartData[]" style="display:none;" multiple="multiple" tabindex="1">';
+		// var cartData = '<select name="cartData[]" style="display:none;" multiple="multiple" tabindex="1">';
 		
-		for(var i = 0; i < this.items.length; i++)
-		{
-			cartData += '<option value="' + this.items[i][0].id + '" selected>' + this.items[i][0].mod_name + '</option>';
-		}
+		
 
-		cartData += '</select>';
-		cartData += '<input type="text" type="hidden" name="cartTotalCost" value="'+ this.total +'">';
+		// cartData += '</select>';
+		var cartData = '<input type="text" type="hidden" name="cartTotalCost" value="'+ this.total +'">';
 		cartData += '<input type="text" type="hidden" name="cartTax" value="'+ this.tax +'">';
 		cartData += '<input type="text" type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
+		cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';
+		for(var i = 0; i < this.items.length; i++)
+		{
+			// cartData += '<option data-value="{&quotid&quot:' + this.items[i][0].id + ',&quotmod_name&quot:&quot'+ this.items[i][0].mod_name +'&quot,&quotmsn&quot:&quot'+ this.items[i][0].msn +'&quot,&quotcost&quot:'+ this.items[i][0].cost +',&quotrental_type&quot:&quot'+ this.items[i][0].status +'&quot}" selected>' + this.items[i][0].mod_name + '</option>';
+			// cartData += '<option data-value="' + this.items[i][0] + '</option>';
+			var prod = JSON.stringify(this.items[i][0]);
+			cartData += "<input type='hidden' name='product"+i+"' value='" + prod + "'>";
+		}
 		$('#insertCartData').html(cartData);
 		console.log('Cart Data inserted.');
 
@@ -161,6 +168,11 @@ var Product = function (id, mod_name, msn, cost, status)
 	this.cost = cost;
 	// Rental or Sales?
 	this.status = status;
+	this.qty = 0;
+}
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 cart = new Cart();

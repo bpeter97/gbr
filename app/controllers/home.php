@@ -41,6 +41,15 @@ class Home extends Controller
 		$this->view('home/login', []);
 	}
 
+	public function getOrderInfo()
+	{
+		if(isset($_POST['order_id']))
+		{
+			$order = new Order($_POST['order_id']);
+		}
+		return ($order->products);
+	}
+
 }
 
 

@@ -385,6 +385,7 @@ $events = $data['events'];
 
     $(document).ready(function() {
       
+
       $('#calendar').fullCalendar({
         header: {
           left: 'prev,next today',
@@ -406,20 +407,26 @@ $events = $data['events'];
         },
         eventRender: function(event, element) {
           element.bind('dblclick', function() {
-            if(event.order_id != ""){
-              postData(event.order_id);
-            }
+
             $('#ModalEdit #id').val(event.id);
             $('#ModalEdit #title').val(event.title);
             $('#ModalEdit #color').val(event.color);
+            console.log(event.id);
+            console.log(event.prodCount);
+
+            var prodTable = '<table class="table table-striped table-hover">';
+            prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
             <?php $i=1; ?>
-            $('#ModalEdit #prodInsert').html('<table class="table table-striped table-hover"><tr><th>Container</th><th>Quantity</th></tr><?php foreach($events[0]->order->products as $order): ?><tr><td id="prod<?php echo $i; ?>"></td><td id="prodQty<?php echo $i; ?>"></td><?php $i++ ?><?php endforeach; ?></tr></table>');
-            <?php $i=1; ?>
-            <?php foreach($events[0]->order->products as $order): ?>
-            document.getElementById('prod<?php echo $i; ?>').innerHTML=event.product<?php echo $i; ?>;
-            document.getElementById('prodQty<?php echo $i; ?>').innerHTML=event.productQty<?php echo $i; ?>;
-            <?php $i++ ?>
-            <?php endforeach; ?>
+            var l = 1;
+            for(var i = 0; i < event.prodCount; i++)
+            {
+                var x = l.toString();
+                prodTable += '<tr><td id="prod'+ x +'">'+ event.prod+x +'</td><td id="prodQty<?php echo "$i"; ?>"></td></tr>';
+                l++;
+                <?php $i++; ?>
+            }
+            prodTable += '</table>';
+            $('#ModalEdit #prodInsert').html(prodTable);
             $('#ModalEdit').modal('show');
           });
         },
@@ -433,6 +440,7 @@ $events = $data['events'];
           edit(event);
 
         },
+
         events: [
         <?php foreach($events as $event): 
         
@@ -458,10 +466,11 @@ $events = $data['events'];
             order_id: '<?php echo $event->order_id; ?>',
             <?php $prodCount = 1; ?>
             <?php foreach($event->order->products as $prod):?>
-            product<?php echo $prodCount; ?>: "<?php echo $prod->mod_name; ?>",
+            prod<?php echo $prodCount; ?>: "<?php echo $prod->mod_name; ?>",
             productQty<?php echo $prodCount; ?>: "<?php echo $prod->product_qty; ?>",
-            <?php $prodCount++ ?>
+            <?php $prodCount++; ?>
             <?php endforeach; ?>
+            prodCount: <?= $prodCount ?>,
             order_customer: '<?php echo $event->order->order_customer; ?>'
           },
         <?php endforeach; ?>
@@ -498,7 +507,7 @@ $events = $data['events'];
       }
 
       function postData(order_id){
-          $.post("<?php echo HTTP.HTTPURL.MODEL.'/getOrderInfo.php'; ?>", { order_id: order_id }, function(response) {
+          $.post("<?php echo HTTP.HTTPURL.PUB.'/home/getOrderInfo'; ?>", { order_id: order_id }, function(response) {
             // Inserts your chosen response into the page in 'response-content' DIV
             $('#response-content').html(response); // Can also use .text(), .append(), etc
           });
