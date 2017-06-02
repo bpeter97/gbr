@@ -411,20 +411,20 @@ $events = $data['events'];
             $('#ModalEdit #id').val(event.id);
             $('#ModalEdit #title').val(event.title);
             $('#ModalEdit #color').val(event.color);
-            console.log(event.id);
-            console.log(event.prodCount);
 
             var prodTable = '<table class="table table-striped table-hover">';
             prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
             <?php $i=1; ?>
             var l = 1;
-            for(var i = 0; i < event.prodCount; i++)
+            <?php foreach($events as $event): ?>
+            prodID = <?php echo $event->order->id; ?>;
+            if(prodID == event.order_id)
             {
-                var x = l.toString();
-                prodTable += '<tr><td id="prod'+ x +'">'+ event.prod+x +'</td><td id="prodQty<?php echo "$i"; ?>"></td></tr>';
-                l++;
-                <?php $i++; ?>
+                <?php foreach($event->order->products as $prod): ?>
+                prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
+                <?php endforeach; ?>
             }
+            <?php endforeach; ?>
             prodTable += '</table>';
             $('#ModalEdit #prodInsert').html(prodTable);
             $('#ModalEdit').modal('show');

@@ -230,7 +230,6 @@ class Order extends Model
     public function insertOrderedProducts()
     {
         $this->db = new Database();
-
         $i = 0;
         while ($i < $_POST['itemCount'])
         {
@@ -240,20 +239,15 @@ class Order extends Model
             $new_product->product_cost = $post_product['cost'];
             $i++;
 
-            $this->db->insert('product_orders',array(
-                'order_id'=>$this->id,
-                'product_type'=>$new_product->item_type,
-                'product_msn'=>$new_product->mod_short_name,
-                'product_cost'=>$new_product->product_cost,
-                'product_qty'=>$new_product->product_qty,
-                'product_name'=>$new_product->mod_name,
-                'product_id'=>$new_product->id));
+            $this->db->insert('product_orders',array('order_id'=>$this->id,
+                                                                                'product_type'=>$new_product->item_type,
+                                                                                'product_msn'=>$new_product->mod_short_name,
+                                                                                'product_cost'=>$new_product->product_cost,
+                                                                                'product_qty'=>$new_product->product_qty,
+                                                                                'product_name'=>$new_product->mod_name,
+                                                                                'product_id'=>$new_product->id));
 
             $this->res = $this->db->getResult();
-            if(!$this->res)
-            {
-                echo 'There was an error inserting products into product_orders table.';
-            }
         }
 
         $this->db->disconnect();
