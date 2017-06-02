@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100119
 File Encoding         : 65001
 
-Date: 2017-05-31 00:11:29
+Date: 2017-06-02 00:19:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1572,12 +1572,13 @@ CREATE TABLE `events` (
   `end` datetime DEFAULT NULL,
   `order_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of events
 -- ----------------------------
-INSERT INTO `events` VALUES ('39', 'Bennie Hodges', '#FF1493', '2017-05-23 10:06:11', '2017-05-23 11:06:11', '16');
+INSERT INTO `events` VALUES ('40', 'Christy Tucker', '#FF1493', '2017-06-21 22:52:29', '2017-06-21 23:52:29', '18');
+INSERT INTO `events` VALUES ('41', 'Debbie Hughes', '#FF1493', '2017-06-21 23:00:41', '2017-06-22 00:00:41', '19');
 
 -- ----------------------------
 -- Table structure for modifications
@@ -1660,6 +1661,7 @@ CREATE TABLE `orders` (
   `total_cost` decimal(10,2) DEFAULT NULL,
   `sales_tax` decimal(10,2) DEFAULT NULL,
   `monthly_total` decimal(10,2) DEFAULT NULL,
+  `tax_rate` decimal(10,2) DEFAULT NULL,
   `stage` int(11) NOT NULL DEFAULT '1',
   `driver` varchar(255) NOT NULL,
   `driver_notes` text NOT NULL,
@@ -1667,12 +1669,14 @@ CREATE TABLE `orders` (
   `date_delivered` varchar(255) NOT NULL,
   `container` int(255) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('16', '0', 'Bennie Hodges', '2017-05-23', '10:06:11', 'Sales', '', 'Job Name', '1733 S. Casablanca St', 'Visalia', '93292', 'Brian', 'brian', '555-555-5555', '2700.00', '4232.75', '222.75', '0.00', '1', '', '', '', '', '0');
+INSERT INTO `orders` VALUES ('16', '0', 'Bennie Hodges', '2017-05-23', '10:06:11', 'Sales', '', 'Job Name', '1733 S. Casablanca St', 'Visalia', '93292', 'Brian', 'brian', '555-555-5555', '2700.00', '4232.75', '222.75', '0.00', null, '1', '', '', '', '', '0');
+INSERT INTO `orders` VALUES ('18', '0', 'Christy Tucker', '2017-06-21', '22:52:29', 'Sales', '', 'Job Name', '1733 S. Casablanca St', 'Visalia', '93292', 'Brian', 'brian', '555-555-5555', '2810.00', '3034.80', '224.80', null, '0.08', '1', '', '', '', '', '0');
+INSERT INTO `orders` VALUES ('19', '0', 'Debbie Hughes', '2017-06-21', '23:00:41', 'Sales', '', 'Job Name', '1733 S. Casablanca St', 'Visalia', '93292', 'Brian', 'brian', '555-555-5555', '3140.00', '3391.20', '251.20', null, '0.08', '1', '', '', '', '', '0');
 
 -- ----------------------------
 -- Table structure for product_orders
@@ -1689,7 +1693,7 @@ CREATE TABLE `product_orders` (
   `product_type` varchar(255) NOT NULL,
   `product_id` int(255) DEFAULT NULL,
   PRIMARY KEY (`product_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=342 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=350 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of product_orders
@@ -1766,6 +1770,14 @@ INSERT INTO `product_orders` VALUES ('338', null, '15', '40\' Paint Ext+Int', '1
 INSERT INTO `product_orders` VALUES ('339', null, '16', '40\' Delivery', '1', '110.00', '40DEL', 'delivery', '21');
 INSERT INTO `product_orders` VALUES ('340', null, '16', '40\' Sales Container w/ Lock Box', '1', '2700.00', '40SALECON', 'container', '24');
 INSERT INTO `product_orders` VALUES ('341', null, '16', '40\' Paint Ext+Int', '1', '1200.00', '40PEXTINT', 'modification', '5');
+INSERT INTO `product_orders` VALUES ('342', null, '17', '40 Delivery', '1', '110.00', '40DEL', 'delivery', '21');
+INSERT INTO `product_orders` VALUES ('343', null, '17', '40 Sales Container w/ Lock Box', '1', '2700.00', '40SALECON', 'container', '24');
+INSERT INTO `product_orders` VALUES ('344', null, '18', '40 Delivery', '1', '110.00', '40DEL', 'delivery', '21');
+INSERT INTO `product_orders` VALUES ('345', null, '18', '40 Sales Container w/ Lock Box', '1', '2700.00', '40SALECON', 'container', '24');
+INSERT INTO `product_orders` VALUES ('346', null, '19', '10 / 20 / 24 Delivery', '1', '90.00', '20DEL', 'delivery', '25');
+INSERT INTO `product_orders` VALUES ('347', null, '19', '20 Sales Container w/ Lock Box', '1', '2100.00', '20SALECON', 'container', '23');
+INSERT INTO `product_orders` VALUES ('348', null, '19', '20 Paint Ext+Int', '1', '800.00', '20PEXTINT', 'modification', '3');
+INSERT INTO `product_orders` VALUES ('349', null, '19', 'Roof Vent - Installed', '1', '150.00', 'RVENTINST', 'modification', '6');
 
 -- ----------------------------
 -- Table structure for purchases
