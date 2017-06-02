@@ -4,8 +4,7 @@
     ini_set('allow_url_fopen', 'on');
 
     // Create URL to CFG/SETTINGS.PHP file.
-    $cfgurl = $_SERVER['DOCUMENT_ROOT'];
-    $cfgurl .= "/app/core/settings.php";
+    $cfgurl = dirname($_SERVER["DOCUMENT_ROOT"]).'/blpdev.com/app/core/Settings.php';
 
     //Variable Constants
     include($cfgurl);
