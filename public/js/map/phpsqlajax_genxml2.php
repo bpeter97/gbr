@@ -38,7 +38,7 @@
     // Iterate through the rows, printing XML nodes for each
     foreach ($coninfo as $con){
 
-      // Google maps is being a doucher.
+      // Google maps is not working properly..
       // $con['latitude'] = getLat($con['container_address']);
       // $con['longitude'] = getLon($con['container_address']);
       

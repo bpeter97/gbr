@@ -32,6 +32,14 @@ class Home extends Controller
 		$this->checkLogin();
 	}
 
+	public function addCustomEvent()
+	{
+		$event = $this->model('Event');
+		$event->addCustomEvent();
+
+		$this->index();
+	}
+
 	public function logout()
 	{
 		$this->checkSession();

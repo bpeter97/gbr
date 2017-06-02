@@ -158,6 +158,7 @@ var Cart = function ()
 			return true;
 		}
 	}
+
 }
 
 var Product = function (id, mod_name, msn, cost, status)
@@ -171,8 +172,9 @@ var Product = function (id, mod_name, msn, cost, status)
 	this.qty = 0;
 }
 
-function round(value, decimals) {
-  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+function round(value, decimals) 
+{
+	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 cart = new Cart();

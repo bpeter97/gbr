@@ -261,7 +261,7 @@ $events = $data['events'];
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="<?php echo HTTP.HTTPURL.CONTROLLERS.'/addEvent.php'; ?>">
+                <form class="form-horizontal" method="POST" action="<?php echo HTTP.HTTPURL.PUB.'/home/addCustomEvent'; ?>">
                 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -287,6 +287,7 @@ $events = $data['events'];
                                     <option style="color:#FF8C00;" value="#FF8C00">&#9724; Orange</option>
                                     <option style="color:#FF0000;" value="#FF0000">&#9724; Red</option>
                                     <option style="color:#000;" value="#000">&#9724; Black</option>
+                                    <option style="color:#FF1493;" value="#FF1493">&#9724; Pink (Delivery)</option>
                                 </select>
                             </div>
                         </div>
