@@ -412,22 +412,11 @@ $events = $data['events'];
             $('#ModalEdit #id').val(event.id);
             $('#ModalEdit #title').val(event.title);
             $('#ModalEdit #color').val(event.color);
-
-            var prodTable = '<table class="table table-striped table-hover">';
-            prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
-            <?php $i=1; ?>
-            var l = 1;
-            <?php foreach($events as $event): ?>
-            prodID = <?php echo $event->order->id; ?>;
-            if(prodID == event.order_id)
+            if(event.custom == false)
             {
-                <?php foreach($event->order->products as $prod): ?>
-                prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
-                <?php endforeach; ?>
+                var prodTable = createProdTable(event);
+                $('#ModalEdit #prodInsert').html(prodTable);
             }
-            <?php endforeach; ?>
-            prodTable += '</table>';
-            $('#ModalEdit #prodInsert').html(prodTable);
             $('#ModalEdit').modal('show');
           });
         },
@@ -463,16 +452,25 @@ $events = $data['events'];
             title: '<?php echo $event->title; ?>',
             start: '<?php echo $start; ?>',
             end: '<?php echo $end; ?>',
-            color: '<?php echo $event->color; ?>',
+            <?php echo 'color: "'.$event->color.'",'.PHP_EOL; ?>
             order_id: '<?php echo $event->order_id; ?>',
-            <?php $prodCount = 1; ?>
-            <?php foreach($event->order->products as $prod):?>
-            prod<?php echo $prodCount; ?>: "<?php echo $prod->mod_name; ?>",
-            productQty<?php echo $prodCount; ?>: "<?php echo $prod->product_qty; ?>",
-            <?php $prodCount++; ?>
-            <?php endforeach; ?>
-            prodCount: <?= $prodCount ?>,
-            order_customer: '<?php echo $event->order->order_customer; ?>'
+            <?php
+
+            if($event->order_id == 0){
+                echo 'custom: true'.PHP_EOL;
+            } else {
+                echo 'custom: false,'.PHP_EOL;
+                $prodCount = 0;
+                foreach($event->order->products as $prod)
+                {
+                    echo 'prod'.$prodCount.': "'.$prod->mod_name.'",'.PHP_EOL;
+                    echo 'productQty'.$prodCount.': '.$prod->product_qty.','.PHP_EOL;
+                    $prodCount++;
+                }
+                echo 'prodCount: '.$prodCount.','.PHP_EOL;
+                echo 'order_customer: "'.$event->order->order_customer.'"'.PHP_EOL;
+            }
+            ?>
           },
         <?php endforeach; ?>
         ]
@@ -505,6 +503,25 @@ $events = $data['events'];
             }
           }
         });
+      }
+
+      function createProdTable(event)
+      {
+        var prodTable = '<table class="table table-striped table-hover">';
+        prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
+        <?php $i=1; ?>
+        var l = 1;
+        <?php foreach($events as $event): ?>
+        prodID = <?php echo $event->order->id; ?>;
+        if(prodID == event.order_id)
+        {
+            <?php foreach($event->order->products as $prod): ?>
+            prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
+            <?php endforeach; ?>
+        }
+        <?php endforeach; ?>
+        prodTable += '</table>';
+        return prodTable;
       }
 
       function postData(order_id){
