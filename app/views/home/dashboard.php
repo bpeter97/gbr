@@ -356,7 +356,7 @@ $events = $data['events'];
                         <div id='response-content' style="margin-top: 50px;">
                             
 
-                        <div class="panel panel-default">
+                        <div id="orderDetailsDiv" class="panel panel-default">
                             <div class="panel-heading text-center">
                                 <b>Order Details</b>
                             </div>
@@ -414,8 +414,13 @@ $events = $data['events'];
             $('#ModalEdit #color').val(event.color);
             if(event.custom == false)
             {
-                var prodTable = createProdTable(event);
-                $('#ModalEdit #prodInsert').html(prodTable);
+                    var getRidOfDiv = document.getElementById('orderDetailsDiv');
+                    getRidOfDiv.style.display = 'block';
+                    var prodTable = createProdTable(event);
+                    $('#ModalEdit #prodInsert').html(prodTable);
+            } else {
+                var getRidOfDiv = document.getElementById('orderDetailsDiv');
+                getRidOfDiv.style.display = 'none';
             }
             $('#ModalEdit').modal('show');
           });
@@ -453,11 +458,11 @@ $events = $data['events'];
             start: '<?php echo $start; ?>',
             end: '<?php echo $end; ?>',
             <?php echo 'color: "'.$event->color.'",'.PHP_EOL; ?>
-            order_id: '<?php echo $event->order_id; ?>',
+            order_id: <?= $event->order_id; ?>,
             <?php
 
-            if($event->order_id == 0){
-                echo 'custom: true'.PHP_EOL;
+            if($event->order_id == 0 || $event->order_id = ''){
+                echo 'custom: true,'.PHP_EOL;
             } else {
                 echo 'custom: false,'.PHP_EOL;
                 $prodCount = 0;
@@ -512,13 +517,19 @@ $events = $data['events'];
         <?php $i=1; ?>
         var l = 1;
         <?php foreach($events as $event): ?>
-        prodID = <?php echo $event->order->id; ?>;
-        if(prodID == event.order_id)
-        {
-            <?php foreach($event->order->products as $prod): ?>
-            prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
-            <?php endforeach; ?>
+        <?php if(isset($event->order->id)): ?>
+        eventOrderId = <?php echo $event->order->id; ?>;
+        console.log(event.order_id);
+        if(eventOrderId != ''){
+            if(eventOrderId == event.order_id)
+            {
+                <?php foreach($event->order->products as $prod): ?>
+                prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
+                <?php endforeach; ?>
+            }
         }
+        <?php endif; ?>
+        
         <?php endforeach; ?>
         prodTable += '</table>';
         return prodTable;
