@@ -240,12 +240,12 @@ class Order extends Model
             $i++;
 
             $this->db->insert('product_orders',array('order_id'=>$this->id,
-                                                                                'product_type'=>$new_product->item_type,
-                                                                                'product_msn'=>$new_product->mod_short_name,
-                                                                                'product_cost'=>$new_product->product_cost,
-                                                                                'product_qty'=>$new_product->product_qty,
-                                                                                'product_name'=>$new_product->mod_name,
-                                                                                'product_id'=>$new_product->id));
+                            'product_type'=>$new_product->item_type,
+                            'product_msn'=>$new_product->mod_short_name,
+                            'product_cost'=>$new_product->product_cost,
+                            'product_qty'=>$new_product->product_qty,
+                            'product_name'=>$new_product->mod_name,
+                            'product_id'=>$new_product->id));
 
             $this->res = $this->db->getResult();
         }

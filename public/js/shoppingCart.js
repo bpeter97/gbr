@@ -1,14 +1,18 @@
 // This will be the shopping cart module for the order pages.
-var Cart = function () 
+rentArray = ['10CONRENT','20DDCONRENT','20CONRENT','40CONRENT','24CONRENT','20COMBORENT','20FULLRENT','40COMBORENT','40SCOMBORENT','20SHELVRENT','LOADRAMP'];
+
+var Cart = function (order_type) 
 {
 	this.items = [];
 	this.itemCounter = 1;
 	this.total = 0.00;
+	this.monthly_total = 0.00;
 	this.total_before_tax = 0.00;
 	this.tax = 0.00;
 	this.tax_rate = 0.00;
 	this.postList = [];
 	this.tax_rate_updated = false;
+	this.order_type = order_type;
 
 	this.addItem = function (product, quantity)
 	{   
@@ -22,9 +26,18 @@ var Cart = function ()
 			
 			this.items.push([product, quantity, this.itemCounter]);
 
-			// Add product cost to the total.
-			this.total_before_tax = round(this.total_before_tax + (product.cost * quantity), 2);
-
+			// Add product cost to the total. If in rental array, add it to monthly instead.
+			if(this.order_type == 'rental')
+			{
+				if($.inArray(product.msn, rentArray) != -1){
+					this.monthly_total = round(this.monthly_total + (product.cost * quantity), 2);
+				} else {
+					this.total_before_tax = round(this.total_before_tax + (product.cost * quantity), 2);
+				}
+			} else {
+				this.total_before_tax = round(this.total_before_tax + (product.cost * quantity), 2);
+			}
+			
 			// Calculate tax.
 			this.calculateTax();
 
@@ -81,20 +94,33 @@ var Cart = function ()
 	this.updateCart = function ()
 	{
 		var cartTable = '<table class="table table-hover">';
-		cartTable+= '<thead><th>Item Name</th><th>Cost</th><th>Quantity</th><th>Total Cost</th><th></th></tr></thead>';
+		cartTable+= '<thead><th>Item Name</th><th>Cost</th><th>Monthly Cost</th><th>Quantity</th><th>Total Cost</th><th></th></tr></thead>';
 		cartTable+= '<tbody>';
 
 		for(var i = 0; i < this.items.length; i++)
 		{
 			cartTable+= '<tr><td width="250" id="prod">'+cart.items[i][0].mod_name+'</td>';
-			cartTable+= '<td width="250" id="prodCost">$'+round(cart.items[i][0].cost, 2)+'</td>';
+			if(this.order_type == 'rental') {
+				console.log(cart.items[i][0].msn);
+				if($.inArray(cart.items[i][0].msn, rentArray) != -1)	{
+					cartTable+= '<td width="250" id="prodCost">$0</td>';
+					cartTable+= '<td width="250" id="prodMonthlyCost">'+cart.items[i][0].cost+'</td>';
+				} else {
+					cartTable+= '<td width="250" id="prodCost">$'+round(cart.items[i][0].cost, 2)+'</td>';
+					cartTable+= '<td width="250" id="prodMonthlyCost">$0</td>';
+				}
+			} else {
+				cartTable+= '<td width="250" id="prodCost">$'+round(cart.items[i][0].cost, 2)+'</td>';
+				cartTable+= '<td width="250" id="prodMonthlyCost">$0</td>';
+			}
 			cartTable+= '<td width="250" id="prodCost">'+cart.items[i][1]+'</td>';
 			cartTable+= '<td width="250" id="itemTotal">$'+round(cart.items[i][0].cost*cart.items[i][1], 2)+'</td>';
 			cartTable+= '<td width="50"><button type="button" class="btn btn-gbr" onclick="cart.removeItem('+cart.items[i][2]+');"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 		}
-		cartTable+= '<tr><td width="250"></td><td width="250"></td><td width="250">Total cost before tax:</td><td width="250"><strong>$'+cart.total_before_tax+'</strong></td><td></td>';
-		cartTable+='<tr><td width="250"></td><td width="250"></td><td width="250">Total tax:</td><td width="250"><strong>$'+cart.tax+'</strong></td><td></td>';
-		cartTable+='<tr><td width="250"></td><td width="250"></td><td width="250">Total after taxes::</td><td width="250"><strong>$'+cart.total+'</strong></td><td></td>';
+		cartTable+= '<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total cost before tax:</td><td width="250"><strong>$'+cart.total_before_tax+'</strong></td><td></td>';
+		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total tax:</td><td width="250"><strong>$'+cart.tax+'</strong></td><td></td>';
+		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total after taxes:</td><td width="250"><strong>$'+cart.total+'</strong></td><td></td>';
+		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total Monthly Cost:</td><td width="250"><strong>$'+cart.monthly_total+'</strong></td><td></td>';
 		cartTable+= '</tr></tbody></table>';
 		$('#cart').html(cartTable);                  
 	}
@@ -125,24 +151,27 @@ var Cart = function ()
 	{
 		// var cartData = '<select name="cartData[]" style="display:none;" multiple="multiple" tabindex="1">';
 		
-		
+		if(1 > this.items.length){
+			alert('You have no items in the cart!');
+		} else {
+			var cartData = '<input type="hidden" name="cartTotalCost" value="'+ this.total +'">';
+			cartData += '<input type="hidden" name="cartTax" value="'+ this.tax +'">';
+			cartData += '<input type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
+			cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';
+			for(var i = 0; i < this.items.length; i++)
+			{
+				// cartData += '<option data-value="{&quotid&quot:' + this.items[i][0].id + ',&quotmod_name&quot:&quot'+ this.items[i][0].mod_name +'&quot,&quotmsn&quot:&quot'+ this.items[i][0].msn +'&quot,&quotcost&quot:'+ this.items[i][0].cost +',&quotrental_type&quot:&quot'+ this.items[i][0].status +'&quot}" selected>' + this.items[i][0].mod_name + '</option>';
+				// cartData += '<option data-value="' + this.items[i][0] + '</option>';
+				var prod = JSON.stringify(this.items[i][0]);
+				cartData += "<input type='hidden' name='product"+i+"' value='" + prod + "'>";
+			}
+			$('#insertCartData').html(cartData);
+			console.log('Cart Data inserted.');
 
-		// cartData += '</select>';
-		var cartData = '<input type="text" type="hidden" name="cartTotalCost" value="'+ this.total +'">';
-		cartData += '<input type="text" type="hidden" name="cartTax" value="'+ this.tax +'">';
-		cartData += '<input type="text" type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
-		cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';
-		for(var i = 0; i < this.items.length; i++)
-		{
-			// cartData += '<option data-value="{&quotid&quot:' + this.items[i][0].id + ',&quotmod_name&quot:&quot'+ this.items[i][0].mod_name +'&quot,&quotmsn&quot:&quot'+ this.items[i][0].msn +'&quot,&quotcost&quot:'+ this.items[i][0].cost +',&quotrental_type&quot:&quot'+ this.items[i][0].status +'&quot}" selected>' + this.items[i][0].mod_name + '</option>';
-			// cartData += '<option data-value="' + this.items[i][0] + '</option>';
-			var prod = JSON.stringify(this.items[i][0]);
-			cartData += "<input type='hidden' name='product"+i+"' value='" + prod + "'>";
+			document.getElementById("orderForm").submit();
 		}
-		$('#insertCartData').html(cartData);
-		console.log('Cart Data inserted.');
 
-		document.getElementById("orderForm").submit();
+		
 	}
 
 	this.getTaxRate = function (value)
@@ -177,4 +206,5 @@ function round(value, decimals)
 	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
-cart = new Cart();
+
+cart = new Cart(cart_order_type);

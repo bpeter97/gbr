@@ -49,7 +49,7 @@ class Orders extends Controller
 		
 		if($this->checkLogin())
 		{
-			if($type == 'sales' && $action == 'create' || $type == 'rental' && $action == 'create')
+			if($action == 'create')
 			{
 				// Create the order
 				$order = $this->model('Order');
@@ -62,22 +62,30 @@ class Orders extends Controller
 				// direct user to the orders view page.
 				$this->masterlist();
 			} 
-			elseif ($type == "sales")
+
+			$customer = $this->model('Customer');
+			$custList = $customer->getCustomers();
+
+			$products = $this->model('Product');
+
+			if($type == 'rental')
 			{
-				$customer = $this->model('Customer');
-				$custList = $customer->getCustomers();
-
-				$products = $this->model('Product');
-				$shippingProducts = $products->getProducts("item_type = 'pickup' OR item_type = 'delivery'");
-				$containerProducts = $products->getProducts("item_type = 'container' AND monthly = 0");
-				$modificationProducts = $products->getProducts("monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'");
-
-				$this->view('orders/create', ['custList'=>$custList, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts]);
+				$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+				$containerSQL = "item_type = 'container' AND monthly <> 0";
+				$modSQL = "monthly <> 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
 			} 
-			elseif ($type == "rental")
+			else
 			{
-				echo 'The type is: '.$type;
+				$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+				$containerSQL = "item_type = 'container' AND monthly = 0";
+				$modSQL = "monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
 			}
+				
+			$shippingProducts = $products->getProducts($shipSQL);
+			$containerProducts = $products->getProducts($containerSQL);
+			$modificationProducts = $products->getProducts($modSQL);
+
+			$this->view('orders/create', ['custList'=>$custList, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts, 'order_type'=>$type]);
 			
 		}
 

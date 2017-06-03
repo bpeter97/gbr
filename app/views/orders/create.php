@@ -3,6 +3,9 @@
 <html>
     <head>
         <?php require_once(BASEURL.APP.ASSETS.'/header.php'); ?>
+        <script type="text/javascript">
+            cart_order_type = <?php echo '"'.$data['order_type'].'"'; ?>;
+        </script>
         <script type="text/javascript" src="<?php echo HTTP.HTTPURL.PUB.JS.'/shoppingCart.js'; ?>"></script>
 
         <?php 
@@ -31,6 +34,8 @@
                 });
             });
         </script>
+
+
 
 <!--     <script type="text/javascript">
 
@@ -159,11 +164,19 @@
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmordertype" control-label">Order Type</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="frmordertype" id="frmordertype">
-                                                        <option>Select One</option>
-                                                        <option value="Rental">Rental</option>
-                                                        <option value="Resale">Resale</option>
-                                                        <option value="Sales">Sales</option>
+                                                    <select class="form-control" name="frmordertype" id="frmordertype" disabled>
+                                                    <?php 
+
+                                                    if($data['order_type']=='rental')
+                                                    {
+                                                        echo '<option value="Rental" id="cart_create" selected>Rental</option>';
+                                                    }
+                                                    elseif($data['order_type']=='sales')
+                                                    {
+                                                        echo '<option value="Sales" id="cart_create" selected>Sales</option>';
+                                                    }
+
+                                                    ?>
                                                     </select>
                                                     <p class="help-block">Select what type of order this is.</p>
                                                 </div>
@@ -300,7 +313,6 @@
                                                                                         <input type="text" id="shippingCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $shippingProducts->mod_cost; ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
-                                                                                <?php $product = 'cart.addItem(new Product(1, "'.$shippingProducts->mod_name.'", "prod", 110, "rental"), 2);'; ?>
                                                                                 <td width="250"><input type="text" id="shippingQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
                                                                                 <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $shippingProducts->id ?>, "<?= $shippingProducts->mod_name ?>", "<?= $shippingProducts->mod_short_name ?>", document.getElementById("shippingCost<?= $counter ?>").value, "<?= $shippingProducts->rental_type ?>"), document.getElementById("shippingQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
                                                                             </tr>
@@ -333,7 +345,7 @@
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $containerProducts->mod_cost; ?>"/>
+                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $containerProducts->monthly;}else{echo $containerProducts->mod_cost;} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input type="text" id="containerQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
@@ -365,7 +377,7 @@
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $modificationProducts->mod_cost; ?>"/>
+                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $modificationProducts->monthly;}else{echo $modificationProducts->mod_cost;} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input id="modQty<?= $counter ?>" type="text" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
