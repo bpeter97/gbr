@@ -1,99 +1,49 @@
 <?php
 
-// Still Used
-if(!defined('DBHOST')){
-	define("DBHOST",		"localhost");
-}
-if(!defined('DBUSER')){
-	define("DBUSER",		"root");
-}
-if(!defined('DBPASS')){
-	define("DBPASS",		"");
-}
-if(!defined('DBNAME')){
-	define("DBNAME",		"gbr");
-}
-if(!defined('BASEURL')){
-	define("BASEURL",		$_SERVER['DOCUMENT_ROOT']);
-}
-if(!defined('HTTPURL')){
-	define("HTTPURL",		$_SERVER['HTTP_HOST']);
-}
-if(!defined('SELFURL')){
-	define("SELFURL",		$_SERVER['REQUEST_URI']);
-}
-if(!defined('HTTP')){
-	define("HTTP",			"http://"); // Add www. after the // in HTTP if www. is required!
-}
-if(!defined('IMG')){
-	define("IMG",			"/img");
-}
-if(!defined('CSS')){
-	define("CSS",			"/css");
-}
-if(!defined('JS')){
-	define("JS",			"/js");
-}
-
-// MVC Architecture Folders
-if(!defined('PUB')){
-	define("PUB", 			'/public');
-}
-if(!defined('APP')){
-	define('APP', 			'/app');
-}
-if(!defined('ASSETS')){
-	define('ASSETS', 		'/assets');
-}
-if(!defined('CORE')){
-	define('CORE', 			'/core');
-}
-if(!defined('CONTROLLERS')){
-	define("CONTROLLERS",	"/controller");
-}
-
-// View Folders
-if(!defined('CONTAINERS')){
-    define('CONTAINERS',    '/containers');
-}
-if(!defined('CUSTOMERS')){
-    define('CUSTOMERS',     '/customers');
-}
-if(!defined('QUOTES')){
-    define('QUOTES',        '/quotes');
-}
-if(!defined('ORDERS')){
-    define('ORDERS',        '/orders');
-}
-if(!defined('ORDERS')){
-    define('ORDERS',        '/orders');
-}
-if(!defined('PRODUCTS')){
-    define('PRODUCTS',        '/products');
-}
-if(!defined('CALENDAR')){
-    define('CALENDAR',        '/calendar');
-}
-
-// Not sure if still used.
-if(!defined('CFG')){
-	define("CFG",			"/cfg");
-}
-if(!defined('CLASSES')){
-	define("CLASSES",		"/classes");
-}
-if(!defined('VIEW')){
-	define("VIEW",			"/view");
-}
-if(!defined('MAP')){
-	define("MAP",			"/map");
-}
-if(!defined('MODEL')){
-	define("MODEL",			"/model");
-}
-if(!defined('INCLUDES')){
-	define("INCLUDES",		"/includes");
-}
-
-
-?>
+$GLOBALS['config'] = array(
+	'mysql' => array(
+		'host' => 'localhost',
+		'user' => 'root',
+		'pass' => '',
+		'dbname' => 'gbr',
+		'charset' => 'UTF8'
+ 	 ),
+	'site' => array(
+		'baseurl' => $_SERVER['DOCUMENT_ROOT'],
+		'httpurl' => $_SERVER['HTTP_HOST'],
+		'selfurl' => $_SERVER['REQUEST_URI'],
+		'http' => 'http://',
+		'DS' => DIRECTORY_SEPARATOR,
+		'root' => dirname(dirname(__FILE__)),
+		'datetime' => 'm/d/Y H:i:s',
+		'timezone' => -8,
+		'assets' => '/assets',
+		'resources' => array(
+			'img' => '/img',
+			'css' => '/css',
+			'js' => '/js'
+		),
+		'quotes' => '/quotes',
+		'customers' => '/customers',
+		'containers' => '/containers',
+		'orders' => '/orders',
+		'products' => '/products',
+		'calendar' => '/calendar'
+		
+	),
+	'remember' => array(
+		'cookie_name' => 'hash',
+		'cookie_expiry' => 604800
+  	),
+	'session' => array(
+		'user_session' => 'user',
+		'token_name' => 'csrf_token'
+	  ),
+	'security' => array(
+		'salt' => 'YouWillWantToChangeMe'
+	),
+	'steam' => array(
+		'apikey' => 'YouWillWantToChangeMe',
+		'redirecturl' => 'localhost/user/profile'
+	)
+);

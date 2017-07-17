@@ -33,10 +33,10 @@ $events = $data['events'];
 
 <head>
 
-    <?php include(BASEURL.APP.ASSETS.'/header.php'); ?>
+    <?php include(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmAJNXfLD_-32yOSheQ-xo4gySGStag9U&v=3.exp&libraries=places"
             type="text/javascript"></script>
-    <script type="text/javascript" src="<?php echo HTTP.HTTPURL.PUB.JS.'/mapprinting.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo Config::get('site/http').Config::get('site/httpurl').Config::get('site/resources/js').'/mapprinting.js'; ?>"></script>
     <script type="text/javascript">
     var customIcons = {
       restaurant: {
@@ -59,7 +59,7 @@ $events = $data['events'];
       var infoWindow = new google.maps.InfoWindow;
 
       // Change this depending on the name of your PHP file
-      downloadUrl("<?php echo HTTP.HTTPURL.PUB.JS.'/map/phpsqlajax_genxml2.php'; ?>", function(data) {
+      downloadUrl("<?php echo Config::get('site/http').Config::get('site/httpurl').Config::get('site/resources/js').'/map/phpsqlajax_genxml2.php'; ?>", function(data) {
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
@@ -143,7 +143,7 @@ $events = $data['events'];
     google.maps.event.addDomListener(window, 'load', load);
     //]]>
     </script>
-    <script type="text/javascript" src="<?php echo HTTP.HTTPURL.PUB.JS.'/dashboard_charts.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo Config::get('site/http').Config::get('site/httpurl').Config::get('site/resources/js').'/dashboard_charts.js'; ?>"></script>
 
     
     
@@ -153,14 +153,11 @@ $events = $data['events'];
 
     <div id="wrapper">
 
-        <?php include BASEURL.APP.ASSETS.'/fixednavbar.php'; ?>
+        <?php include Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'; ?>
     
         <!-- Page Content -->
         <div id="page-content-wrapper">
-
             <div class="container-fluid" id="webbg">
-
-                <!-- include BASEURL.VIEW.'/dashboard.php'; ?> -->
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-default">
@@ -177,7 +174,7 @@ $events = $data['events'];
                     <div class="col-lg-5">
                         <div class="panel panel-default">
                             <div class="panel-heading text-center">
-                                <b><a class="homeLink" href="<?php echo HTTP.HTTPURL.VIEW.'/calendar.php';?>">Calendar</a></b>
+                                <b><a class="homeLink" href="<?php echo Config::get('site/http').Config::get('site/httpurl').'/calendar.php';?>">Calendar</a></b>
                             </div>
                             <div class="panel-body">
                                 <div id="calendar" class="col-centered"></div>
@@ -251,7 +248,7 @@ $events = $data['events'];
                         </div>
                     </div>
 
-                <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
+                <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
 
                 </div>
 
@@ -261,7 +258,7 @@ $events = $data['events'];
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="<?php echo HTTP.HTTPURL.PUB.'/home/addCustomEvent'; ?>">
+                <form class="form-horizontal" method="POST" action="<?php echo Config::get('site/http').Config::get('site/httpurl').'/home/addCustomEvent'; ?>">
                 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -318,7 +315,7 @@ $events = $data['events'];
     <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="<?php echo HTTP.HTTPURL.CONTROLLERS.'/editEventTitle.php'; ?>">
+                <form class="form-horizontal" method="POST" action="<?php echo Config::get('site/http').Config::get('site/httpurl').'/editEventTitle.php'; ?>">
                     <div class="modal-header gbr-header" style="text-align: center;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edit Event</h4>
@@ -497,7 +494,7 @@ $events = $data['events'];
         Event[2] = end;
         
         $.ajax({
-         url: '<?php echo HTTP.HTTPURL.CONTROLLERS.'/editEventDate.php'; ?>',
+         url: '<?php echo Config::get('site/http').Config::get('site/httpurl').'/controllers/editEventDate.php'; ?>',
          type: "POST",
          data: {Event:Event},
          success: function(rep) {
@@ -536,7 +533,7 @@ $events = $data['events'];
       }
 
       function postData(order_id){
-          $.post("<?php echo HTTP.HTTPURL.PUB.'/home/getOrderInfo'; ?>", { order_id: order_id }, function(response) {
+          $.post("<?php echo Config::get('site/http').Config::get('site/httpurl').'/home/getOrderInfo'; ?>", { order_id: order_id }, function(response) {
             // Inserts your chosen response into the page in 'response-content' DIV
             $('#response-content').html(response); // Can also use .text(), .append(), etc
           });
@@ -546,7 +543,7 @@ $events = $data['events'];
 
   </script>
 
-    <?php include BASEURL.APP.ASSETS.'/botjsincludes.php'; ?>
+    <?php include Config::get('site/baseurl').Config::get('site/assets').'/botjsincludes.php'; ?>
 
 </body>
 

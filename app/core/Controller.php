@@ -7,6 +7,12 @@
  */
 class Controller 
 {   
+    
+    public function __construct()
+    {
+        $this->checkSession();
+    }
+    
     // Create the model.
     public function model($model)
     {

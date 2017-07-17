@@ -2,7 +2,7 @@
 <?php $counter = 0; ?>
 <html>
     <head>
-        <?php require_once(BASEURL.APP.ASSETS.'/header.php'); ?>
+        <?php require_once(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
         <script type="text/javascript">
             cart_order_type = <?php echo '"'.$data['order_type'].'"'; ?>;
         </script>
@@ -70,7 +70,7 @@
 
         <div id="wrapper">
 
-            <?php include(BASEURL.APP.ASSETS.'/fixednavbar.php'); ?>
+            <?php include(Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'); ?>
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
@@ -405,7 +405,7 @@
                     <!-- This is the alert for when an item is added or removed from the cart. -->
                     <div id="insertAlert"></div>
                     
-                    <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
+                    <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
 
                 </div>
 
@@ -416,7 +416,7 @@
         <!-- This is teh alert modal if a customer is flagged. -->
         <div class="modal fade" id="alertModal" role="dialog">
 
-        <?php include(BASEURL.APP.ASSETS.'/botjsincludes.php'); ?>
+        <?php include(Config::get('site/baseurl').Config::get('site/assets').'/botjsincludes.php'); ?>
 
     </body>
 

@@ -6,28 +6,43 @@
 class User extends Model
 {
     
-    public $username;
-    public $password;
-    private $rows;
+    private $username,
+                $password,
+                $firstname,
+                $lastname,
+                $title,
+                $type;
 
     public function __construct()
     {
 
     }
-
-    public function login()
+    
+    public function getUsername() { return $this->username; }
+    public function getPassword() { return $this->password; }
+    public function getFirstname() { return $this->firstname; }
+    public function getLastname() { return $this->lastname; }
+    public function getTitle() { return $this->title; }
+    public function getType() { return $this->type; }
+    
+    public function setUsername($username) { $this->username = $username; }
+    public function setPassword($password) { $this->password = $password; }
+    public function setFirstname($firstname) { $this->firstname = $firstname; }
+    public function setLastname($lastname) { $this->lastname = $lastname; }
+    public function setTitle($title) { $this->title = $title; }
+    public function setType($type) { $this->type = $type; }
+    
+    //@TODO Code the get user info function.
+    public function getUserInfo()
     {
-        $this->checkSession();
-
-        $this->db = new Database();
-        $this->db->connect();
-
-        $escaped_username = $this->db->escapestring($this->username);
-        $this->username = $this->db->stripSlashes($escaped_username);
-
-        $escaped_password = $this->db->escapestring($this->password);
-        $this->password = $this->db->stripSlashes($escaped_password);
         
+    }
+
+    public function login($username, $password)
+    {
+
+        $this->setUsername($username);
+        $this->setPassword($password);
         $this->checkLogin();
 
         if(isset($_SESSION['loggedin'])){
@@ -40,12 +55,13 @@ class User extends Model
 
     private function checkLogin()
     {
-        $sql = 'SELECT * FROM users WHERE username = "'. $this->username .'"';
-        $this->db->sql($sql);
-        $this->res = $this->db->getResult();
-        $this->rows = $this->db->numRows();
+        
+        $sql = 'SELECT * FROM users WHERE username = "'. $this->getUsername() .'"';
+        $this->db->query($sql);
+        $results = $this->db->results('arr');
+        $rows = $this->db->count();
 
-        if($this->rows == 1){  
+        if($rows == 1){  
             $this->logUserIn();
         } else {
             echo "<strong>Incorrect username <br>";
@@ -54,33 +70,23 @@ class User extends Model
 
     private function logUserIn()
     {
-        $sql = 'SELECT * FROM users WHERE username = "'. $this->username .'" AND password = "' . $this->password . '"';
-        $this->db->sql($sql);
-        $this->res = $this->db->getResult();
-        $this->rows = $this->db->numRows();
+        $sql = 'SELECT * FROM users WHERE username = "'. $this->getUsername() .'" AND password = "' . $this->getPassword() . '"';
+        $this->db->query($sql);
+        $results = $this->db->single();
+        $rows = $this->db->count();
 
-        if ($this->rows == 1) {
-            $_SESSION['username'] = $this->username;
-            $_SESSION['userfname'] = $this->res[0]['firstname'];
-            $_SESSION['userlname'] = $this->res[0]['lastname'];
-            $_SESSION['usertitle'] = $this->res[0]['title'];
-            $_SESSION['usertype'] = $this->res[0]['user_type'];
+        if ($rows == 1) {
+            $_SESSION['username'] = $this->getUsername();
+            $_SESSION['userfname'] = $results->firstname;
+            $_SESSION['userlname'] = $results->lastname;
+            $_SESSION['usertitle'] = $results->title;
+            $_SESSION['usertype'] = $results->user_type;
             $_SESSION['loggedin'] = true;
         }
         else {
             echo "<strong>Incorrect password.<br/>";
         }
-        $this->db->disconnect();
-        $this->resetResDb();
     }
-
-    private function checkSession()
-    {
-        if(session_id() == '' || !isset($_SESSION)) {
-            session_start();
-        }
-    }
-
 }
 
 ?>

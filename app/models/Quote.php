@@ -6,100 +6,127 @@
 class Quote extends Model
 {
 
-    public $id;
-    public $quote_customer;
-    public $quote_type;
-    public $quote_date;
-    public $quote_status;
-    public $job_name;
-    public $job_address;
-    public $job_city;
-    public $job_zipcode;
-    public $attn;
-    public $cost_before_tax;
-    public $total_cost;
-    public $sales_tax;
-    public $monthly_total;
-    
-    function __construct($id = '')
-    {
-        if($id != null){
-            $this->id = $id;
-            $this->getDetails();
-        } else {
-            $this->id = null;
-        }
-    }
+	private $id;
+	private $quote_customer;
+	private $quote_type;
+	private $quote_date;
+	private $quote_status;
+	private $job_name;
+	private $job_address;
+	private $job_city;
+	private $job_zipcode;
+	private $attn;
+	private $cost_before_tax;
+	private $total_cost;
+	private $sales_tax;
+	private $monthly_total;
+	
+	function __construct($id = '')
+	{
+		if($id != null){
+			$this->setId($id);
+			$this->getDetails();
+		} else {
+			$this->id = null;
+		}
+	}
+	
+	public function getId() { return $this->id; }
+	public function getCustomer() { return $this->quote_customer; }
+	public function getType() { return $this->quote_type; }
+	public function getDate() { return $this->quote_date; }
+	public function getStatus() { return $this->quote_status; }
+	public function getJobName() { return $this->job_name; }
+	public function getJobAddress() { return $this->job_address; }
+	public function getJobCity() { return $this->job_city; }
+	public function getJobZipcode() { return $this->job_zipcode; }
+	public function getAttention() { return $this->attn; }
+	public function getCostBeforeTax() { return $this->cost_before_tax; }
+	public function getTotalCost() { return $this->total_cost; }
+	public function getSalesTax() { return $this->sales_tax; }
+	public function getMonthlyTotal() { return $this->monthly_total; }
+	
+	public function setId($id) { return $this->id = $id; }
+	public function setCustomer($customer) { return $this->quote_customer = $customer; }
+	public function setType($type) { return $this->quote_type = $type; }
+	public function setDate($date) { return $this->quote_date = $date; }
+	public function setStatus($status) { return $this->quote_status = $status; }
+	public function setJobName($name) { return $this->job_name = $name; }
+	public function setJobAddress($address) { return $this->job_address = $address; }
+	public function setJobCity($city) { return $this->job_city = $city; }
+	public function setJobZipcode($zipcode) { return $this->job_zipcode = $zipcode; }
+	public function setAttention($attn) { return $this->attn = $attn; }
+	public function setCostBeforeTax($before) { return $this->cost_before_tax = $before; }
+	public function setTotalCost($total) { return $this->total_cost = $total; }
+	public function setSalesTax($tax) { return $this->sales_tax = $tax; }
+	public function setMonthlyTotal($total) { return $this->monthly_total = $total; }
 
-    public function getDetails()
-    {
-        // Database auto connects in the constructor.
-        $this->db = new Database();
+	public function getDetails($id = null)
+	{
+		
+		if($id != null)
+		{
+			$this->setId($id);
+		}
+		
+		$sql = 'SELECT * FROM quotes WHERE quote_id = '.$this->id;
+		$this->db->query($sql);
+		$res = $this->db->single();
+	   
+		// Assign details to attributes.
+		$this->setCustomer($res->quote_customer);
+		$this->setType($res->quote_type);
+		$this->setDate($res->quote_date);
+		$this->setStatus($res->quote_status);
+		$this->setJobName($res->job_name);
+		$this->setJobAddress($res->job_address);
+		$this->setJobCity($res->job_city);
+		$this->setJobZipcode($res->job_zipcode);
+		$this->setAttention($res->attn);
+		$this->setCostBeforeTax($res->cost_before_tax);
+		$this->setTotalCost($res->total_cost);
+		$this->setSalesTax($res->sales_tax);
+		$this->setMonthlyTotal($res->monthly_total);
+	
+	}
 
-        // Get the quote details.
-        $this->db->select('quotes','*','','quote_id = ' . $this->id);
-        $this->res = $this->db->getResult();
+	public function countQuotes($where = '')
+	{
+		$row = '';
+		$new_where = '';
+				
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
+		$this->db->query('SELECT COUNT(quote_id) FROM quotes '. $new_where);
+		$res = $this->db->results('arr')
 
-        // Assign details to attributes.
-        $this->quote_customer = $this->res[0]['quote_customer'];
-        $this->quote_date = $this->res[0]['quote_date'];
-        $this->quote_status = $this->res[0]['quote_status'];
-        $this->job_name = $this->res[0]['job_name'];
-        $this->job_address = $this->res[0]['job_address'];
-        $this->job_city = $this->res[0]['job_city'];
-        $this->job_zipcode = $this->res[0]['job_zipcode'];
-        $this->attn = $this->res[0]['attn'];
-        $this->cost_before_tax = $this->res[0]['cost_before_tax'];
-        $this->total_cost = $this->res[0]['total_cost'];
-        $this->sales_tax = $this->res[0]['sales_tax'];
-        $this->monthly_total = $this->res[0]['monthly_total'];
-        $this->quote_type = $this->res[0]['quote_type'];
-        $this->db->disconnect();
-        $this->resetResDb();
-    }
+		foreach($res as $count){
+			$row = $count['COUNT(quote_id)'];
+		}
+		
+		return $row;
+	}    
 
-    public function countQuotes($where = ''){
-        $row = '';
-        $new_where = '';
-        $this->db = new Database();
-        $this->db->connect();
-        
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
-        $this->db->sql('SELECT COUNT(quote_id) FROM quotes '. $new_where);
-        $this->res = $this->db->getResult();
+	public function getQuotes($where = '',$limit = '')
+	{
+		$list = array();
 
-        foreach($this->res as $count){
-            $row = $count['COUNT(quote_id)'];
-        }
+		$new_where = '';
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
 
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $row;
-    }    
+		$sql = 'SELECT * FROM quotes ' . $new_where . $limit;
+		$this->db->query($sql);
+		$res = $this->db->results('arr')
+		
+		foreach ($res as $con) {
+			array_push($list, new Quote($con['quote_id']));
+		}
 
-    public function getQuotes($where = '',$limit = ''){
-        $list = array();
-        $this->db = new Database();
-
-        $new_where = '';
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
-
-        $sql = 'SELECT * FROM quotes ' . $new_where . $limit;
-        $this->db->sql($sql);
-        $this->res = $this->db->getResult();
-        
-        foreach ($this->res as $con) {
-            array_push($list, new Quote($con['quote_id']));
-        }
-
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $list;
-    }
+		return $list;
+	}
 
 }
 

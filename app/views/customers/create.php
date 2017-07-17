@@ -3,7 +3,7 @@
 
 <head>
 
-    <?php include(BASEURL.APP.ASSETS.'/header.php'); ?>
+    <?php include(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
 
 </head>
 
@@ -11,7 +11,7 @@
 
     <div id="wrapper">
 
-        <?php include(BASEURL.APP.ASSETS.'/fixednavbar.php'); ?>
+        <?php include(Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'); ?>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -145,12 +145,12 @@
                 </div>
                 <!-- End of 2nd Row. -->
 
-                <?php include(BASEURL.APP.ASSETS.'/copyright.php'); ?>
+                <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
             </div>
         </form>
     </div>
 
-    <?php include(BASEURL.APP.ASSETS.'/botjsincludes.php'); ?>
+    <?php include(Config::get('site/baseurl').Config::get('site/assets').'/botjsincludes.php'); ?>
 
 </body>
 

@@ -6,94 +6,105 @@
 class Product extends Model
 {
 
-    public $id;
-    public $mod_name;
-    public $mod_cost;
-    public $mod_short_name;
-    public $monthly;
-    public $item_type;
-    public $rental_type;
-    public $order_id;
+	private $id,
+		$mod_name,
+		$mod_cost,
+		$mod_short_name,
+		$monthly,
+		$item_type,
+		$rental_type,
+		$order_id,
+		$product_qty,
+		$product_cost,
+		$product_type;
 
-    public $product_qty;
-    public $product_cost;
-    public $product_type;
+	function __construct($id = '')
+	{
+		if($id != null){
+			$this->id = $id;
+			$this->getDetails();
+		} else {
+			$this->id = null;
+		}
+	}
 
-    
-    function __construct($id = '')
-    {
-        if($id != null){
-            $this->id = $id;
-            $this->getDetails();
-        } else {
-            $this->id = null;
-        }
-    }
+	public function getId() { return $this->id; }
+	public function getModName() { return $this->mod_name; }
+	public function getModCost() { return $this->mod_cost; }
+	public function getModShortName() { return $this->mod_short_name; }
+	public function getMonthly() { return $this->monthly; }
+	public function getItemType() { return $this->item_type; }
+	public function getRentalType() { return $this->rental_type; }
+	public function getOrderId() { return $this->order_id; }
+	public function getProductQuantity() { return $this->product_qty; }
+	public function getProductCost() { return $this->product_cost; }
+	public function getProductType() { return $this->product_type; }
+	
+	public function setId($id) { $this->id = $id; }
+	public function setModName($name) { $this->mod_name = $name; }
+	public function setModCost($cost) { $this->mod_cost = $cost; }
+	public function setModShortName($name) { $this->mod_short_name = $name; }
+	public function setMonthly($cost) { $this->monthly = $cost; }
+	public function setItemType($type) { $this->item_type = $type; }
+	public function setRentalType($type) { $this->rental_type = $type; }
+	public function setOrderId($id) { $this->order_id = $id; }
+	public function setProductQuantity($qty) { $this->product_qty = $qty; }
+	public function setProductCost($cost) { $this->product_cost = $cost; }
+	public function setProductType($type) { $this->product_type = $type; }
 
-    public function getDetails()
-    {
-        // Database auto connects in the constructor.
-        $this->db = new Database();
+	public function getDetails()
+	{
+		// Get the product details.
+		$sql = 'SELECT * FROM modifications WHERE mod_ID = '.$this->id;
+		$this->db->query($sql);
+		$res = $this->db->single();
 
-        // Get the product details.
-        $this->db->select('modifications','*','','mod_ID = ' . $this->id);
-        $this->res = $this->db->getResult();
+		// Assign details to attributes.
+		$this->setModName($res->mod_name);
+		$this->setModCost($res->mod_cost);
+		$this->setModShortName($res->mod_short_name);
+		$this->setMonthly($res->monthly);
+		$this->setItemType($res->item_type);
+		$this->setRentalType($res->rental_type);
+	}
 
-        // Assign details to attributes.
-        $this->mod_name = $this->res[0]['mod_name'];
-        $this->mod_cost = $this->res[0]['mod_cost'];
-        $this->mod_short_name = $this->res[0]['mod_short_name'];
-        $this->monthly = $this->res[0]['monthly'];
-        $this->item_type = $this->res[0]['item_type'];
-        $this->rental_type = $this->res[0]['rental_type'];
+	public function countProducts($where = '')
+	{
+		$row = '';
+		$new_where = '';
+		
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
+		$this->db->query('SELECT COUNT(mod_ID) FROM modifications '. $new_where);
+		$res = $this->db->results('arr');
 
-        // Don't forget to disconnect the DB connection!
-        $this->db->disconnect();
-        $this->resetResDb();
-    }
+		foreach(res as $count){
+			$row = $count['COUNT(mod_ID)'];
+		}
+		
+		return $row;
+	}    
 
-    public function countProducts($where = ''){
-        $row = '';
-        $new_where = '';
-        $this->db = new Database();
-        $this->db->connect();
-        
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
-        $this->db->sql('SELECT COUNT(mod_ID) FROM modifications '. $new_where);
-        $this->res = $this->db->getResult();
+	public function getProducts($where = '',$limit = '')
+	{
+		$list = array();
 
-        foreach($this->res as $count){
-            $row = $count['COUNT(mod_ID)'];
-        }
+		$new_where = '';
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
 
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $row;
-    }    
-
-    public function getProducts($where = '',$limit = ''){
-        $list = array();
-        $this->db = new Database();
-
-        $new_where = '';
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
-
-        $sql = 'SELECT * FROM modifications ' . $new_where . $limit;
-        $this->db->sql($sql);
-        $this->res = $this->db->getResult();
-        
-        foreach ($this->res as $con) {
-            array_push($list, new Product($con['mod_ID']));
-        }
-
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $list;
-    }
+		$sql = 'SELECT * FROM modifications ' . $new_where . $limit;
+		$this->db->query($sql);
+		$res = $this->db->results('arr');
+		
+		foreach ($res as $con) {
+			array_push($list, new Product($con['mod_ID']));
+		}
+		
+		return $list;
+	}
 
 }
 
