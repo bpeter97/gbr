@@ -6,20 +6,20 @@
 class Quote extends Model
 {
 
-	private $id;
-	private $quote_customer;
-	private $quote_type;
-	private $quote_date;
-	private $quote_status;
-	private $job_name;
-	private $job_address;
-	private $job_city;
-	private $job_zipcode;
-	private $attn;
-	private $cost_before_tax;
-	private $total_cost;
-	private $sales_tax;
-	private $monthly_total;
+	private $id,
+		$quote_customer,
+		$quote_type,
+		$quote_date,
+		$quote_status,
+		$job_name,
+		$job_address,
+		$job_city,
+		$job_zipcode,
+		$attn,
+		$cost_before_tax,
+		$total_cost,
+		$sales_tax,
+		$monthly_total;
 	
 	function __construct($id = '')
 	{
@@ -119,7 +119,7 @@ class Quote extends Model
 
 		$sql = 'SELECT * FROM quotes ' . $new_where . $limit;
 		$this->db->query($sql);
-		$res = $this->db->results('arr')
+		$res = $this->db->results('arr');
 		
 		foreach ($res as $con) {
 			array_push($list, new Quote($con['quote_id']));

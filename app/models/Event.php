@@ -6,110 +6,118 @@
 class Event extends Model
 {
 	
-	public $id;
-	public $title;
-	public $color;
-	public $start;
-	public $end;
-	public $order_id;
-	public $order;
+	public $id,
+		$title,
+		$color,
+		$start,
+		$end,
+		$order_id,
+		$order;
+		
+	public getId() { return $this->id; }
+	public getTitle() { return $this->title; }
+	public getColor() { return $this->color; }
+	public getStart() { return $this->start; }
+	public getEnd() { return $this->end; }
+	public getOrderId() { return $this->order_id; }
+	public getOrder() { return $this->order; }
 
+	public setId($id) { $this->id = $id; }
+	public setTitle($title) { $this->title = $title; }
+	public setColor($color) { $this->color = $color; }
+	public setStart($datetime) { $this->start = $datetime; }
+	public setEnd($datetime) { $this->end = $datetime; }
+	public setOrderId($id) { $this->order_id = $id; }
+	public setOrder($obj) { $this->order = $obj; }	
+	
 	function __construct($id = '')
 	{
 	
 		if($id != null){
 			$this->getDetails($id);
-			if($this->order_id != 0)
+			if($this->getOrderId() != 0)
 			{
 				$this->getOrderInfo();
 			}
 		} else {
-			$this->id = null;
+			$this->setId(null);
 		}
 		
 	}
 
 	public function getDetails($id)
 	{
-		$this->id = $id;
-		$this->db = new Database();
-		$this->db->select('events','*','','id = ' . $this->id);
-		$this->res = $this->db->getResult();
-		$this->db->disconnect();
+		
+		$this->setId($id);
+		$this->db->select('events',['id'=>$this->getId()]);
+		$res = $this->db->results('arr');
 
-		$this->title = $this->res[0]['title'];
-		$this->color = $this->res[0]['color'];
-		$this->start = $this->res[0]['start'];
-		$this->end = $this->res[0]['end'];
-		$this->order_id = $this->res[0]['order_id'];
-
-		$this->resetResDb();
+		$this->setTitle($res[0]['title']);
+		$this->setColor($res[0]['color']);
+		$this->setStart($res[0]['start']);
+		$this->setEnd($res[0]['end']);
+		$this->setOrderId($res[0]['order_id']);
+		
 	}
 
 	public function getOrderInfo()
 	{   
-		if($this->order_id != '')
+		if($this->getOrderId() != '')
 		{
-			$this->order = new Order($this->order_id);
+			$this->setOrder(new Order($this->getOrderId()));
 		} else {
-			$this->order = '';
+			$this->setOrder(null);
 		}
 	}
 
 	public function addEvent($id = null)
 	{
-		$this->db = new Database();
-
+		
 		if($id != null)
 		{
-			$this->order_id = $id;
+			$this->setOrderId($id);
 		}
 		$this->getOrderInfo();
 
-		$this->title = $this->order->order_customer;
-		$this->color = '#FF1493';
-		$this->start = $this->order->order_date.' '.$this->order->order_time;
-		$latertime = strtotime($this->start) + 60*60;
-		$this->end = date('Y/m/d H:i:s', $latertime);
+		$this->setTitle($this->order->order_customer);
+		$this->setColor('#FF1493');
+		$this->setStart($this->order->order_date.' '.$this->order->order_time);
+		$latertime = strtotime($this->getStart()) + 60*60;
+		$this->setEnd(date('Y/m/d H:i:s', $latertime));
 
-		$this->db->insert('events',array(
-			'title'=>$this->title,
-			'color'=>$this->color,
-			'start'=>$this->start,
-			'end'=>$this->end,
-			'order_id'=>$this->order_id
-			));
-		$this->res = $this->db->getResult();
-		if(!$this->res)
+		$this->db->insert('events',[
+			'title'=>$this->getTitle(),
+			'color'=>$this->getColor(),
+			'start'=>$this->getStart(),
+			'end'=>$this->getEnd(),
+			'order_id'=>$this->getOrderId()
+			]);
+		$res = $this->db->getResult();
+		if(!res)
 		{
 			echo 'There was an error inserting the event into the calendar!';
 		}
-
-		$this->db->disconnect();
-		$this->resetResDb();
+		
 	}
 
 	public function addCustomEvent()
 	{
-		$this->db = new Database();
 
 		// Post details.
-		$this->title = $_POST['title'];
-		$this->color = $_POST['color'];
-		$this->start = $_POST['start'];
-		$this->end = $_POST['end'];
-		$this->order_id = '';
+		$this->setTitle($_POST['title']);
+		$this->setColor($_POST['color']);
+		$this->setStart($_POST['start']);
+		$this->setEnd($_POST['end']);
+		$this->setOrderId('');
 
-		$this->db->insert('events',array('title'=>$this->title,
+		$this->db->insert('events',['title'=>$this->title,
 						'color'=>$this->color,
 						'start'=>$this->start,
 						'order_id'=>$this->order_id,
-						'end'=>$this->end));
+						'end'=>$this->end]);
 
-		$this->res = $this->db->getResult();
+		$res = $this->db->getResult();
 
-		$this->db->disconnect();
-		$this->resetResDb();
 	}
 
 	public function editEvent()

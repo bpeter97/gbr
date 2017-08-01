@@ -6,31 +6,21 @@
 class Calendar extends Model
 {
 
-    public $events = array();
-    
-    function __construct()
-    {
+	private $events = array();
 
-    }
+	public function getEvents()
+	{
 
-    public function getEvents()
-    {
-        // Connects upon creation.
-        $this->db = new Database();
+		$this->db->query('SELECT * FROM events');
+		$res = $this->db->results('arr');
 
-        $this->db->sql('SELECT * FROM events');
-        $this->res = $this->db->getResult();
-        $this->db->disconnect();
+		foreach ($res as $event) 
+		{
+			array_push($this->events, new Event($event['id']));
+		}
 
-        foreach ($this->res as $event) 
-        {
-            array_push($this->events, new Event($event['id']));
-        }
-
-        $this->resetResDb();
-        return $this->events;
-    }
-
+		return $this->events;
+	}
 
 }
 

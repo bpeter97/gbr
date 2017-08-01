@@ -5,165 +5,183 @@
 */
 class Customer extends Model
 {
-    
-    public $id;
-    public $customer_name;
-    public $customer_address1;
-    public $customer_address2;
-    public $customer_city;
-    public $customer_zipcode;
-    public $customer_state;
-    public $customer_phone;
-    public $customer_ext;
-    public $customer_fax;
-    public $customer_email;
-    public $customer_rdp;
-    public $customer_notes;
-    public $flag;
-    public $flag_reason;
+	
+	private $id,
+		$customer_name,
+		$customer_address1,
+		$customer_address2,
+		$customer_city,
+		$customer_zipcode,
+		$customer_state,
+		$customer_phone,
+		$customer_ext,
+		$customer_fax,
+		$customer_email,
+		$customer_rdp,
+		$customer_notes,
+		$flag,
+		$flag_reason;
+		
+	public getId() { return $this->id; }
+	public getCustomerName() { return $this->customer_name; }
+	public getCustomerAddress1() { return $this->customer_address1; }
+	public getCustomerAddress2() { return $this->customer_address2; }
+	public getCustomerCity() { return $this->customer_city; }
+	public getCustomerZipcode() { return $this->customer_zipcode; }
+	public getCustomerState() { return $this->customer_state; }
+	public getCustomerPhone() { return $this->customer_phone; }
+	public getCustomerExt() { return $this->; }
+	public getCustomerFax() { return $this->customer_; }
+	public getCustomerEmail() { return $this->customer_; }
+	public getCustomerRdp() { return $this->customer_; }
+	public getCustomerNotes() { return $this->customer_; }
+	public getFlag() { return $this->flag; }
+	public getFlagReason() { return $this->flag_reason; }
+	
+	public setId($id) { $this->id = $id; }
+	public setCustomerName($name) { $this->customer_name = $name; }
+	public setCustomerAddress1($address) { $this->customer_address1 = $address; }
+	public setCustomerAddress2($address) { $this->customer_address2 = $address; }
+	public setCustomerCity($city) { $this->customer_city = $city; }
+	public setCustomerZipcode($zipcode) { $this->customer_zipcode = $zipcode; }
+	public setCustomerState($state) { $this->customer_state = $state; }
+	public setCustomerPhone($phone) { $this->customer_phone = $phone; }
+	public setCustomerExt($ext) { $this-> = $ext; }
+	public setCustomerFax($fax) { $this->customer_ = $fax; }
+	public setCustomerEmail($email) { $this->customer_ = $email; }
+	public setCustomerRdp($rdp) { $this->customer_ = $rdp; }
+	public setCustomerNotes($notes) { $this->customer_ = $notes; }
+	public setFlag($flag) { $this->flag = $flag; }
+	public setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 
-    function __construct($id = '')
-    {
-        if($id != null){
-            $this->id = $id;
-            $this->getDetails($this->id);
-        } else {
-            $this->id = null;
-        }
-    }
+	function __construct($id = '')
+	{
+		if($id != null){
+			$this->setId($id);
+			$this->getDetails($this->getId());
+		}
+	}
 
-    // This function pulls the container details from the database and stores it in the object.
-    public function getDetails($id) 
-    {
+	// This function pulls the container details from the database and stores it in the object.
+	public function getDetails($id) 
+	{
 
-        // Get the containers details.
-        $this->id = $id;
-        $this->db = new Database();
-        $this->db->connect();
-        $this->db->select('customers','*','','customer_ID = ' . $this->id);
-        $this->res = $this->db->getResult();
+		// Get the containers details.
+		$this->setId($id);
+		$this->db->query('SELECT * FROM customers WHERE customer_ID = ' . $this->getId());
+		$res = $this->db->single();
 
-        // Assign details to attributes.
-        $this->customer_name = $this->res[0]['customer_name'];
-        $this->customer_address1 = $this->res[0]['customer_address1'];
-        $this->customer_address2 = $this->res[0]['customer_address2'];
-        $this->customer_city = $this->res[0]['customer_city'];
-        $this->customer_zipcode = $this->res[0]['customer_zipcode'];
-        $this->customer_state = $this->res[0]['customer_state'];
-        $this->customer_phone = $this->res[0]['customer_phone'];
-        $this->customer_ext = $this->res[0]['customer_ext'];
-        $this->customer_fax = $this->res[0]['customer_fax'];
-        $this->customer_email = $this->res[0]['customer_email'];
-        $this->customer_rdp = $this->res[0]['customer_rdp'];
-        $this->customer_notes = $this->res[0]['customer_notes'];
-        $this->flag = $this->res[0]['flagged'];
-        $this->flag_reason = $this->res[0]['flag_reason'];
+		// Assign details to attributes.
+		$this->setCustomerName($res->customer_name);
+		$this->setCustomerAddress1($res->customer_address1);
+		$this->setCustomerAddress2($res->customer_address2);
+		$this->setCustomerCity($res->customer_city);
+		$this->setCustomerZipcode($res->customer_zipcode);
+		$this->setCustomerState($res->customer_state);
+		$this->setCustomerPhone($res->customer_phone);
+		$this->setCustomerExt($res->customer_ext);
+		$this->setCustomerFax($res->customer_fax);
+		$this->setCustomerEmail($res->customer_email);
+		$this->setCustomerRdp($res->customer_rdp);
+		$this->setCustomerNotes($res->customer_notes);
+		$this->setFlag($res->flagged);
+		$this->setFlagReason($res->flag_reason);
+		
+	}
 
-        $this->db->disconnect();
-        $this->resetResDb();
-    }
+	// This function counts the number of customers in the database to be able to set up the number of pages to view.
+	public function countCustomers($where = '')
+	{
+		$row = '';
+		$new_where = '';
 
-    // This function counts the number of customers in the database to be able to set up the number of pages to view.
-    public function countCustomers($where = '')
-    {
-        $row = '';
-        $new_where = '';
-        $this->db = new Database();
-        $this->db->connect();
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
-        $this->db->sql('SELECT COUNT(customer_ID) FROM customers '. $new_where);
-        $this->res = $this->db->getResult();
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
+		$this->db->query('SELECT COUNT(customer_ID) FROM customers '. $new_where);
+		$res = $this->db->results('arr');
 
-        foreach($this->res as $count){
-            $row = $count['COUNT(customer_ID)'];
-        }
+		foreach($res as $count){
+			$row = $count['COUNT(customer_ID)'];
+		}
+		
+		return $row;
+	}
 
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $row;
-    }
+	// Simply pulls the customers in the database depending on params.
+	public function getCustomers($where = '', $limit = '', $filter = '')
+	{
+		$list = array();
 
-    // Simply pulls the customers in the database depending on params.
-    public function getCustomers($where = '', $limit = '', $filter = '')
-    {
-        $list = array();
-        $this->db = new Database();
+		$new_where = '';
+		if($where != ''){
+			$new_where = 'WHERE '. $where .' ';
+		}
 
-        $new_where = '';
-        if($where != ''){
-            $new_where = 'WHERE '. $where .' ';
-        }
+		if($filter == ''){
+			$sql = 'SELECT * FROM customers ' . $new_where . $limit;
+			$this->db->query($sql);
+			$res = $this->db->results('arr');
+		} else {
+			$sql = 'SELECT * FROM customers WHERE customer_name LIKE "' . $filter .'%" ORDER BY customer_name ' . $limit;
+			$this->db->query($sql);
+			$res = $this->db->results('arr');
+		}
 
-        if($filter == ''){
-            $sql = 'SELECT * FROM customers ' . $new_where . $limit;
-            $this->db->sql($sql);
-            $this->res = $this->db->getResult();
-        } else {
-            $sql = 'SELECT * FROM customers WHERE customer_name LIKE "' . $filter .'%" ORDER BY customer_name ' . $limit;
-            $this->db->sql($sql);
-            $this->res = $this->db->getResult();
-        }
+		foreach ($res as $cus) {
+			array_push($list, new Customer($cus['customer_ID']));
+		}
 
-        foreach ($this->res as $cus) {
-            array_push($list, new Customer($cus['customer_ID']));
-        }
-        $this->db->disconnect();
-        $this->resetResDb();
-        return $list;
-    }
+		return $list;
+	}
 
-    // Function to insert new customer into database.
-    public function create()
-    {
-        // Returning result, so using $result instead of $this->res.
-        $result = '';
+	// Function to insert new customer into database.
+	public function create()
+	{
+		// Returning result, so using $result instead of $this->res.
+		$result = '';
 
-        $this->postData();
+		$this->postData();
 
-        $this->db = new Database();
-        $this->db->insert('customers',array(
-                                        'customer_name'=>$this->customer_name,
-                                        'customer_address1'=>$this->customer_address1,
-                                        'customer_address2'=>$this->customer_address2,
-                                        'customer_city'=>$this->customer_city,
-                                        'customer_zipcode'=>$this->customer_zipcode,
-                                        'customer_state'=>$this->customer_state,
-                                        'customer_phone'=>$this->customer_phone,
-                                        'customer_ext'=>$this->customer_ext,
-                                        'customer_fax'=>$this->customer_fax,
-                                        'customer_email'=>$this->customer_email,
-                                        'customer_rdp'=>$this->customer_rdp,
-                                        'customer_notes'=>$this->customer_notes,
-                                        'flagged'=>$this->flag,
-                                        'flag_reason'=>$this->flag_reason));
+		$this->db->insert('customers',[
+				'customer_name'=>$this->getCustomerName(),
+				'customer_address1'=>$this->getCustomerAddress1(),
+				'customer_address2'=>$this->getCustomerAddress2(),
+				'customer_city'=>$this->getCustomerCity(),
+				'customer_zipcode'=>$this->getCustomerZipcode(),
+				'customer_state'=>$this->getCustomerState(),
+				'customer_phone'=>$this->getCustomerPhone(),
+				'customer_ext'=>$this->getCustomerExt(),
+				'customer_fax'=>$this->getCustomerFax(),
+				'customer_email'=>$this->getCustomerEmail(),
+				'customer_rdp'=>$this->getCustomerRdp(),
+				'customer_notes'=>$this->getCustomerNotes(),
+				'flagged'=>$this->getFlag(),
+				'flag_reason'=>$this->getFlagReason()]);
 
-        $result = $this->db->getResult();
-        $this->db->disconnect();
-        $this->resetResDb();
+		$result = $this->db->results('arr');
 
-        return $result;
-    }
+		return $result;
+	}
 
-    // Simple function to post data.
-    public function postData()
-    {
-        $this->customer_name = $_POST['frmcname'];
-        $this->customer_address1 = $_POST['frmcaddy1'];
-        $this->customer_address2 = $_POST['frmcaddy2'];
-        $this->customer_city= $_POST['frmccity'];
-        $this->customer_zipcode = $_POST['frmczipcode'];
-        $this->customer_state = $_POST['frmcstate'];
-        $this->customer_phone =  $_POST['frmcpnumber'];
-        $this->customer_ext  = $_POST['frmcext'];
-        $this->customer_fax = $_POST['frmcfnumber'];
-        $this->customer_email = $_POST['frmcemail'];
-        $this->customer_rdp = $_POST['frmcrdp'];
-        $this->customer_notes = $_POST['frmcnotes'];
-        $this->flag = $_POST['frmflaggedq'];
-        $this->flag_reason = $_POST['frmflagreason'];
-    }
+	// Simple function to post data.
+	public function postData()
+	{
+		$this->setCustomerName($_POST['frmcname']);
+		$this->setCustomerAddress1($_POST['frmcaddy1']);
+		$this->setCustomerAddress2($_POST['frmcaddy2']);
+		$this->setCustomerCity($_POST['frmccity']);
+		$this->setCustomerZipcode($_POST['frmczipcode']);
+		$this->setCustomerState($_POST['frmcstate']);
+		$this->setCustomerPhone( $_POST['frmcpnumber']);
+		$this->setCustomerExt($_POST['frmcext']);
+		$this->setCustomerFax($_POST['frmcfnumber']);
+		$this->setCustomerEmail($_POST['frmcemail']);
+		$this->setCustomerRdp($_POST['frmcrdp']);
+		$this->setCustomerNotes($_POST['frmcnotes']);
+		$this->setFlag($_POST['frmflaggedq']);
+		$this->setFlagReason($_POST['frmflagreason']);
+	}
 }
 
 ?>
