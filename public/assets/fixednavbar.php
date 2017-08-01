@@ -16,27 +16,30 @@
     }
 
     $curl = getCurrentURL();
+    
+    $main_website = Config::get('site/http').Config::get('site/httpurl');
+    $index = Config::get('site/http').Config::get('site/httpurl');
 
-    $index = HTTP.HTTPURL.PUB;
+    $con_array = array(
+                        $main_website.Config::get('site/containers').'/resalecontainers',
+                        $main_website.Config::get('site/containers').'/currentrentals',
+                        $main_website.Config::get('site/containers').'/masterlist',
+                        $main_website.Config::get('site/containers').'/rentalcontainers',
+                        $main_website.Config::get('site/containers').'/create'
+                        );
 
-    $con_array = array(HTTP.HTTPURL.PUB.CONTAINERS.'/resalecontainers',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/masterlist',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/rentalcontainers',
-                        HTTP.HTTPURL.PUB.CONTAINERS.'/create');
+    $cust_array = array($main_website.Config::get('site/customers'),
+                        $main_website.Config::get('site/customers').'/create');
 
-    $cust_array = array(HTTP.HTTPURL.PUB.CUSTOMERS,
-                        HTTP.HTTPURL.PUB.CUSTOMERS.'/create');
+    $quote_array = array($main_website.Config::get('site/quotes').'/masterlist',
+                        $main_website.Config::get('site/quotes').'/create');
 
-    $quote_array = array(HTTP.HTTPURL.PUB.QUOTES.'/masterlist',
-                        HTTP.HTTPURL.PUB.QUOTES.'/create');
+    $order_array = array($main_website.Config::get('site/orders').'/create',
+                        $main_website.Config::get('site/orders').'/masterlist');
 
-    $order_array = array(HTTP.HTTPURL.PUB.ORDERS.'/create',
-                        HTTP.HTTPURL.PUB.ORDERS.'/masterlist');
+    $cal_url = $main_website.'/calendar';
 
-    $cal_url = HTTP.HTTPURL.VIEW.'/calendar.php';
-
-    $prod_url = HTTP.HTTPURL.PUB.PRODUCTS.'/products';
+    $prod_url = $main_website.'/products';
 
     $index_active = "";
     $containers_active = "";
@@ -69,7 +72,7 @@
             $cog = '<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-delay="10000" data-close-others="true" style=""><span class="glyphicon glyphicon-cog"></span></a>
                         <ul class="dropdown-menu main-dropdown-effects">
-                            <li><a href="'.HTTP.HTTPURL.VIEW.'/users.php">View / Edit Users</a></li>
+                            <li><a href="'.$main_website.'/users.php">View / Edit Users</a></li>
                             <li><a href="#">View / Edit Taxrates</a></li>
                         </ul>
                     </li>';
@@ -80,44 +83,44 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <img height="25" src="'.HTTP.HTTPURL.PUB.IMG.'/logo.png">
+                    <img height="25" src="'.$main_website.Config::get('site/resources/img').'/logo.png">
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" id="myNavbar">
                         <li class="'.$index_active.'"><a href="'.$index.'">Home</a></li>
                         <li class="dropdown '.$containers_active.'">
-                            <a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Containers <span class="caret"></span></a>
+                            <a href="'.$main_website.Config::get('site/containers').'/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Containers <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                            	<li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/create">Create Container</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/masterlist">Master List</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/rentalcontainers">Rental Fleet</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/currentrentals">Currently Rented</a></li>
-                                <li><a href="'. HTTP.HTTPURL.PUB.CONTAINERS . '/resalecontainers">Resale Fleet</a></li>
+                            	<li><a href="'. $main_website.Config::get('site/containers') . '/create">Create Container</a></li>
+                                <li><a href="'. $main_website.Config::get('site/containers') . '/masterlist">Master List</a></li>
+                                <li><a href="'. $main_website.Config::get('site/containers') . '/rentalcontainers">Rental Fleet</a></li>
+                                <li><a href="'. $main_website.Config::get('site/containers') . '/currentrentals">Currently Rented</a></li>
+                                <li><a href="'. $main_website.Config::get('site/containers') . '/resalecontainers">Resale Fleet</a></li>
                             </ul>
                         </li>
                         <li class="dropdown '.$customers_active.'">
-                        	<a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Customers <span class="caret"></a>
+                        	<a href="'.$main_website.Config::get('site/customers').'" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Customers <span class="caret"></a>
                         	<ul class="dropdown-menu main-dropdown-effects">
-                        		<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/create">Create Customer</a></li>
-                        		<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/">View Customers</a></li>
+                        		<li><a href="'.$main_website.Config::get('site/customers').'/create">Create Customer</a></li>
+                        		<li><a href="'.$main_website.Config::get('site/customers').'/">View Customers</a></li>
                         	</ul>
                         </li>
                         <li class="dropdown '.$quotes_active.'">
                         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Quotes <span class="caret"></span></a>
                         	<ul class="dropdown-menu main-dropdown-effects">
-                        		<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/create_quote.php">Create Quote</a></li>
-                        		<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/quotes.php">View Quotes</a></li>
+                        		<li><a href="'.$main_website.Config::get('site/quotes').'/create_quote.php">Create Quote</a></li>
+                        		<li><a href="'.$main_website.Config::get('site/quotes').'/quotes.php">View Quotes</a></li>
                         	</ul>
                         </li>
                         <li class="dropdown '.$orders_active.'">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Orders <span class="caret"></span></a>
                             <ul class="dropdown-menu main-dropdown-effects">
-                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create/sales">Create Sale Order</a></li>
-                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/create/rental">Create Rental Order</a></li>
-                                <li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/">View Orders</a></li>
+                                <li><a href="'.$main_website.Config::get('site/orders').'/create/sales">Create Sale Order</a></li>
+                                <li><a href="'.$main_website.Config::get('site/orders').'/create/rental">Create Rental Order</a></li>
+                                <li><a href="'.$main_website.Config::get('site/orders').'/">View Orders</a></li>
                             </ul>
                         </li>
-                        <li class="'.$prod_active.'"><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/">Products</a></li>
+                        <li class="'.$prod_active.'"><a href="'.$main_website.Config::get('site/products').'/">Products</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="welcome_msg">Welcome, '.$_SESSION['userfname'].' '.$_SESSION['userlname'].'!</li>
@@ -125,7 +128,7 @@
                         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-delay="10000" data-close-others="true" style=""><span class="glyphicon glyphicon-search"></span></a>
                             <div class="dropdown-menu main-dropdown-effects" style="width: 415px;">
                             	<div id="#sbox">
-	                                <form action="'.HTTP.HTTPURL.VIEW.'/search.php" method="post">
+	                                <form action="'.$main_website.'/view/search.php" method="post">
 					                <ul class="nav navbar-nav">
 					                    <li style="margin-left: 10px;">
 					                        <select class="form-control" name="category" id="category">
@@ -146,7 +149,7 @@
                             </div>
                         </li>
                         '.$cog.'
-                        <li><a href="'.HTTP.HTTPURL.PUB.'/home/logout" style="margin-right:5px;"><span class="glyphicon glyphicon-lock"></span></a></li>
+                        <li><a href="'.$main_website.'/home/logout" style="margin-right:5px;"><span class="glyphicon glyphicon-lock"></span></a></li>
                     </ul>
                 </div>
             </div>

@@ -1,17 +1,4 @@
-<?php
-
-    // // Create URL to CFG/SETTINGS.PHP file.
-    // $cfgurl = $_SERVER['DOCUMENT_ROOT'];
-    // $cfgurl .= "public/app/core/settings.php";
-
-    // //Variable Constants
-    // include($cfgurl);
-
-    // This is simply to remove some of the extra <script> tags laying around.
-
-    echo '
-
-    	<!-- Menu Toggle Script -->
+    <!-- Menu Toggle Script -->
         <script>
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
@@ -41,16 +28,7 @@
             }
         }
         </script>
-        <script src="'.HTTP.HTTPURL.PUB.JS.'/bootstrap.min.js"></script>
+        <script src="<?= Config::get('site/http').Config::get('site/httpurl').Config::get('site/resources/js').'/bootstrap.min.js'; ?>"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    ';
-
-
-
-    
-
-
-
-?>
