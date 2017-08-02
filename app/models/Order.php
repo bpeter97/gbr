@@ -31,14 +31,64 @@ class Order extends Model
 		$date_delivered,
 		$container,
 		$products = array();
+		
+	public getId() { return $this->id; }
+	public getQuoteId() { return $this->quote_id; }
+	public getOrderCustomer() { return $this->order_customer; }
+	public getOrderDate() { return $this->order_date; }
+	public getOrderTime() { return $this->order_time; }
+	public getOrderType() { return $this->order_type; }
+	public getJobName() { return $this->job_name; }
+	public getJobCity() { return $this->job_city; }
+	public getJobAddress() { return $this->job_address; }
+	public getJobZipcode() { return $this->job_zipcode; }
+	public getOrderedBy() { return $this->ordered_by; }
+	public getOnsiteContact() { return $this->onsite_contact; }
+	public getOnsiteContactPhone() { return $this->onsite_contact_phone; }
+	public getTaxRate() { return $this->tax_rate; }
+	public getCostBeforeTax() { return $this->cost_before_tax; }
+	public getTotalCost() { return $this->total_cost; }
+	public getSalesTax() { return $this->sales_tax; }
+	public getMonthlyTotal() { return $this->monthly_total; }
+	public getStage() { return $this->stage; }
+	public getDriver() { return $this->driver; }
+	public getDriverNotes() { return $this->driver_notes; }
+	public getDelivered() { return $this->delivered; }
+	public getDateDelivered() { return $this->date_delivered; }
+	public getContainer() { return $this->container; }
 	
+	public setId($id) { $this->id = $id; }
+	public setQuoteId($id) { $this->quote_id = $id; }
+	public setOrderCustomer($name) { $this->order_customer = $name; }
+	public setOrderDate($datetime) { $this->order_date = $datetime; }
+	public setOrderTime($datetime) { $this->order_time = $datetime; }
+	public setOrderType($type) { $this->order_type = $type; }
+	public setJobName($name) { $this->job_name = $name; }
+	public setJobCity($city) { $this->job_city = $city; }
+	public setJobAddress($address) { $this->job_address = $address; }
+	public setJobZipcode($zipcode) { $this->job_zipcode = $zipcode; }
+	public setOrderedBy($name) { $this->ordered_by = $name; }
+	public setOnsiteContact($name) { $this->onsite_contact = $name; }
+	public setOnsiteContactPhone($phone) { $this->onsite_contact_phone = $phone; }
+	public setTaxRate($tax_rate) { $this->tax_rate = $tax_rate; }
+	public setCostBeforeTax($cost_before_tax) { $this->cost_before_tax = $cost_before_tax; }
+	public setTotalCost($cost) { $this->total_cost = $cost; }
+	public setSalesTax($cost) { $this->sales_tax = $cost; }
+	public setMonthlyTotal($cost) { $this->monthly_total = $cost; }
+	public setStage($stage) { $this->stage = $stage; }
+	public setDriver($name) { $this->driver = $name; }
+	public setDriverNotes($notes) { $this->driver_notes = $notes; }
+	public setDelivered($bool) { $this->delivered = $bool; }
+	public setDateDelivered($datetime) { $this->date_delivered = $datetime; }
+	public setContainer($container) { $this->container = $container; }
+
 	function __construct($id = '')
 	{
 		if($id != null){
-			$this->id = $id;
+			$this->setId($id);
 			$this->getDetails();
 		} else {
-			$this->id = null;
+			$this->setId(null);
 		}
 	}
 
@@ -46,41 +96,41 @@ class Order extends Model
 	{
 
 		// Get the quote details.
-		$this->db->select('orders','*','','order_id = ' . $this->id);
-		$res = $this->db->results('arr');
+		$this->db->select('orders',['order_id'=>$this->getId()]);
+		$res = $this->db->single();
 
 		if($id != null)
 		{
-			$this->id = $id;
+			$this->setId($id);
 		} 
 		else 
 		{
-			$this->id = $res[0]['order_id'];
+			$this->setId($res->order_id);
 		}
 		// Assign details to attributes.
-		$this->quote_id = $res[0]['quote_id'];
-		$this->order_customer = $res[0]['order_customer'];
-		$this->order_date = $res[0]['order_date'];
-		$this->order_time = $res[0]['order_time'];
-		$this->order_type = $res[0]['order_type'];
-		$this->job_name = $res[0]['job_name'];
-		$this->job_city = $res[0]['job_city'];
-		$this->job_address = $res[0]['job_address'];
-		$this->job_zipcode = $res[0]['job_zipcode'];
-		$this->ordered_by = $res[0]['ordered_by'];
-		$this->onsite_contact = $res[0]['onsite_contact'];
-		$this->onsite_contact_phone = $res[0]['onsite_contact_phone'];
-		$this->tax_rate = $res[0]['tax_rate'];
-		$this->cost_before_tax = $res[0]['cost_before_tax'];
-		$this->total_cost = $res[0]['total_cost'];
-		$this->sales_tax = $res[0]['sales_tax'];
-		$this->monthly_total = $res[0]['monthly_total'];
-		$this->stage = $res[0]['stage'];
-		$this->driver = $res[0]['driver'];
-		$this->driver_notes = $res[0]['driver_notes'];
-		$this->delivered = $res[0]['delivered'];
-		$this->date_delivered = $res[0]['date_delivered'];
-		$this->container = $res[0]['container'];
+		$this->setQuoteId($res->quote_id);
+		$this->setOrderCustomer($res->order_customer);
+		$this->setOrderDate($res->order_date);
+		$this->setOrderTime($res->order_time);
+		$this->setOrderType($res->order_type);
+		$this->setJobName($res->job_name);
+		$this->setJobCity($res->job_city);
+		$this->setJobAddress($res->job_address);
+		$this->setJobZipcode($res->job_zipcode);
+		$this->setOrderedBy($res->ordered_by);
+		$this->setOnsiteContact($res->onsite_contact);
+		$this->setOnsiteContactPhone($res->onsite_contact_phone);
+		$this->setTaxRate($res->tax_rate);
+		$this->setCostBeforeTax($res->cost_before_tax);
+		$this->setTotalCost($res->total_cost);
+		$this->setSalesTax($res->sales_tax);
+		$this->setMonthlyTotal($res->monthly_total);
+		$this->setStage($res->stage);
+		$this->setDriver($res->driver);
+		$this->setDriverNotes($res->driver_notes);
+		$this->setDelivered($res->delivered);
+		$this->setDateDelivered($res->date_delivered);
+		$this->setContainer($res->container);
 		$this->getOrderProducts();
 		
 	}
@@ -130,15 +180,15 @@ class Order extends Model
 	public function getOrderProducts()
 	{
 
-		$this->db->query('SELECT * FROM product_orders WHERE order_id = '.$this->id);
+		$this->db->query('SELECT * FROM product_orders WHERE order_id = '.$this->getId());
 		$res = $this->db->results('arr');
 		foreach($res as $orderedProd)
 		{
 			$product = new Product($orderedProd['product_id']);
-			$product->product_cost = $orderedProd['product_cost'];
-			$product->product_qty = $orderedProd['product_qty'];
-			$product->product_type = $orderedProd['product_type'];
-			$product->order_id = $this->id;
+			$product->setProductCost($orderedProd['product_cost']);
+			$product->setProductQuantity($orderedProd['product_qty']);
+			$product->setProductType($orderedProd['product_type']);
+			$product->setOrderId($this->getId());
 
 			array_push($this->products, $product);
 		}
@@ -153,44 +203,44 @@ class Order extends Model
 	{
 
 		// Post the data from the order form.
-		$this->order_date = $_POST['frmorderdate'];
-		$this->order_time = $_POST['frmordertime'];
-		$this->order_customer = $_POST['frmcustomername'];
-		$this->ordered_by = $_POST['frmorderedby'];
-		$this->order_type = $_POST['frmordertype'];
-		$this->job_name = $_POST['frmjobname'];
-		$this->job_address = $_POST['frmjobaddress'];
-		$this->job_city = $_POST['frmjobcity'];
-		$this->job_zipcode = $_POST['frmjobzipcode'];
+		$this->setOrderDate($_POST['frmorderdate']);
+		$this->setOrderTime($_POST['frmordertime']);
+		$this->setOrderCustomer($_POST['frmcustomername']);
+		$this->setOrderedBy($_POST['frmorderedby']);
+		$this->setOrderType($_POST['frmordertype']);
+		$this->setJobName($_POST['frmjobname']);
+		$this->setJobAddress($_POST['frmjobaddress']);
+		$this->setJobCity($_POST['frmjobcity']);
+		$this->setJobZipcode($_POST['frmjobzipcode']);
 		// Here we are going to post the tax rate and turn it into a float.
 		$unformatted_tax_rate = $_POST['frmtaxrate'];
-		$this->tax_rate = (float)$unformatted_tax_rate;
-		$this->onsite_contact = $_POST['frmcontact'];
-		$this->onsite_contact_phone = $_POST['frmcontactphone'];
-		$this->total_cost = $_POST['cartTotalCost'];
-		$this->sales_tax = $_POST['cartTax'];
-		$this->cost_before_tax = $_POST['cartBeforeTaxCost'];
+		$this->setTaxRate((float)$unformatted_tax_rate);
+		$this->setOnsiteContact($_POST['frmcontact']);
+		$this->setOnsiteContactPhone($_POST['frmcontactphone']);
+		$this->setTotalCost($_POST['cartTotalCost']);
+		$this->setSalesTax($_POST['cartTax']);
+		$this->setCostBeforeTax($_POST['cartBeforeTaxCost']);
 		// Assigning stage as one since it is a newly created order.
 		$this->stage = 1;
 
 		// Need to insert the new order into the database.
-		$this->db->insert('orders',array(
-				'order_customer'=>$this->order_customer,
-				'order_date'=>$this->order_date,
-				'order_time'=>$this->order_time,
-				'order_type'=>$this->order_type,
-				'job_name'=>$this->job_name,
-				'job_city'=>$this->job_city,
-				'job_address'=>$this->job_address,
-				'job_zipcode'=>$this->job_zipcode,
-				'ordered_by'=>$this->ordered_by,
-				'onsite_contact'=>$this->onsite_contact,
-				'onsite_contact_phone'=>$this->onsite_contact_phone,
-				'tax_rate'=>$this->tax_rate,
-				'cost_before_tax'=>$this->cost_before_tax,
-				'total_cost'=>$this->total_cost,
-				'sales_tax'=>$this->sales_tax,
-				'stage'=>$this->stage));
+		$this->db->insert('orders',[
+				'order_customer'=>$this->getOrderCustomer(),
+				'order_date'=>$this->getOrderDate(),
+				'order_time'=>$this->getOrderTime(),
+				'order_type'=>$this->getOrderType(),
+				'job_name'=>$this->getJobName(),
+				'job_city'=>$this->getJobCity(),
+				'job_address'=>$this->getJobAddress(),
+				'job_zipcode'=>$this->getJobZipcode(),
+				'ordered_by'=>$this->getOrderedBy(),
+				'onsite_contact'=>$this->getOnsiteContact(),
+				'onsite_contact_phone'=>$this->getOnsiteContactPhone(),
+				'tax_rate'=>$this->getTaxRate(),
+				'cost_before_tax'=>$this->getCostBeforeTax(),
+				'total_cost'=>$this->getTotalCost(),
+				'sales_tax'=>$this->getSalesTax(),
+				'stage'=>$this->getStage()]);
 
 		$res = $this->db->results('arr');
 
@@ -216,17 +266,17 @@ class Order extends Model
 		{
 			$post_product = json_decode($_POST['product'.$i], true);
 			$new_product = new Product($post_product['id']);
-			$new_product->product_qty = $post_product['qty'];
-			$new_product->product_cost = $post_product['cost'];
+			$new_product->setProductQuantity($post_product['qty']);
+			$new_product->setProductCost($post_product['cost']);
 			$i++;
 
 			$this->db->insert('product_orders',array('order_id'=>$this->id,
-							'product_type'=>$new_product->item_type,
-							'product_msn'=>$new_product->mod_short_name,
-							'product_cost'=>$new_product->product_cost,
-							'product_qty'=>$new_product->product_qty,
-							'product_name'=>$new_product->mod_name,
-							'product_id'=>$new_product->id));
+							'product_type'=>$new_product->getProductType(),
+							'product_msn'=>$new_product->getModShortName(),
+							'product_cost'=>$new_product->getProductCost(),
+							'product_qty'=>$new_product->getProductQuantity(),
+							'product_name'=>$new_product->getModName(),
+							'product_id'=>$new_product->getId()));
 
 			$res = $this->db->results('arr');
 		}

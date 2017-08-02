@@ -21,7 +21,6 @@ class Containers extends Controller
 	// This will be the page that shows all of the current containers.
 	public function masterlist()
 	{
-		$this->checkSession();
 		if($this->checkLogin())
 		{
 			$container = $this->model('Container');
@@ -48,7 +47,6 @@ class Containers extends Controller
 	// This page shows all of the rental containers in the database.
 	public function rentalcontainers()
 	{
-		$this->checkSession();
 		if($this->checkLogin())
 		{
 			$container = $this->model('Container');
@@ -74,7 +72,6 @@ class Containers extends Controller
 	// This page shows all of the currently rented containers.
 	public function currentrentals()
 	{
-		$this->checkSession();
 		if($this->checkLogin())
 		{
 			$container = $this->model('Container');
@@ -99,7 +96,6 @@ class Containers extends Controller
 
 	public function resalecontainers()
 	{
-		$this->checkSession();
 		if($this->checkLogin())
 		{
 			$container = $this->model('Container');
