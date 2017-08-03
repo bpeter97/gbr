@@ -31,47 +31,49 @@ class Container extends Model
 		$flag_reason,
 		$container_size_code;
 		
-	public getId() { return $this->id; }
-	public getReleaseNumber() { return $this->release_number; }
-	public getContainerSize() { return $this->container_size; }
-	public getContainerSerialNumber() { return $this->container_serial_number; }
-	public getContainerNumber() { return $this->container_number; }
-	public getContainerShelves() { return $this->container_shelves; }
-	public getContainerPaint() { return $this->container_paint; }
-	public getContainerOnboxNumbers() { return $this->container_onbox_numbers; }
-	public getContainerSigns() { return $this->container_signs; }
-	public getRentalResale() { return $this->rental_resale; }
-	public getIsRented() { return $this->is_rented; }
-	public getContainerAddress() { return $this->container_address; }
-	public getLatitude() { return $this->latitude; }
-	public getLongitude() { return $this->longitude; }
-	public getType() { return $this->type; }
-	public getFlag() { return $this->flag; }
-	public getFlagReason() { return $this->flag_reason; }
-	public getContainerSizeCode() { return $this->container_size_code; }
+	public function getId() { return $this->id; }
+	public function getReleaseNumber() { return $this->release_number; }
+	public function getContainerSize() { return $this->container_size; }
+	public function getContainerSerialNumber() { return $this->container_serial_number; }
+	public function getContainerNumber() { return $this->container_number; }
+	public function getContainerShelves() { return $this->container_shelves; }
+	public function getContainerPaint() { return $this->container_paint; }
+	public function getContainerOnboxNumbers() { return $this->container_onbox_numbers; }
+	public function getContainerSigns() { return $this->container_signs; }
+	public function getRentalResale() { return $this->rental_resale; }
+	public function getIsRented() { return $this->is_rented; }
+	public function getContainerAddress() { return $this->container_address; }
+	public function getLatitude() { return $this->latitude; }
+	public function getLongitude() { return $this->longitude; }
+	public function getType() { return $this->type; }
+	public function getFlag() { return $this->flag; }
+	public function getFlagReason() { return $this->flag_reason; }
+	public function getContainerSizeCode() { return $this->container_size_code; }
 	
-	public setId($id) { $this->id = $id; }
-	public setReleaseNumber($num) { $this->release_number = $num; }
-	public setContainerSize($size) { $this->container_size = $size ; }
-	public setContainerSerialNumber($num) { $this->container_serial_number = $num; }
-	public setContainerNumber($num) { $this->container_number = $num; }
-	public setContainerShelves($bool) { $this->container_shelves = $bool; }
-	public setContainerPaint($bool) { $this->container_paint = $bool; }
-	public setContainerOnboxNumbers($num) { $this->container_onbox_numbers = $num; }
-	public setContainerSigns($bool) { $this->container_signs = $bool; }
-	public setRentalResale($bool) { $this->rental_resale = $bool; }
-	public setIsRented($bool) { $this->is_rented = $bool; }
-	public setContainerAddress($address) { $this->container_address = $address; }
-	public setLatitude($lat) { $this->latitude = $lat; }
-	public setLongitude($long) { $this->longitude = $long; }
-	public setType($type) { $this->type = $type; }
-	public setFlag($bool) { $this->flag = $bool; }
-	public setFlagReason($reason) { $this->flag_reason = $reason; }
-	public setContainerSizeCode($code) { $this->container_size_code = $code; }
+	public function setId($id) { $this->id = $id; }
+	public function setReleaseNumber($num) { $this->release_number = $num; }
+	public function setContainerSize($size) { $this->container_size = $size ; }
+	public function setContainerSerialNumber($num) { $this->container_serial_number = $num; }
+	public function setContainerNumber($num) { $this->container_number = $num; }
+	public function setContainerShelves($bool) { $this->container_shelves = $bool; }
+	public function setContainerPaint($bool) { $this->container_paint = $bool; }
+	public function setContainerOnboxNumbers($num) { $this->container_onbox_numbers = $num; }
+	public function setContainerSigns($bool) { $this->container_signs = $bool; }
+	public function setRentalResale($bool) { $this->rental_resale = $bool; }
+	public function setIsRented($bool) { $this->is_rented = $bool; }
+	public function setContainerAddress($address) { $this->container_address = $address; }
+	public function setLatitude($lat) { $this->latitude = $lat; }
+	public function setLongitude($long) { $this->longitude = $long; }
+	public function setType($type) { $this->type = $type; }
+	public function setFlag($bool) { $this->flag = $bool; }
+	public function setFlagReason($reason) { $this->flag_reason = $reason; }
+	public function setContainerSizeCode($code) { $this->container_size_code = $code; }
 	
 	// Assign the id property the ID and the db property that was passed when the object was created.
-	function __construct($id = '') {
-
+	function __construct($id = '') 
+	{
+		$this->db = Database::getDBI();
+		
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails($this->getId());

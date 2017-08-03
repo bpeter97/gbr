@@ -23,6 +23,7 @@ class Quote extends Model
 	
 	function __construct($id = '')
 	{
+		$this->db = Database::getDBI();
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails();

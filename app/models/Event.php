@@ -14,25 +14,26 @@ class Event extends Model
 		$order_id,
 		$order;
 		
-	public getId() { return $this->id; }
-	public getTitle() { return $this->title; }
-	public getColor() { return $this->color; }
-	public getStart() { return $this->start; }
-	public getEnd() { return $this->end; }
-	public getOrderId() { return $this->order_id; }
-	public getOrder() { return $this->order; }
+	public function getId() { return $this->id; }
+	public function getTitle() { return $this->title; }
+	public function getColor() { return $this->color; }
+	public function getStart() { return $this->start; }
+	public function getEnd() { return $this->end; }
+	public function getOrderId() { return $this->order_id; }
+	public function getOrder() { return $this->order; }
 
-	public setId($id) { $this->id = $id; }
-	public setTitle($title) { $this->title = $title; }
-	public setColor($color) { $this->color = $color; }
-	public setStart($datetime) { $this->start = $datetime; }
-	public setEnd($datetime) { $this->end = $datetime; }
-	public setOrderId($id) { $this->order_id = $id; }
-	public setOrder($obj) { $this->order = $obj; }	
+	public function setId($id) { $this->id = $id; }
+	public function setTitle($title) { $this->title = $title; }
+	public function setColor($color) { $this->color = $color; }
+	public function setStart($datetime) { $this->start = $datetime; }
+	public function setEnd($datetime) { $this->end = $datetime; }
+	public function setOrderId($id) { $this->order_id = $id; }
+	public function setOrder($obj) { $this->order = $obj; }	
 	
 	function __construct($id = '')
 	{
-	
+		$this->db = Database::getDBI();
+		
 		if($id != null){
 			$this->getDetails($id);
 			if($this->getOrderId() != 0)
@@ -49,14 +50,15 @@ class Event extends Model
 	{
 		
 		$this->setId($id);
-		$this->db->select('events',['id'=>$this->getId()]);
-		$res = $this->db->results('arr');
+		$sql = 'SELECT * FROM events WHERE id = ?';
+		$this->db->query($sql, array($id));
+		$res = $this->db->single();
 
-		$this->setTitle($res[0]['title']);
-		$this->setColor($res[0]['color']);
-		$this->setStart($res[0]['start']);
-		$this->setEnd($res[0]['end']);
-		$this->setOrderId($res[0]['order_id']);
+		$this->setTitle($res->title);
+		$this->setColor($res->color);
+		$this->setStart($res->start);
+		$this->setEnd($res->end);
+		$this->setOrderId($res->order_id);
 		
 	}
 

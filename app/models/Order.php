@@ -29,61 +29,62 @@ class Order extends Model
 		$driver_notes,
 		$delivered,
 		$date_delivered,
-		$container,
-		$products = array();
+		$container;
+	public $products = array();
 		
-	public getId() { return $this->id; }
-	public getQuoteId() { return $this->quote_id; }
-	public getOrderCustomer() { return $this->order_customer; }
-	public getOrderDate() { return $this->order_date; }
-	public getOrderTime() { return $this->order_time; }
-	public getOrderType() { return $this->order_type; }
-	public getJobName() { return $this->job_name; }
-	public getJobCity() { return $this->job_city; }
-	public getJobAddress() { return $this->job_address; }
-	public getJobZipcode() { return $this->job_zipcode; }
-	public getOrderedBy() { return $this->ordered_by; }
-	public getOnsiteContact() { return $this->onsite_contact; }
-	public getOnsiteContactPhone() { return $this->onsite_contact_phone; }
-	public getTaxRate() { return $this->tax_rate; }
-	public getCostBeforeTax() { return $this->cost_before_tax; }
-	public getTotalCost() { return $this->total_cost; }
-	public getSalesTax() { return $this->sales_tax; }
-	public getMonthlyTotal() { return $this->monthly_total; }
-	public getStage() { return $this->stage; }
-	public getDriver() { return $this->driver; }
-	public getDriverNotes() { return $this->driver_notes; }
-	public getDelivered() { return $this->delivered; }
-	public getDateDelivered() { return $this->date_delivered; }
-	public getContainer() { return $this->container; }
+	public function getId() { return $this->id; }
+	public function getQuoteId() { return $this->quote_id; }
+	public function getOrderCustomer() { return $this->order_customer; }
+	public function getOrderDate() { return $this->order_date; }
+	public function getOrderTime() { return $this->order_time; }
+	public function getOrderType() { return $this->order_type; }
+	public function getJobName() { return $this->job_name; }
+	public function getJobCity() { return $this->job_city; }
+	public function getJobAddress() { return $this->job_address; }
+	public function getJobZipcode() { return $this->job_zipcode; }
+	public function getOrderedBy() { return $this->ordered_by; }
+	public function getOnsiteContact() { return $this->onsite_contact; }
+	public function getOnsiteContactPhone() { return $this->onsite_contact_phone; }
+	public function getTaxRate() { return $this->tax_rate; }
+	public function getCostBeforeTax() { return $this->cost_before_tax; }
+	public function getTotalCost() { return $this->total_cost; }
+	public function getSalesTax() { return $this->sales_tax; }
+	public function getMonthlyTotal() { return $this->monthly_total; }
+	public function getStage() { return $this->stage; }
+	public function getDriver() { return $this->driver; }
+	public function getDriverNotes() { return $this->driver_notes; }
+	public function getDelivered() { return $this->delivered; }
+	public function getDateDelivered() { return $this->date_delivered; }
+	public function getContainer() { return $this->container; }
 	
-	public setId($id) { $this->id = $id; }
-	public setQuoteId($id) { $this->quote_id = $id; }
-	public setOrderCustomer($name) { $this->order_customer = $name; }
-	public setOrderDate($datetime) { $this->order_date = $datetime; }
-	public setOrderTime($datetime) { $this->order_time = $datetime; }
-	public setOrderType($type) { $this->order_type = $type; }
-	public setJobName($name) { $this->job_name = $name; }
-	public setJobCity($city) { $this->job_city = $city; }
-	public setJobAddress($address) { $this->job_address = $address; }
-	public setJobZipcode($zipcode) { $this->job_zipcode = $zipcode; }
-	public setOrderedBy($name) { $this->ordered_by = $name; }
-	public setOnsiteContact($name) { $this->onsite_contact = $name; }
-	public setOnsiteContactPhone($phone) { $this->onsite_contact_phone = $phone; }
-	public setTaxRate($tax_rate) { $this->tax_rate = $tax_rate; }
-	public setCostBeforeTax($cost_before_tax) { $this->cost_before_tax = $cost_before_tax; }
-	public setTotalCost($cost) { $this->total_cost = $cost; }
-	public setSalesTax($cost) { $this->sales_tax = $cost; }
-	public setMonthlyTotal($cost) { $this->monthly_total = $cost; }
-	public setStage($stage) { $this->stage = $stage; }
-	public setDriver($name) { $this->driver = $name; }
-	public setDriverNotes($notes) { $this->driver_notes = $notes; }
-	public setDelivered($bool) { $this->delivered = $bool; }
-	public setDateDelivered($datetime) { $this->date_delivered = $datetime; }
-	public setContainer($container) { $this->container = $container; }
+	public function setId($id) { $this->id = $id; }
+	public function setQuoteId($id) { $this->quote_id = $id; }
+	public function setOrderCustomer($name) { $this->order_customer = $name; }
+	public function setOrderDate($datetime) { $this->order_date = $datetime; }
+	public function setOrderTime($datetime) { $this->order_time = $datetime; }
+	public function setOrderType($type) { $this->order_type = $type; }
+	public function setJobName($name) { $this->job_name = $name; }
+	public function setJobCity($city) { $this->job_city = $city; }
+	public function setJobAddress($address) { $this->job_address = $address; }
+	public function setJobZipcode($zipcode) { $this->job_zipcode = $zipcode; }
+	public function setOrderedBy($name) { $this->ordered_by = $name; }
+	public function setOnsiteContact($name) { $this->onsite_contact = $name; }
+	public function setOnsiteContactPhone($phone) { $this->onsite_contact_phone = $phone; }
+	public function setTaxRate($tax_rate) { $this->tax_rate = $tax_rate; }
+	public function setCostBeforeTax($cost_before_tax) { $this->cost_before_tax = $cost_before_tax; }
+	public function setTotalCost($cost) { $this->total_cost = $cost; }
+	public function setSalesTax($cost) { $this->sales_tax = $cost; }
+	public function setMonthlyTotal($cost) { $this->monthly_total = $cost; }
+	public function setStage($stage) { $this->stage = $stage; }
+	public function setDriver($name) { $this->driver = $name; }
+	public function setDriverNotes($notes) { $this->driver_notes = $notes; }
+	public function setDelivered($bool) { $this->delivered = $bool; }
+	public function setDateDelivered($datetime) { $this->date_delivered = $datetime; }
+	public function setContainer($container) { $this->container = $container; }
 
 	function __construct($id = '')
 	{
+		$this->db = Database::getDBI();
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails();

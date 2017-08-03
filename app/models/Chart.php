@@ -8,20 +8,21 @@ class Chart extends Model
 	
 	private $curmonth = 1,
 		$begmonth = 1;
-	private $quotes,
-		$orders,
-		$rentals,
+	public $quotes = array(),
+		$orders = array(),
+		$rentals = array(),
 		$resales = array();
-	private $con_array = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+	public $con_array = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
 	
-	public getCurMonth() { return $this->curmonth; }
-	public getBegMonth() { return $this->begmonth; }
+	public function getCurMonth() { return $this->curmonth; }
+	public function getBegMonth() { return $this->begmonth; }
 	
-	public setCurMonth($date) { $this->curmonth = $date; }
-	public setBegMonth($date) { $this->begmonth = $date; }
+	public function setCurMonth($date) { $this->curmonth = $date; }
+	public function setBegMonth($date) { $this->begmonth = $date; }
 
 	public function __construct()
 	{
+		$this->db = Database::getDBI();
 		$this->fetchAllQuotes();
 		$this->fetchAllOrders();
 		$this->getRentalContainers();

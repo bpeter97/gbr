@@ -20,6 +20,7 @@ class Product extends Model
 
 	function __construct($id = '')
 	{
+		$this->db = Database::getDBI();
 		if($id != null){
 			$this->id = $id;
 			$this->getDetails();

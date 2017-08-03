@@ -440,7 +440,7 @@ $con_list = $data['con_list'];
             order_id: <?= $event->getOrderId(); ?>,
             <?php
 
-            if($event->getOrderId() == 0 || $event->getOrderId() = ''){
+            if($event->getOrderId() == 0 || $event->getOrderId() == ''){
                 echo 'custom: true,'.PHP_EOL;
             } else {
                 echo 'custom: false,'.PHP_EOL;
@@ -496,7 +496,7 @@ $con_list = $data['con_list'];
         <?php $i=1; ?>
         var l = 1;
         <?php foreach($events as $event): ?>
-        <?php if(isset($event->order->getId())): ?>
+        <?php if(!empty($event->order->getId())): ?>
         eventOrderId = <?php echo $event->order->getId(); ?>;
         console.log(event.order_id);
         if(eventOrderId != ''){

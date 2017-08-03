@@ -7,6 +7,11 @@ class Calendar extends Model
 {
 
 	private $events = array();
+	
+	public function __construct()
+	{
+		$this->db = Database::getDBI();
+	}
 
 	public function getEvents()
 	{

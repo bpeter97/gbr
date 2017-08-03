@@ -22,40 +22,42 @@ class Customer extends Model
 		$flag,
 		$flag_reason;
 		
-	public getId() { return $this->id; }
-	public getCustomerName() { return $this->customer_name; }
-	public getCustomerAddress1() { return $this->customer_address1; }
-	public getCustomerAddress2() { return $this->customer_address2; }
-	public getCustomerCity() { return $this->customer_city; }
-	public getCustomerZipcode() { return $this->customer_zipcode; }
-	public getCustomerState() { return $this->customer_state; }
-	public getCustomerPhone() { return $this->customer_phone; }
-	public getCustomerExt() { return $this->; }
-	public getCustomerFax() { return $this->customer_; }
-	public getCustomerEmail() { return $this->customer_; }
-	public getCustomerRdp() { return $this->customer_; }
-	public getCustomerNotes() { return $this->customer_; }
-	public getFlag() { return $this->flag; }
-	public getFlagReason() { return $this->flag_reason; }
+	public function getId() { return $this->id; }
+	public function getCustomerName() { return $this->customer_name; }
+	public function getCustomerAddress1() { return $this->customer_address1; }
+	public function getCustomerAddress2() { return $this->customer_address2; }
+	public function getCustomerCity() { return $this->customer_city; }
+	public function getCustomerZipcode() { return $this->customer_zipcode; }
+	public function getCustomerState() { return $this->customer_state; }
+	public function getCustomerPhone() { return $this->customer_phone; }
+	public function getCustomerExt() { return $this->; }
+	public function getCustomerFax() { return $this->customer_; }
+	public function getCustomerEmail() { return $this->customer_; }
+	public function getCustomerRdp() { return $this->customer_; }
+	public function getCustomerNotes() { return $this->customer_; }
+	public function getFlag() { return $this->flag; }
+	public function getFlagReason() { return $this->flag_reason; }
 	
-	public setId($id) { $this->id = $id; }
-	public setCustomerName($name) { $this->customer_name = $name; }
-	public setCustomerAddress1($address) { $this->customer_address1 = $address; }
-	public setCustomerAddress2($address) { $this->customer_address2 = $address; }
-	public setCustomerCity($city) { $this->customer_city = $city; }
-	public setCustomerZipcode($zipcode) { $this->customer_zipcode = $zipcode; }
-	public setCustomerState($state) { $this->customer_state = $state; }
-	public setCustomerPhone($phone) { $this->customer_phone = $phone; }
-	public setCustomerExt($ext) { $this-> = $ext; }
-	public setCustomerFax($fax) { $this->customer_ = $fax; }
-	public setCustomerEmail($email) { $this->customer_ = $email; }
-	public setCustomerRdp($rdp) { $this->customer_ = $rdp; }
-	public setCustomerNotes($notes) { $this->customer_ = $notes; }
-	public setFlag($flag) { $this->flag = $flag; }
-	public setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
+	public function setId($id) { $this->id = $id; }
+	public function setCustomerName($name) { $this->customer_name = $name; }
+	public function setCustomerAddress1($address) { $this->customer_address1 = $address; }
+	public function setCustomerAddress2($address) { $this->customer_address2 = $address; }
+	public function setCustomerCity($city) { $this->customer_city = $city; }
+	public function setCustomerZipcode($zipcode) { $this->customer_zipcode = $zipcode; }
+	public function setCustomerState($state) { $this->customer_state = $state; }
+	public function setCustomerPhone($phone) { $this->customer_phone = $phone; }
+	public function setCustomerExt($ext) { $this-> = $ext; }
+	public function setCustomerFax($fax) { $this->customer_ = $fax; }
+	public function setCustomerEmail($email) { $this->customer_ = $email; }
+	public function setCustomerRdp($rdp) { $this->customer_ = $rdp; }
+	public function setCustomerNotes($notes) { $this->customer_ = $notes; }
+	public function setFlag($flag) { $this->flag = $flag; }
+	public function setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 
 	function __construct($id = '')
 	{
+		$this->db = Database::getDBI();
+		
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails($this->getId());

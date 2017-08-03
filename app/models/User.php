@@ -12,11 +12,6 @@ class User extends Model
                 $lastname,
                 $title,
                 $type;
-
-    public function __construct()
-    {
-
-    }
     
     public function getUsername() { return $this->username; }
     public function getPassword() { return $this->password; }
@@ -32,17 +27,20 @@ class User extends Model
     public function setTitle($title) { $this->title = $title; }
     public function setType($type) { $this->type = $type; }
     
+    public function __construct()
+    {
+        $this->db = Database::getDBI();
+    }
+    
     //@TODO Code the get user info function.
     public function getUserInfo()
     {
         
     }
 
-    public function login($username, $password)
+    public function login()
     {
 
-        $this->setUsername($username);
-        $this->setPassword($password);
         $this->checkLogin();
 
         if(isset($_SESSION['loggedin'])){
@@ -56,8 +54,8 @@ class User extends Model
     private function checkLogin()
     {
         
-        $sql = 'SELECT * FROM users WHERE username = "'. $this->getUsername() .'"';
-        $this->db->query($sql);
+        $sql = 'SELECT * FROM users WHERE username = ?';
+        $this->db->query($sql, array($this->getUsername()));
         $results = $this->db->results('arr');
         $rows = $this->db->count();
 

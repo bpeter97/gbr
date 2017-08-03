@@ -1,15 +1,28 @@
 <?php
-include('core/Settings.php');
+/**
+ * These files must stay here and not be autoloaded.
+ * Essentially these unofficially called globally loaded files.
+ * Without these loading here, the autoloader will not know what to do.
+ */
+require_once('core/Settings.php');
+require_once('core/Config.php');
+require_once('core/lib/lightopenid.php');
 
-// Requirements
-require_once('core/Model.php');
-require_once('core/Database.php');
-require_once('core/App.php');
-require_once('core/Controller.php');
+// Make sure to not change $class_name. From the looks of it, its predefined
+function __autoload($class_name) {
+    $root = Config::get('site/root');
+    $ds = Config::get('site/DS');
+    $core_path = $root.$ds.'core'.$ds.strtolower($class_name).'.php';
+    $controller_path = $root.$ds.'controllers'.$ds.strtolower($class_name).'.php';
+    $model_path = $root.$ds.'models'.$ds.strtolower($class_name).'.php';
 
-// Classes
-require_once('models/Product.php');
-require_once('models/Order.php');
-require_once('models/Event.php');
-
-?>
+    if(file_exists($core_path)) {
+        require_once($core_path);
+    } else if(file_exists($controller_path)) {
+        require_once($controller_path);
+    } else if(file_exists($model_path)) {
+        require_once($model_path);
+    } else {
+        echo "Failed to load class" . $core_path;
+    }
+}

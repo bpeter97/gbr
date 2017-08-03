@@ -1,264 +1,275 @@
 <?php
 
-    include('Settings.php');
+class Database {
+	private static $_instance = null;
+	private $_pdo,
+			$_query,
+			$_error = false,
+			$_count = 0,
+			$_results;
 
-/*
- * @Author Rory Standley <rorystandley@gmail.com>
- * @Version 1.0
- * @Reference: https://github.com/rorystandley/MySQLi-CRUD-PHP-OOP
- * @Package Database
- */
-class Database{
-	/*
-	 * Create variables for credentials to MySQL database
-	 * The variables have been declared as private. This
-	 * means that they will only be available with the
-	 * Database class
-	 */
-	private $db_host = DBHOST;  // Change as required
-	private $db_user = DBUSER;  // Change as required
-	private $db_pass = DBPASS;  // Change as required
-	private $db_name = DBNAME;	// Change as required
-
-	/*
-	 * Extra variables that are required by other function such as boolean con variable
-	 */
-	private $con = false; // Check to see if the connection is active
-	private $myconn = ""; // This will be our mysqli object
-	private $result = array(); // Any results from a query will be stored here
-	private $myQuery = "";// used for debugging process with SQL return
-	private $numResults = "";// used for returning the number of rows
-
-    public function __construct(){
-        $this->connect();
-    }
-
-	// Function to make connection to database
-	public function connect(){
-		if(!$this->con){
-			$this->myconn = new mysqli($this->db_host,$this->db_user,$this->db_pass,$this->db_name);  // mysql_connect() with variables defined at the start of Database class
-			if($this->myconn->connect_errno > 0){
-				array_push($this->result,$this->myconn->connect_error);
-				return false; // Problem selecting database return FALSE
-			}else{
-				$this->con = true;
-				return true; // Connection has been made return TRUE
-			}
-		}else{
-			return true; // Connection has already been made return TRUE
+	private function __construct() {
+		try
+		{
+			$this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';dbname=' . Config::get('mysql/dbname') . ';charset=' . Config::get('mysql/charset'), Config::get('mysql/user'), Config::get('mysql/pass'), [
+			  PDO::ATTR_EMULATE_PREPARES => false,
+			  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+			]);
+		} catch(PDOException $e)
+		{
+			die($e->getMessage());
 		}
 	}
 
-	// Function to disconnect from the database
-	public function disconnect(){
-	// If there is a connection to the database
-		if($this->con){
-			// We have found a connection, try to close it
-			if($this->myconn->close()){
-			// We have successfully closed the connection, set the connection variable to false
-				$this->con = false;
-					// Return true tjat we have closed the connection
+	public static function getDBI() {
+		if(!isset(self::$_instance)) {
+			self::$_instance = new Database();
+		}
+		return self::$_instance;
+	}
+	/**
+	 * query database with raw SQL
+	 * @method query
+	 * @param  string $sql    sql statement
+	 * @param  array  $params the array will have values
+	 * @return string
+	 * $db = Databse::getDBI();
+	 * $db->query('SELECT * FROM users WHERE username ? AND password ?', array($username, $password));
+	 */
+	public function query($sql, $params = []) {
+		$this->_error = false;
+		if($this->_query = $this->_pdo->prepare($sql)) {
+			if(count($params)) {
+				$setI = 1;
+				foreach($params as $set) {
+					$this->_query->bindValue($setI, $set);
+					$setI++;
+				}
+			}
+			if($this->_query->execute()) {
+				$this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
+				$this->_count = $this->rowCount();
+			} else {
+				$this->_error = true;
+			}
+		}
+		return $this;
+	}
+
+	public function bind($params, $value, $type = null) {
+		if(is_null($type)) {
+			switch(true) {
+				case is_int($value):
+					$type = PDO::PARAM_INT;
+					break;
+				case is_bool($value):
+					$type = PDO::PARAM_BOOL;
+					break;
+				case is_null($value):
+					$type = PDO::PARAM_NULL;
+					break;
+				default:
+					$type = PDO::PARAM_STR;
+			}
+		}
+		$this->_query->bindValue($params, $value, $type);
+	}
+
+	public function execute() {
+		return $this->_query->execute();
+	}
+
+	public function results($set = 'obj') {
+		if($set == 'obj' || $set == 'object') {
+			$this->execute();
+			return $this->_query->fetchAll(PDO::FETCH_OBJ);
+		} else if($set == 'arr' || $set == 'array') {
+			$this->execute();
+			return $this->_query->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+	/**
+	 * Update function
+	 * @method update
+	 * @param  string $table
+	 * @param  array $idArray ['user_id' => '1']
+	 * @param  array $array   ['username' => 'Test']
+	 * @return boolean
+	 * $db->update('users', ['user_id' => '2'], ['user_username'=>'Ryahn2'])
+	 */
+	public function update($table, $idArray, $array) {
+		$pos = 1;
+		$set = '';
+
+		foreach($array as $key => $value) {
+			$set .= "{$key} = ?";
+
+			if($pos < count($array)) {
+				$set .= ', ';
+			}
+			$pos++;
+		}
+		foreach($idArray as $field => $id) {
+			$sql ="UPDATE {$table} SET {$set} WHERE {$field} = {$id}";
+		}
+
+		if(!$this->query($sql, $array)->error()) {
+			return true;
+		}
+		return false;
+	}
+
+	public function delete($table, $array) {
+		$set = '';
+		$pos = 1;
+
+		foreach($array as $key => $value) {
+			$set .= "{$key} = ?";
+
+			if($pos < count($array)) {
+				$set .= ', ';
+			}
+			$pos++;
+		}
+		$sql = "DELETE FROM {$table} WHERE {$set}";
+
+		if(!$this->query($sql, $array)->error()) {
+			return true;
+		}
+		return false;
+	}
+
+	public function insert($table, $array) {
+		$set = '';
+		$set2 = '';
+		$pos = 1;
+
+		foreach($array as $key => $value) {
+			$set .= "{$key}";
+			$set2 .= "'{$value}'";
+
+			if($pos < count($array)) {
+				$set .= ', ';
+				$set2 .=', ';
+			}
+			$pos++;
+		}
+		$sql = "INSERT INTO {$table} ({$set}) VALUES ({$set2})";
+		// Functions::dump($sql);
+		if(!$this->query($sql)->error()) {
+			$this->_count = $this->rowCount();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Select everything $db->select('users');
+	 * Select specific rows with no where statement $db->select('users', null, ['user_id','user_username']);
+	 * Select everything with where statement $db->select('users',['user_id'=>1,'user_username'=>'Ryahn']);
+	 * Select specific rows with where statement $db->select('users',['user_id'=>1,'user_username'=>'Ryahn'],['user_id','user_username']);
+	 */
+	public function select($table, $where = null, $array = null) {
+		$set = '';
+		$set2 = '';
+		$pos = 1;
+		$pos2 = 1;
+
+		if(!is_null($where) && is_null($array)) {
+			foreach($where as $select => $value) {
+				$set2 .= "{$select} = ?";
+				if($pos < count($where)) {
+					$set2 .= ' AND ';
+				}
+				$pos++;
+			}
+			$sql = "SELECT * FROM {$table} WHERE {$set2}";
+			if(!$this->query($sql, $where)->error()) {
 				return true;
-			}else{
-				// We could not close the connection, return false
-				return false;
 			}
+			return false;
+		} else if(!is_null($array) && !is_null($where)) {
+			foreach($where as $select => $value) {
+				$set2 .= "{$select} = ?";
+				if($pos < count($where)) {
+					$set2 .= ' AND ';
+				}
+				$pos++;
+			}
+			foreach($array as $field) {
+				$set .= "{$field}";
+
+				if($pos2 < count($array)) {
+					$set .= ', ';
+				}
+				$pos2++;
+			}
+			$sql = "SELECT {$set} FROM {$table} WHERE {$set2}";
+			if(!$this->query($sql,$where)->error()) {
+				return true;
+			}
+			return false;
+		} else if(is_null($where) && !is_null($array)) {
+			foreach($array as $field) {
+				$set .= "{$field}";
+
+				if($pos < count($array)) {
+					$set .= ', ';
+				}
+				$pos++;
+			}
+			$sql = "SELECT {$set} FROM {$table}";
+			if(!$this->query($sql)->error()) {
+				return true;
+			}
+			return false;
+		} else {
+			$sql = "SELECT * FROM {$table}";
+			if(!$this->query($sql)->error()) {
+				return true;
+			}
+			return false;
 		}
 	}
 
-	public function sql($sql){
-		$query = $this->myconn->query($sql);
-		$this->myQuery = $sql; // Pass back the SQL
-		if($query){
-			// If the query returns >= 1 assign the number of rows to numResults
-			$this->numResults = $query->num_rows;
-			// Loop through the query results by the number of rows returned
-			for($i = 0; $i < $this->numResults; $i++){
-				$r = $query->fetch_array();
-				$key = array_keys($r);
-				for($x = 0; $x < count($key); $x++){
-					// Sanitizes keys so only alphavalues are allowed
-					if(!is_int($key[$x])){
-						if($query->num_rows >= 1){
-							$this->result[$i][$key[$x]] = $r[$key[$x]];
-						}else{
-							$this->result = null;
-						}
-					}
-				}
-			}
-			return true; // Query was successful
-		}else{
-			array_push($this->result,$this->myconn->error);
-		return false; // No rows where returned
+	public function single($set = 'obj') {
+		if($set == 'obj' || $set == 'object') {
+			$this->execute();
+			return $this->_query->fetch(PDO::FETCH_OBJ);
+		} else if($set == 'arr' || $set == 'array') {
+			$this->execute();
+			return $this->_query->fetch(PDO::FETCH_ASSOC);
 		}
 	}
 
-	// Function to SELECT from the database
-	public function select($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null){
-		// Create query from the variables passed to the function
-		$q = 'SELECT '.$rows.' FROM '.$table;
-		if($join != null){
-			$q .= ' JOIN '.$join;
-		}
-        if($where != null){
-        	$q .= ' WHERE '.$where;
-		}
-        if($order != null){
-            $q .= ' ORDER BY '.$order;
-		}
-        if($limit != null){
-            $q .= ' LIMIT '.$limit;
-        }
-        // echo $table;
-        $this->myQuery = $q; // Pass back the SQL
-		// Check to see if the table exists
-        if($this->tableExists($table)){
-        	// The table exists, run the query
-        	$query = $this->myconn->query($q);
-			if($query){
-				// If the query returns >= 1 assign the number of rows to numResults
-				$this->numResults = $query->num_rows;
-				// Loop through the query results by the number of rows returned
-				for($i = 0; $i < $this->numResults; $i++){
-					$r = $query->fetch_array();
-                	$key = array_keys($r);
-                	for($x = 0; $x < count($key); $x++){
-                		// Sanitizes keys so only alphavalues are allowed
-                    	if(!is_int($key[$x])){
-                    		if($query->num_rows >= 1){
-                    			$this->result[$i][$key[$x]] = $r[$key[$x]];
-							}else{
-								$this->result[$i][$key[$x]] = null;
-							}
-						}
-					}
-				}
-				return true; // Query was successful
-			}else{
-				array_push($this->result,$this->myconn->error);
-				return false; // No rows where returned
-			}
-      	}else{
-      		return false; // Table does not exist
-    	}
-    }
+	public function rowCount() {
+		return $this->_query->rowCount();
+	}
 
-	// Function to insert into the database
-    public function insert($table,$params=array()){
-    	// Check to see if the table exists
-    	 if($this->tableExists($table)){
-    	 	$sql='INSERT INTO `'.$table.'` (`'.implode('`, `',array_keys($params)).'`) VALUES ("' . implode('", "', $params) . '")';
-            $this->myQuery = $sql; // Pass back the SQL
-            // Make the query to insert to the database
-            if($ins = $this->myconn->query($sql)){
-            	array_push($this->result,$this->myconn->insert_id);
-                return true; // The data has been inserted
-            }else{
-            	array_push($this->result,$this->myconn->error);
-                return false; // The data has not been inserted
-            }
-        }else{
-        	return false; // Table does not exist
-        }
-    }
+	public function count() {
+		return $this->_count;
+	}
 
-	//Function to delete table or row(s) from database
-    public function delete($table,$where = null){
-    	// Check to see if table exists
-    	 if($this->tableExists($table)){
-    	 	// The table exists check to see if we are deleting rows or table
-    	 	if($where == null){
-                $delete = 'DROP TABLE '.$table; // Create query to delete table
-            }else{
-                $delete = 'DELETE FROM '.$table.' WHERE '.$where; // Create query to delete rows
-            }
-            // Submit query to database
-            if($del = $this->myconn->query($delete)){
-            	array_push($this->result,$this->myconn->affected_rows);
-                $this->myQuery = $delete; // Pass back the SQL
-                return true; // The query exectued correctly
-            }else{
-            	array_push($this->result,$this->myconn->error);
-               	return false; // The query did not execute correctly
-            }
-        }else{
-            return false; // The table does not exist
-        }
-    }
+	public function lastId() {
+		return $this->_pdo->lastInsertId();
+	}
 
-	// Function to update row in database
-    public function update($table,$params=array(),$where){
-    	// Check to see if table exists
-    	if($this->tableExists($table)){
-    		// Create Array to hold all the columns to update
-            $args=array();
-			foreach($params as $field=>$value){
-				// Seperate each column out with it's corresponding value
-				$args[]=$field.'="'.$value.'"';
-			}
-			// Create the query
-			$sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
-			// Make query to database
-            $this->myQuery = $sql; // Pass back the SQL
-            if($query = $this->myconn->query($sql)){
-            	array_push($this->result,$this->myconn->affected_rows);
-            	return true; // Update has been successful
-            }else{
-            	array_push($this->result,$this->myconn->error);
-                return false; // Update has not been successful
-            }
-        }else{
-            return false; // The table does not exist
-        }
-    }
+	public function transStart() {
+		return $this->_pdo->beginTransaction();
+	}
 
-	// Private function to check if table exists for use with queries
-	private function tableExists($table){
-		$tablesInDb = $this->myconn->query('SHOW TABLES FROM '.$this->db_name.' LIKE "'.$table.'"');
-        if($tablesInDb){
-        	if($tablesInDb->num_rows == 1){
-                return true; // The table exists
-            }else{
-            	array_push($this->result,$table." does not exist in this database");
-                return false; // The table does not exist
-            }
-        }
-    }
+	public function transEnd(){
+		return $this->_pdo->commit();
+	}
 
-	// Public function to return the data to the user
-    public function getResult(){
-        $val = $this->result;
-        $this->result = array();
-        return $val;
-    }
+	public function transClear(){
+		return $this->_pdo->rollBack();
+	}
 
-    // Pass the SQL back for debugging
-    public function getSql(){
-        $val = $this->myQuery;
-        $this->myQuery = array();
-        return $val;
-    }
-
-    // Pass the number of rows back
-    public function numRows(){
-        $val = $this->numResults;
-        $this->numResults = array();
-        return $val;
-    }
-    
-    // Escape your string
-    public function escapeString($data){
-        return $this->myconn->real_escape_string($data);
-    }
-
-    // string slashes...
-    public function stripSlashes($data){
-        return stripcslashes($data);
-    }
-
-    // Grab last inserted row's ID.
-    public function grabID(){
-        return $this->myconn->insert_id;
-    }
+	public function error() {
+		return $this->_error;
+	}
 }
+
+?>
