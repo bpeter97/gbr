@@ -11,7 +11,7 @@
     <div class="container">
         <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
             <div class="row">
-                <img id="lockedlogo" class="img-responsive" src="<?php echo HTTP.HTTPURL.PUB.IMG.'/logo.png'; ?>">
+                <img id="lockedlogo" class="img-responsive" src="<?php echo Config::get('site/siteurl').Config::get('site/resources/img').'/logo.png'; ?>">
             </div>
             <div class="panel panel-default" >
                 <div class="panel-heading">
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="panel-body" >
-                    <form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST" action="<?php echo HTTP.HTTPURL.PUB.'/' ?>">
+                    <form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST" action="<?php echo Config::get('site/siteurl').'/'; ?>">
                         <p class="text-center">
                             This session has been locked by either timing out and not doing anything for 5 minutes or the user decided to lock the system for security purposes. Please type your login password to get back into the system.
                         </p>

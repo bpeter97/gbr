@@ -9,6 +9,7 @@ $GLOBALS['config'] = array(
 		'charset' => 'UTF8'
  	 ),
 	'site' => array(
+		'siteurl' => 'http://'.$_SERVER['HTTP_HOST'];
 		'baseurl' => $_SERVER['DOCUMENT_ROOT'],
 		'httpurl' => $_SERVER['HTTP_HOST'],
 		'selfurl' => $_SERVER['REQUEST_URI'],

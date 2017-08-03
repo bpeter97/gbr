@@ -16,7 +16,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <!-- Need to add action (url) -->
-        <form action="<?php echo HTTP.HTTPURL.PUB.CUSTOMERS.'/create/?action=create'; ?>" method="post">
+        <form action="<?php echo Config::get('site/siteurl').Config::get('site/customers').'/create/?action=create'; ?>" method="post">
 
         
             <div class="container-fluid" id="webbg">

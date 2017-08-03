@@ -1,3 +1,7 @@
+<?php
+    $main_website = Config::get('site/http').Config::get('site/httpurl');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +37,7 @@
                                 <b>New Container</b>
                             </div>
                             <div class="panel-body">
-                                <form action="<?php echo HTTP.HTTPURL.PUB.CONTAINERS.'/create/?action=create'; ?>" method="post">
+                                <form action="<?php echo Config::get('site/siteurl').'/containers/create/?action=create'; ?>" method="post">
                                     <div class="row"><!-- 1st Row -->
                                         <div class="col-lg-12">
                                         <input type="hidden" name="containerID" value="">

@@ -61,25 +61,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -87,10 +87,10 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CONTAINERS.'/currentrentals/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').'/containers/currentrentals/?pn='.$last.'">Last</a></li>';
                                     }
 
                                     if($data['conList']) {
@@ -127,7 +127,7 @@
 
                                         foreach($data['conList'] as $con) {
 
-                                            if($con->is_rented=="TRUE"){
+                                            if($con->getIsRented()=="TRUE"){
                                                 $isrented = "Yes";
                                             }
                                             else
@@ -135,10 +135,10 @@
                                                 $isrented = "No";
                                             }
 
-                                            if($con->flag == "Yes"){
+                                            if($con->getFlag() == "Yes"){
                                                 $toolcount += 1;
                                                 $danger = 'danger';
-                                                $flag_reason = $con->flag_reason;
+                                                $flag_reason = $con->getFlagReason();
                                                 $tooltip = ' data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
                                                 echo '
                                                 <div id="a'.$toolcount.'" class="hidden">
@@ -154,22 +154,22 @@
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.HTTP.HTTPURL.CONTROLLERS.'/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->id.'" '.$tooltip.'>
-                                                    <td>' . $con->container_number . '</td>
-                                                    <td>' . $con->container_serial_number . '</td>
-                                                    <td>' . $con->container_size . '</td>
-                                                    <td>' . $con->container_shelves . '</td>
-                                                    <td>' . $con->container_paint . '</td>
-                                                    <td>' . $con->container_onbox_numbers . '</td>
-                                                    <td>' . $con->container_signs . '</td>
-                                                    <td>' . $con->rental_resale . '</td>
+                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->getId().'" '.$tooltip.'>
+                                                    <td>' . $con->getContainerNumber() . '</td>
+                                                    <td>' . $con->getContainerSerialNumber() . '</td>
+                                                    <td>' . $con->getContainerSize() . '</td>
+                                                    <td>' . $con->getContainerShelves() . '</td>
+                                                    <td>' . $con->getContainerPaint() . '</td>
+                                                    <td>' . $con->getContainerOnboxNumbers() . '</td>
+                                                    <td>' . $con->getContainerSigns() . '</td>
+                                                    <td>' . $con->getRentalResale() . '</td>
                                                     <td>' . $isrented . '</td>
-                                                    <td>' . $con->release_number . '</td>
+                                                    <td>' . $con->getReleaseNumber() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.HTTP.HTTPURL.CONTROLLERS.'/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->id.'">
+                                                        <a class="btn btn-xs btn-warning" href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.HTTP.HTTPURL.CONTROLLERS.'/editcontainer.php?of=mastercontainers&action=delete&id=' . $con->id.'">
+                                                        <a class="btn btn-xs btn-danger" href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=delete&id=' . $con->getId().'">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                         </a>
                                                     </td>

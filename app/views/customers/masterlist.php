@@ -59,25 +59,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -85,10 +85,10 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$last.'">Last</a></li>';
                                     }
 
                                     // Create the array containing the alphabet.
@@ -102,7 +102,7 @@
                                     // Generates the links for the alphebet.
                                     $counter = 0;
                                     while ($counter <> 26) {
-                                        $letterlist .= '<li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'/?f='.$chars[$counter].'">'.$chars[$counter].'</a></li> &nbsp;';
+                                        $letterlist .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?f='.$chars[$counter].'">'.$chars[$counter].'</a></li> &nbsp;';
                                         $counter += 1;
                                     }
 
@@ -110,7 +110,7 @@
 
                                         echo '
                                             <ul class="pagination">
-                                                <li><a href="'.HTTP.HTTPURL.PUB.CUSTOMERS.'">ALL</a></li> &nbsp;
+                                                <li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'">ALL</a></li> &nbsp;
                                                 ' . $letterlist . '
                                             </ul>
                                         ';
@@ -139,10 +139,10 @@
 
                                         foreach($data['custList'] as $cus) {
 
-                                            if($cus->flag == "Yes"){
+                                            if($cus->getFlag() == "Yes"){
                                                 $toolcount += 1;
                                                 $danger = 'danger';
-                                                $flag_reason = $cus->flag_reason;
+                                                $flag_reason = $cus->getFlagReason();
                                                 $tooltip = ' data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
                                                 echo '
                                                 <div id="a'.$toolcount.'" class="hidden">
@@ -158,12 +158,12 @@
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.HTTP.HTTPURL.VIEW.'/customerinfo.php?id=' . $cus->id .'" '.$tooltip.'>
-                                                    <td>' . $cus->customer_name . '</td>
-                                                    <td>' . $cus->customer_phone . '</td>
-                                                    <td>' . $cus->customer_ext . '</td>
-                                                    <td>' . $cus->customer_fax . '</td>
-                                                    <td>' . $cus->customer_email . '</td>
+                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').Config::get('site/customers').'/customerinfo/id=' . $cus->id .'" '.$tooltip.'>
+                                                    <td>' . $cus->getCustomerName() . '</td>
+                                                    <td>' . $cus->getCustomerPhone() . '</td>
+                                                    <td>' . $cus->getCustomerExt() . '</td>
+                                                    <td>' . $cus->getCustomerFax() . '</td>
+                                                    <td>' . $cus->getCustomerEmail() . '</td>
                                                 </tr>
                                             </tbody>
                                             ';

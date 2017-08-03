@@ -1,26 +1,8 @@
 <?php
 
 $chart = $data['chart'];
-$months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-$con_list = [
-            "10' Containers",
-            "20' Containers",
-            "20' Combos",
-            "20' Full Offices",
-            "20' Double Door",
-            "20' Containers w/ Shelves",
-            "20' High Cube",
-            "22' DD/HC",
-            "22' High Cube",
-            "24' Containers",
-            "24' High Cube",
-            "40' Containers",
-            "40' Combos",
-            "40' Double Doors",
-            "40' Full Offices",
-            "40' High Cubes"
-            ];
 $events = $data['events'];
+$con_list = $data['con_list'];
 
 // echo '<pre>';
 // var_dump($events);
@@ -436,41 +418,41 @@ $events = $data['events'];
         events: [
         <?php foreach($events as $event): 
         
-          $start = explode(" ", $event->start);
-          $end = explode(" ", $event->end);
+          $start = explode(" ", $event->getStart());
+          $end = explode(" ", $event->getEnd());
           if($start[1] == '00:00:00'){
             $start = $start[0];
           }else{
-            $start = $event->start;
+            $start = $event->getStart();
           }
           if($end[1] == '00:00:00'){
             $end = $end[0];
           }else{
-            $end = $event->end;
+            $end = $event->getEnd();
           }
         ?>
           {
-            id: '<?php echo $event->id; ?>',
-            title: '<?php echo $event->title; ?>',
+            id: '<?php echo $event->getId(); ?>',
+            title: '<?php echo $event->getTitle(); ?>',
             start: '<?php echo $start; ?>',
             end: '<?php echo $end; ?>',
-            <?php echo 'color: "'.$event->color.'",'.PHP_EOL; ?>
-            order_id: <?= $event->order_id; ?>,
+            <?php echo 'color: "'.$event->getColor().'",'.PHP_EOL; ?>
+            order_id: <?= $event->getOrderId(); ?>,
             <?php
 
-            if($event->order_id == 0 || $event->order_id = ''){
+            if($event->getOrderId() == 0 || $event->getOrderId() = ''){
                 echo 'custom: true,'.PHP_EOL;
             } else {
                 echo 'custom: false,'.PHP_EOL;
                 $prodCount = 0;
                 foreach($event->order->products as $prod)
                 {
-                    echo 'prod'.$prodCount.': "'.$prod->mod_name.'",'.PHP_EOL;
-                    echo 'productQty'.$prodCount.': '.$prod->product_qty.','.PHP_EOL;
+                    echo 'prod'.$prodCount.': "'.$prod->getModName().'",'.PHP_EOL;
+                    echo 'productQty'.$prodCount.': '.$prod->getProductQuantity().','.PHP_EOL;
                     $prodCount++;
                 }
                 echo 'prodCount: '.$prodCount.','.PHP_EOL;
-                echo 'order_customer: "'.$event->order->order_customer.'"'.PHP_EOL;
+                echo 'order_customer: "'.$event->order->getOrderCustomer().'"'.PHP_EOL;
             }
             ?>
           },
@@ -514,14 +496,14 @@ $events = $data['events'];
         <?php $i=1; ?>
         var l = 1;
         <?php foreach($events as $event): ?>
-        <?php if(isset($event->order->id)): ?>
-        eventOrderId = <?php echo $event->order->id; ?>;
+        <?php if(isset($event->order->getId())): ?>
+        eventOrderId = <?php echo $event->order->getId(); ?>;
         console.log(event.order_id);
         if(eventOrderId != ''){
             if(eventOrderId == event.order_id)
             {
                 <?php foreach($event->order->products as $prod): ?>
-                prodTable += '<tr><td><?php echo $prod->mod_name; ?></td><td><?php echo $prod->product_qty; ?></td></tr>';
+                prodTable += '<tr><td><?php echo $prod->getModName(); ?></td><td><?php echo $prod->getProductQuantity(); ?></td></tr>';
                 <?php endforeach; ?>
             }
         }

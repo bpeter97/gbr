@@ -1,3 +1,7 @@
+<?php
+    $productsUrl = Config::get('site/siteurl').Config::get('site/products');
+?>
+
 <DOCTYPE html>
 
 <html>
@@ -61,25 +65,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.$productsUrl.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -87,10 +91,10 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.PRODUCTS.'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$productsUrl.'/?pn='.$last.'">Last</a></li>';
                                     }
 
                                     if($data['prodList']) {
@@ -124,18 +128,18 @@
                                             echo '
 
                                                 <tbody>
-                                                    <tr class="clickable-row" data-href="'.HTTP.HTTPURL.CONTROLLERS.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->id.'">
-                                                        <td>' . $product->id . '</td>
-                                                        <td>' . $product->mod_name . '</td>
-                                                        <td>' . $product->mod_short_name . '</td>
-                                                        <td>' . $product->mod_cost . '</td>
-                                                        <td>' . $product->monthly . '</td>
-                                                        <td>' . $product->item_type . '</td>
+                                                    <tr class="clickable-row" data-href="'.$productsUrl.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->getId().'">
+                                                        <td>' . $product->getId() . '</td>
+                                                        <td>' . $product->getModName() . '</td>
+                                                        <td>' . $product->getModShortName() . '</td>
+                                                        <td>' . $product->getModCost() . '</td>
+                                                        <td>' . $product->getMonthly() . '</td>
+                                                        <td>' . $product->getItemType() . '</td>
                                                         <td>
-                                                            <a class="btn btn-xs btn-warning" href="'.HTTP.HTTPURL.CONTROLLERS.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->id.'">
+                                                            <a class="btn btn-xs btn-warning" href="'.$productsUrl.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                             </a>
-                                                            <a class="btn btn-xs btn-danger" href="'.HTTP.HTTPURL.CONTROLLERS.'/editproducts.php?action=delete&uid='.$product->id.'">
+                                                            <a class="btn btn-xs btn-danger" href="'.$productsUrl.'/editproducts.php?action=delete&uid='.$product->getId().'">
                                                             <span class="glyphicon glyphicon-trash"></span>
                                                             </a>
                                                         </td>

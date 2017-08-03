@@ -19,7 +19,6 @@ class Orders extends Controller
 	// This will be the page that shows all quotes.
 	public function masterlist()
 	{
-		$this->checkSession();
 
 		if($this->checkLogin())
 		{
@@ -34,7 +33,7 @@ class Orders extends Controller
 			$page_rows = 100;
 			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 			// Grab the container information with the limit.
-			$orderList = $order->getOrders('',$limit);
+			$orderList = $order->fetchOrders('',$limit);
 
 			$row = $order->countOrders();
 
@@ -45,7 +44,6 @@ class Orders extends Controller
 
 	public function create($type, $action = '')
 	{
-		$this->checkSession();
 		
 		if($this->checkLogin())
 		{

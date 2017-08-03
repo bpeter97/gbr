@@ -155,7 +155,7 @@ class Order extends Model
 		
 	}    
 
-	public function getOrders($where = '',$limit = '')
+	public function fetchOrders($where = '',$limit = '')
 	{
 		$list = array();
 

@@ -22,13 +22,13 @@ class Chart extends Model
 
 	public function __construct()
 	{
-		$this->getQuotes();
-		$this->getOrders();
+		$this->fetchAllQuotes();
+		$this->fetchAllOrders();
 		$this->getRentalContainers();
 		$this->getResaleContainers();
 	}
 
-	public function getQuotes()
+	public function fetchAllQuotes()
 	{
 
 		while ($this->getCurMonth() != 13) {
@@ -49,7 +49,7 @@ class Chart extends Model
 		$this->resetMonths();
 	}
 
-	public function getOrders()
+	public function fetchAllOrders()
 	{
 
 		while ($this->getCurMonth() != 13) {

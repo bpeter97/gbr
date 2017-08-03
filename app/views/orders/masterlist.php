@@ -1,3 +1,7 @@
+<?php
+    $orders_url = Config::get('site/siteurl').Config::get('site/orders');
+?>
+
 <DOCTYPE html>
 
 <html>
@@ -61,25 +65,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.$orders_url.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -87,10 +91,10 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.ORDERS.'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$orders_url.'/?pn='.$last.'">Last</a></li>';
                                     }
 
                                     if($data['orderList']) {
@@ -124,29 +128,29 @@
 
                                         foreach($data['orderList'] as $order) {
 
-                                            if($order->stage == 1) {
-                                                $tablebg = '<tr class="warning clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
-                                            } elseif($order->stage == 2) {
-                                                $tablebg = '<tr class="info clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
-                                            } elseif($order->stage == 3){
-                                                $tablebg = '<tr class="success clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">';
+                                            if($order->getStage() == 1) {
+                                                $tablebg = '<tr class="warning clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
+                                            } elseif($order->getStage() == 2) {
+                                                $tablebg = '<tr class="info clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
+                                            } elseif($order->getStage() == 3){
+                                                $tablebg = '<tr class="success clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
                                             }
 
                                             echo '
 
                                             <tbody>
                                                 '. $tablebg .'
-                                                    <td>' . $order->id . '</td>
-                                                    <td>' . $order->stage . '</td>
-                                                    <td>' . $order->order_customer . '</td>
-                                                    <td>' . $order->order_date . '</td>
-                                                    <td>' . $order->order_time . '</td>
-                                                    <td>' . $order->order_type . '</td>
-                                                    <td>' . $order->ordered_by . '</td>
-                                                    <td>' . $order->onsite_contact . '</td>
-                                                    <td>' . $order->onsite_contact_phone . '</td>
+                                                    <td>' . $order->getId() . '</td>
+                                                    <td>' . $order->getStage() . '</td>
+                                                    <td>' . $order->getOrderCustomer() . '</td>
+                                                    <td>' . $order->getOrderDate() . '</td>
+                                                    <td>' . $order->getOrderTime() . '</td>
+                                                    <td>' . $order->getOrderType() . '</td>
+                                                    <td>' . $order->getOrderedBy() . '</td>
+                                                    <td>' . $order->getOnsiteContact() . '</td>
+                                                    <td>' . $order->getOnsiteContactPhone() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.HTTP.HTTPURL.VIEW.'/orderinfo.php?oid='.$order->id.'">
+                                                        <a class="btn btn-xs btn-warning" href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
                                                         <a class="btn btn-xs btn-info button-link" href="#">

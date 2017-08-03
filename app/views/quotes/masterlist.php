@@ -1,3 +1,7 @@
+<?php
+    $quotesUrl = Config::get('site/siteurl').Config::get('site/quotes');
+?>
+
 <DOCTYPE html>
 
 <html>
@@ -61,25 +65,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.$qutotesUrl.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -87,10 +91,10 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.HTTP.HTTPURL.PUB.QUOTES.'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$qutotesUrl.'/?pn='.$last.'">Last</a></li>';
                                     }
 
                                     if($data['quoteList']) {
@@ -120,32 +124,32 @@
 
                                         foreach($data['quoteList'] as $quote) {
 
-                                            if($quote->quote_status == "Closed") {
-                                                $tablebg = '<tr class="success clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/reproquote.php?quote_id=' . $quote->id . '">';
+                                            if($quote->getQuoteStatus() == "Closed") {
+                                                $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
                                             } else {
-                                                $tablebg = '<tr class="danger clickable-row" data-href="'.HTTP.HTTPURL.VIEW.'/reproquote.php?quote_id=' . $quote->id . '">';
+                                                $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
                                             }
 
                                             echo '
 
                                             <tbody>
                                                 '. $tablebg .'
-                                                    <td>' . $quote->id . '</td>
-                                                    <td>' . $quote->quote_customer . '</td>
-                                                    <td>' . $quote->quote_date . '</td>
-                                                    <td>' . $quote->quote_type . '</td>
-                                                    <td>' . $quote->quote_status . '</td>
+                                                    <td>' . $quote->getId() . '</td>
+                                                    <td>' . $quote->getQuoteCustomer() . '</td>
+                                                    <td>' . $quote->getQuoteDate() . '</td>
+                                                    <td>' . $quote->getQuoteType() . '</td>
+                                                    <td>' . $quote->getQuoteStatus() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.HTTP.HTTPURL.MODEL.'/createquote_sessions.php?pqid='.$quote->id.'">
+                                                        <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/createquote_sessions.php?pqid='.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
-                                                        <a type="button" class="btn btn-xs btn-success" href="'.HTTP.HTTPURL.CONTROLLERS.'/convertquote.php?quote_id='.$quote->id.'&url=listallquotes">
+                                                        <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convertquote.php?quote_id='.$quote->getId().'&url=listallquotes">
                                                         <span class="glyphicon glyphicon-usd"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-info button-link" href="'.HTTP.HTTPURL.VIEW.'/reproquote.php?quote_id=' . $quote->id . '">
+                                                        <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">
                                                         <span class="glyphicon glyphicon-print"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.HTTP.HTTPURL.CONTROLLERS.'/deletequote.php?id='.$quote->id.'&quote_status='.$quote->quote_status.'">
+                                                        <a class="btn btn-xs btn-danger" href="'.$quotesUrl.'/deletequote.php?id='.$quote->getId().'&quote_status='.$quote->getQuoteStatus().'">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                         </a>
                                                     </td>

@@ -6,7 +6,7 @@
         <script type="text/javascript">
             cart_order_type = <?php echo '"'.$data['order_type'].'"'; ?>;
         </script>
-        <script type="text/javascript" src="<?php echo HTTP.HTTPURL.PUB.JS.'/shoppingCart.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo Config::get('site/siteurl').Config::get('site/resources/js').'/shoppingCart.js'; ?>"></script>
 
         <?php 
         echo '
@@ -86,7 +86,7 @@
                                 <div class="panel-body">
                                     <!-- Need to fill in action when link is created. -->
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
-                                    <form action="<?php echo HTTP.HTTPURL.PUB.ORDERS.'/create/sales/create'; ?>" id="orderForm" method="post">
+                                    <form action="<?php echo Config::get('site/siteurl').Config::get('site/orders').'/create/sales/create'; ?>" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -137,7 +137,7 @@
                                                             foreach($data['custList'] as $customer) {
 
                                                                 echo '
-                                                                    <option value="' . $customer->customer_name . '">'. $customer->customer_name .'</option>
+                                                                    <option value="' . $customer->getCustomerName() . '">'. $customer->getCustomerName() .'</option>
                                                                 ';
                                                             }
                                                         ?>
@@ -306,15 +306,15 @@
                                                                         ?>
                                                                             <tr>
                                                                                 <!-- Short Name -->
-                                                                                <td width="250"><?php echo $shippingProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250"><?php echo $shippingProducts->getModName(); ?></td> <!-- Long Name -->
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="shippingCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $shippingProducts->mod_cost; ?>"/>
+                                                                                        <input type="text" id="shippingCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php echo $shippingProducts->getModCost(); ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input type="text" id="shippingQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $shippingProducts->id ?>, "<?= $shippingProducts->mod_name ?>", "<?= $shippingProducts->mod_short_name ?>", document.getElementById("shippingCost<?= $counter ?>").value, "<?= $shippingProducts->rental_type ?>"), document.getElementById("shippingQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $shippingProducts->getId() ?>, "<?= $shippingProducts->getModName() ?>", "<?= $shippingProducts->getModShortName() ?>", document.getElementById("shippingCost<?= $counter ?>").value, "<?= $shippingProducts->getRentalType() ?>"), document.getElementById("shippingQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
                                                                             </tr>
                                                                         <?php
                                                                         $counter++;
@@ -341,15 +341,15 @@
                                                                         ?>
                                                                             <tr>
                                                                                 <!-- Short Name -->
-                                                                                <td width="250"><?php echo $containerProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250"><?php echo $containerProducts->getModName(); ?></td> <!-- Long Name -->
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $containerProducts->monthly;}else{echo $containerProducts->mod_cost;} ?>"/>
+                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $containerProducts->getMonthly();}else{echo $containerProducts->getModCost();} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input type="text" id="containerQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $containerProducts->id ?>, "<?= $containerProducts->mod_name ?>", "<?= $containerProducts->mod_short_name ?>", document.getElementById("containerCost<?= $counter ?>").value, "<?= $containerProducts->rental_type ?>"), document.getElementById("containerQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $containerProducts->getId() ?>, "<?= $containerProducts->getModName() ?>", "<?= $containerProducts->getModShortName() ?>", document.getElementById("containerCost<?= $counter ?>").value, "<?= $containerProducts->getRentalType() ?>"), document.getElementById("containerQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
                                                                             </tr>
                                                                         <?php
                                                                         $counter++;
@@ -373,15 +373,15 @@
                                                                     <?php foreach ($data['modificationProducts'] as $modificationProducts) { ?>
                                                                             <tr>
                                                                                 <!-- Short Name -->
-                                                                                <td width="250"><?php echo $modificationProducts->mod_name; ?></td> <!-- Long Name -->
+                                                                                <td width="250"><?php echo $modificationProducts->getModName(); ?></td> <!-- Long Name -->
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $modificationProducts->monthly;}else{echo $modificationProducts->mod_cost;} ?>"/>
+                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $modificationProducts->getMonthly();}else{echo $modificationProducts->getModCost();} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input id="modQty<?= $counter ?>" type="text" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
-                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $modificationProducts->id ?>, "<?= $modificationProducts->mod_name ?>", "<?= $modificationProducts->mod_short_name ?>", document.getElementById("modCost<?= $counter ?>").value, "<?= $modificationProducts->rental_type ?>"), document.getElementById("modQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
+                                                                                <td width="250"><input type="button" onclick='cart.addItem(new Product(<?= $modificationProducts->getId() ?>, "<?= $modificationProducts->getModName() ?>", "<?= $modificationProducts->getModShortName() ?>", document.getElementById("modCost<?= $counter ?>").value, "<?= $modificationProducts->getRentalType() ?>"), document.getElementById("modQty<?= $counter ?>").value);' class="btn btn-gbr" value="Add To Order"/></td> <!-- Add To Order Button -->
                                                                             </tr>
                                                                         <?php
                                                                         $counter++;
