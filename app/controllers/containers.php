@@ -134,6 +134,17 @@ class Containers extends Controller
 		}
 		$this->view('containers/create', []);
 	}
+	
+	public function id($id)
+	{
+		$con = $this->model('Container');
+		$con->getDetails($id);
+		$con_sizes = $con->getSizes();
+		$orderList  = $con->fetchOrderHistory();
+		
+		
+		$this->view('containers/viewinfo', ['container'=>$con,'action'=>'edit','sizes'=>$con_sizes,'orderList'=>$orderList]);
+	}
 
 	
 }

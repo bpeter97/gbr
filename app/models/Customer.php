@@ -30,11 +30,11 @@ class Customer extends Model
 	public function getCustomerZipcode() { return $this->customer_zipcode; }
 	public function getCustomerState() { return $this->customer_state; }
 	public function getCustomerPhone() { return $this->customer_phone; }
-	public function getCustomerExt() { return $this->; }
-	public function getCustomerFax() { return $this->customer_; }
-	public function getCustomerEmail() { return $this->customer_; }
-	public function getCustomerRdp() { return $this->customer_; }
-	public function getCustomerNotes() { return $this->customer_; }
+	public function getCustomerExt() { return $this->customer_ext; }
+	public function getCustomerFax() { return $this->customer_fax; }
+	public function getCustomerEmail() { return $this->customer_email; }
+	public function getCustomerRdp() { return $this->customer_rdp; }
+	public function getCustomerNotes() { return $this->customer_notes; }
 	public function getFlag() { return $this->flag; }
 	public function getFlagReason() { return $this->flag_reason; }
 	
@@ -46,11 +46,11 @@ class Customer extends Model
 	public function setCustomerZipcode($zipcode) { $this->customer_zipcode = $zipcode; }
 	public function setCustomerState($state) { $this->customer_state = $state; }
 	public function setCustomerPhone($phone) { $this->customer_phone = $phone; }
-	public function setCustomerExt($ext) { $this-> = $ext; }
-	public function setCustomerFax($fax) { $this->customer_ = $fax; }
-	public function setCustomerEmail($email) { $this->customer_ = $email; }
-	public function setCustomerRdp($rdp) { $this->customer_ = $rdp; }
-	public function setCustomerNotes($notes) { $this->customer_ = $notes; }
+	public function setCustomerExt($ext) { $this->customer_ext = $ext; }
+	public function setCustomerFax($fax) { $this->customer_fax = $fax; }
+	public function setCustomerEmail($email) { $this->customer_email = $email; }
+	public function setCustomerRdp($rdp) { $this->customer_rdp = $rdp; }
+	public function setCustomerNotes($notes) { $this->customer_notes = $notes; }
 	public function setFlag($flag) { $this->flag = $flag; }
 	public function setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 

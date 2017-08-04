@@ -6,10 +6,11 @@
     </head>
 
     <body>
-
+        
         <div id="wrapper">
 
             <?php include(Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'); ?>
+                
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
@@ -124,7 +125,7 @@
                                         ';
 
                                         $toolcount = 0;
-
+                                        echo '<tbody>';
                                         foreach($data['conList'] as $con) {
 
                                             if($con->getIsRented()=="TRUE"){
@@ -139,12 +140,13 @@
                                                 $toolcount += 1;
                                                 $danger = 'danger';
                                                 $flag_reason = $con->getFlagReason();
-                                                $tooltip = ' data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
+                                                $tooltip = 'data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
                                                 echo '
                                                 <div id="a'.$toolcount.'" class="hidden">
                                                     <div class="popover-body"><b>'.$flag_reason.'</b></div>
                                                 </div>
                                                 ';
+
                                             } else {
                                                 $danger = '';
                                                 $flag_reason = '';
@@ -153,8 +155,8 @@
 
                                             echo '
 
-                                            <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->getId().'" '.$tooltip.'>
+                                            
+                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/id/' . $con->getId().'" '.$tooltip.'>
                                                     <td>' . $con->getContainerNumber() . '</td>
                                                     <td>' . $con->getContainerSerialNumber() . '</td>
                                                     <td>' . $con->getContainerSize() . '</td>
@@ -174,10 +176,11 @@
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            
                                             ';
 
                                         }
+                                            echo '</tbody>';
 
                                         echo '</table>';
 

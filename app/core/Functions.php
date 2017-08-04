@@ -36,18 +36,19 @@ class Functions {
 	//TODO: Would it not be better to throw an exception to kill the page?
 	public function debug($data)
 	{
-		$output = $data;
-		if ( is_array($output))
-				$output = implode( ',', $output);
+		if ( is_array($data)){
+			$data = implode( ',', $data);
+		}
 
-		echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+		echo "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
 	}
 
 	function fixObject (&$object)
 	{
-	  if (!is_object ($object) && gettype ($object) == 'object')
-	    return ($object = unserialize (serialize ($object)));
-	  return $object;
+		if (!is_object ($object) && gettype ($object) == 'object'){
+			return ($object = unserialize (serialize ($object)));
+		}
+		return $object;
 	}
 
 	// This will take the database time and adjust it to the user's timezone!
@@ -63,14 +64,14 @@ class Functions {
 		if(isset($_SESSION['user']))
 		{
 			$user = new User();
-            $user = unserialize($_SESSION[Config::get('session/user_session')]);
-            if($user->getUserTimezone() != null){
-            	$user_timezone = $user->getUserTimezone();
-            } else {
-            	$user_timezone = Config::get('site/timezone');
-            }
-            
-            $time_diff = $timezone_array[$user_timezone];
+						$user = unserialize($_SESSION[Config::get('session/user_session')]);
+						if($user->getUserTimezone() != null){
+							$user_timezone = $user->getUserTimezone();
+						} else {
+							$user_timezone = Config::get('site/timezone');
+						}
+						
+						$time_diff = $timezone_array[$user_timezone];
 
 			$new_date = new DateTime($date);
 			$new_date->modify("{$time_diff} hours");
@@ -83,7 +84,7 @@ class Functions {
 			
 		} else {
 
-            $time_diff = Config::get('site/timezone');
+						$time_diff = Config::get('site/timezone');
 
 			$new_date = new DateTime($date);
 			$new_date->modify("{$time_diff} hours");

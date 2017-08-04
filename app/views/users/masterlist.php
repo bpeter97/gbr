@@ -1,3 +1,7 @@
+<?php
+    $usersUrl = Config::get('site/siteurl').Config::get('site/users');
+?>
+
 <DOCTYPE html>
 
 <html>
@@ -20,14 +24,16 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center">
-                                    <b>Master List of Customers</b>
+                                    <b>Edit Users</b>
                                 </div>
                                 <div class="panel-body">
-                                <input type="text" id="filterName" onkeyup="searchNames()" placeholder="Search for names..">
                                     <?php    
-                                    // # of customers in customers table
+                                    // # of quotes in quotes table
                                     $rows = $data['row'];
-                                    $page_rows = $data['page_rows'];
+
+                                    // # of quotes to display per pagination
+                                    $page_rows = 100;
+
                                     // This tells us the page # of our last page
                                     $last = ceil($rows/$page_rows);
 
@@ -59,25 +65,25 @@
                                            the previous page or the first page so we do nothing. If we aren't then we
                                            generate links to the first page, and to the previous page. */
 
-                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn=1">First</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn=1">First</a></li>';
 
                                         if ($pagenum > 1) {
                                             $previous = $pagenum - 1;
-                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$previous.'">Previous</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn='.$previous.'">Previous</a></li>';
                                             // Render clickable number links that should appear on the left of the target page number
                                             for($i = $pagenum-2; $i < $pagenum; $i++){
                                                 if($i > 0){
-                                                    $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$i.'">'.$i.'</a></li>';
+                                                    $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn='.$i.'">'.$i.'</a></li>';
                                                 }
                                             }
                                         }
 
                                         // Render the target page number, but without it being a link
-                                        $paginationCtrls .= '<li class="active"><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
+                                        $paginationCtrls .= '<li class="active"><a href="'.$usersUrl.'/?pn='.$pagenum.'">'.$pagenum.'</a></li>';
 
                                         // Render clickable number links that should appear on the right of the target page number
                                         for($i = $pagenum+1; $i <= $last; $i++){
-                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
+                                            $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn='.$i.'">'.$i.'</a></li> &nbsp;';
                                             if($i >= $pagenum+2){
                                                 break;
                                             }
@@ -85,85 +91,59 @@
                                         // This does the same as above, only checking if we are on the last page, and then generating the "Next"
                                         if ($pagenum != $last) {
                                             $next = $pagenum + 1;
-                                            $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$next.'">Next</a></li>';
+                                            $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn='.$next.'">Next</a></li>';
                                         }
 
-                                        $paginationCtrls .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?pn='.$last.'">Last</a></li>';
+                                        $paginationCtrls .= '<li><a href="'.$usersUrl.'/?pn='.$last.'">Last</a></li>';
                                     }
 
-                                    // Create the array containing the alphabet.
-                                    $letterlist = '';
-                                    $c = 'A';
-                                    $chars = array($c);
-                                    while ($c < 'Z') {
-                                        $chars[] = ++$c;
-                                    }
-
-                                    // Generates the links for the alphebet.
-                                    $counter = 0;
-                                    while ($counter <> 26) {
-                                        $letterlist .= '<li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'/?f='.$chars[$counter].'">'.$chars[$counter].'</a></li> &nbsp;';
-                                        $counter += 1;
-                                    }
-
-                                    if($data['custList']) {
+                                    if($data['userList']) {
 
                                         echo '
-                                            <ul class="pagination">
-                                                <li><a href="'.Config::get('site/siteurl').Config::get('site/customers').'">ALL</a></li> &nbsp;
-                                                ' . $letterlist . '
-                                            </ul>
-                                        ';
-
-                                        echo '
+                                        <nav aria-label="Page navigation">
                                             <ul class="pagination">
                                                 ' . $paginationCtrls . '
                                             </ul>
+                                        </nav>
                                         ';
 
                                         echo '
 
-                                        <table class="table table-striped table-hover" id="custTable">
+                                        <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Phone</th>
-                                                    <th>Ext</th>
-                                                    <th>Fax</th>
-                                                    <th>Email</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Title</th>
+                                                    <th>Username</th>
+                                                    <th>Account Type</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                         ';
 
-                                        $toolcount = 0;
+                                        foreach($data['userList'] as $user) {
 
-                                        foreach($data['custList'] as $cus) {
-
-                                            if($cus->getFlag() == "Yes"){
-                                                $toolcount += 1;
-                                                $danger = 'danger';
-                                                $flag_reason = $cus->getFlagReason();
-                                                $tooltip = ' data-toggle="popover" data-placement="top" data-popover-content="#a'.$toolcount.'"';
-                                                echo '
-                                                <div id="a'.$toolcount.'" class="hidden">
-                                                    <div class="popover-body"><b>'.$flag_reason.'</b></div>
-                                                </div>
-                                                ';
-                                            } else {
-                                                $danger = '';
-                                                $flag_reason = '';
-                                                $tooltip = '';
-                                            }
+                                            $tablebg = '<tr class="clickable-row" data-href="'.$usersUrl.'/edituser/?id=' . $user->getId() . '">';
 
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').Config::get('site/customers').'/customerinfo/id=' . $cus->getId() .'" '.$tooltip.'>
-                                                    <td>' . $cus->getCustomerName() . '</td>
-                                                    <td>' . $cus->getCustomerPhone() . '</td>
-                                                    <td>' . $cus->getCustomerExt() . '</td>
-                                                    <td>' . $cus->getCustomerFax() . '</td>
-                                                    <td>' . $cus->getCustomerEmail() . '</td>
+                                                '. $tablebg .'
+                                                    <td>' . $user->getFirstname() . '</td>
+                                                    <td>' . $user->getLastname() . '</td>
+                                                    <td>' . $user->getTitle() . '</td>
+                                                    <td>' . $user->getUsername() . '</td>
+                                                    <td>' . $user->getPhone() . '</td>
+                                                    <td>' . $user->getType() . '</td>
+                                                    <td>
+                                                        <a class="btn btn-xs btn-warning" href="'.$usersUrl.'/edituser/?id='.$user->getId().'">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                        <a class="btn btn-xs btn-danger" href="'.$usersUrl.'/deleteuser/?id='.$user->getId().'">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             ';

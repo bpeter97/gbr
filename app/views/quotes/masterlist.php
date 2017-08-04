@@ -124,7 +124,7 @@
 
                                         foreach($data['quoteList'] as $quote) {
 
-                                            if($quote->getQuoteStatus() == "Closed") {
+                                            if($quote->getStatus() == "Closed") {
                                                 $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
                                             } else {
                                                 $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
@@ -135,10 +135,10 @@
                                             <tbody>
                                                 '. $tablebg .'
                                                     <td>' . $quote->getId() . '</td>
-                                                    <td>' . $quote->getQuoteCustomer() . '</td>
-                                                    <td>' . $quote->getQuoteDate() . '</td>
-                                                    <td>' . $quote->getQuoteType() . '</td>
-                                                    <td>' . $quote->getQuoteStatus() . '</td>
+                                                    <td>' . $quote->getCustomer() . '</td>
+                                                    <td>' . $quote->getDate() . '</td>
+                                                    <td>' . $quote->getType() . '</td>
+                                                    <td>' . $quote->getStatus() . '</td>
                                                     <td>
                                                         <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/createquote_sessions.php?pqid='.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
@@ -149,7 +149,7 @@
                                                         <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">
                                                         <span class="glyphicon glyphicon-print"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.$quotesUrl.'/deletequote.php?id='.$quote->getId().'&quote_status='.$quote->getQuoteStatus().'">
+                                                        <a class="btn btn-xs btn-danger" href="'.$quotesUrl.'/deletequote.php?id='.$quote->getId().'&quote_status='.$quote->getStatus().'">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                         </a>
                                                     </td>

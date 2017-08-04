@@ -35,6 +35,18 @@
     <script type="text/javascript" src="<?= $js . '/bootstrap-datetimepicker.min.js'; ?>"></script>
     <link rel="stylesheet" href="<?= $css . '/bootstrap-datetimepicker.css'; ?>"/>
 
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            html : true,
+            content: function() {
+                var content = $(this).attr("data-popover-content");
+                return $(content).children(".popover-body").html();
+            }
+        }); 
+    });
+    </script>
     
     <script type="text/javascript">
         $(document).ready(function(){

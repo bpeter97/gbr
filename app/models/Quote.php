@@ -100,7 +100,7 @@ class Quote extends Model
 			$new_where = 'WHERE '. $where .' ';
 		}
 		$this->db->query('SELECT COUNT(quote_id) FROM quotes '. $new_where);
-		$res = $this->db->results('arr')
+		$res = $this->db->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(quote_id)'];

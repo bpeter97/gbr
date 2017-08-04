@@ -80,7 +80,7 @@ class Product extends Model
 		$this->db->query('SELECT COUNT(mod_ID) FROM modifications '. $new_where);
 		$res = $this->db->results('arr');
 
-		foreach(res as $count){
+		foreach($res as $count){
 			$row = $count['COUNT(mod_ID)'];
 		}
 		

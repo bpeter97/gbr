@@ -72,7 +72,7 @@
             $cog = '<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-delay="10000" data-close-others="true" style=""><span class="glyphicon glyphicon-cog"></span></a>
                         <ul class="dropdown-menu main-dropdown-effects">
-                            <li><a href="'.$main_website.'/users.php">View / Edit Users</a></li>
+                            <li><a href="'.$main_website.'/users">View / Edit Users</a></li>
                             <li><a href="#">View / Edit Taxrates</a></li>
                         </ul>
                     </li>';
@@ -83,7 +83,8 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <img height="25" src="'.$main_website.Config::get('site/resources/img').'/logo.png">
+                    <img class="gbr_logo_image" height="25" src="'.$main_website.Config::get('site/resources/img').'/logo.png">
+                    <img class="small_gbr_logo_image" height="25" src="'.$main_website.Config::get('site/resources/img').'/logosmall.png">
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" id="myNavbar">

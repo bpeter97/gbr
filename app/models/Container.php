@@ -3,11 +3,11 @@
 // ************MODEL************
 
 /**
- * This is the container model, it will interact with the controller 
- * to provide data for the container views.
- *
- * @class Container
- */
+	* This is the container model, it will interact with the controller 
+	* to provide data for the container views.
+	*
+	* @class Container
+	*/
 class Container extends Model
 {
 	
@@ -113,6 +113,14 @@ class Container extends Model
 
 	}
 
+	public function getSizes()
+	{
+		$this->db->query('SELECT DISTINCT container_size FROM containers');
+		$res = $this->db->results('arr');
+		
+		return $res;
+	}
+
 	// Simple update function when a container is edited. -- NOT TESTED YET
 	public function update()
 	{
@@ -201,7 +209,7 @@ class Container extends Model
 		$this->setContainerAddress($address);
 		$this->setIsRented($isRented);
 
-		if($this->getRentalResale() = "Resale"){
+		if($this->getRentalResale() == "Resale"){
 			$this->setRentalResale("Sold");
 		}
 
@@ -271,6 +279,25 @@ class Container extends Model
 		}
 
 		return $list;
+	}
+	
+	public function fetchOrderHistory()
+	{
+		$sql = "SELECT * FROM orders WHERE container = ?";
+		$this->db->query($sql, array($this->getId()));
+                              $res = $this->db->results('arr');
+                              
+                              Functions::dump($res);
+                              
+                              $orderList = array();
+                              
+                              foreach ($res as $ord) {
+                              	$order = new Order($ord);
+                              	array_push($orderList, $order);
+                              }
+                              
+                              Functions::dump($orderList);
+                              return $orderList;
 	}
 
 	// Simple function to set checkbox values.
