@@ -112,6 +112,24 @@ class Container extends Model
 		$this->setContainerSizeCode($res->container_size_code);
 
 	}
+	
+	public function getPost()
+	{
+		$this->setId($_POST['frmcid']);
+		$this->setReleaseNumber($_POST['release_number']);
+		$this->setContainerSize($_POST['container_size']);
+		$this->setContainerSerialNumber($_POST['container_serial_number']);
+		$this->setContainerNumber($_POST['container_number']);
+		$this->setContainerShelves($_POST['container_shelves']);
+		$this->setContainerPaint($_POST['container_paint']);
+		$this->setContainerOnboxNumbers($_POST['container_onbox_numbers']);
+		$this->setContainerSigns($_POST['container_signs']);
+		$this->setRentalResale($_POST['rental_resale']);
+		$this->setIsRented($_POST['is_rented']);
+		$this->setContainerAddress($_POST['container_address']);
+		$this->setFlag($_POST['flag']);
+		$this->setFlagReason($_POST['flag_reason']);	
+	}
 
 	public function getSizes()
 	{
@@ -287,8 +305,6 @@ class Container extends Model
 		$this->db->query($sql, array($this->getId()));
                               $res = $this->db->results('arr');
                               
-                              Functions::dump($res);
-                              
                               $orderList = array();
                               
                               foreach ($res as $ord) {
@@ -296,7 +312,6 @@ class Container extends Model
                               	array_push($orderList, $order);
                               }
                               
-                              Functions::dump($orderList);
                               return $orderList;
 	}
 

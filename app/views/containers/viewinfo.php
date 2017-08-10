@@ -3,6 +3,7 @@
     $con = $data['container'];
     $sizes = $data['sizes'];
     $orders = $data['orderList'];
+    $url = Config::get('site/selfurl').'?action=update';
 ?>
 
 <DOCTYPE html>
@@ -256,7 +257,7 @@
                                             </select>
                                             <p class="help-block">Select whether or not the container is a rental or resale container.</p>
                                         </div>
-                                        <label class="col-md-2" for="release_number" control-label>Is it rented?</label>
+                                        <label class="col-md-2" for="is_rented" control-label>Is it rented?</label>
                                         <div class="col-md-4">
                                             <select class="form-control" name="is_rented">
                                                 <?php

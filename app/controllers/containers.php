@@ -23,6 +23,10 @@ class Containers extends Controller
 	{
 		if($this->checkLogin())
 		{
+			if(isset($_GET['action']))
+			{
+				$action = $_GET['action'];
+			}
 			$container = $this->model('Container');
 
 			$pagenum = 1;
@@ -38,7 +42,7 @@ class Containers extends Controller
 
 			$row = $container->countContainers();
 
-			$this->view('containers/masterlist', ['conList'=>$conList, 'row'=>$row]);
+			$this->view('containers/masterlist', ['conList'=>$conList, 'row'=>$row,'action'=>$action]);
 		}
 
 		
@@ -139,11 +143,23 @@ class Containers extends Controller
 	{
 		$con = $this->model('Container');
 		$con->getDetails($id);
-		$con_sizes = $con->getSizes();
-		$orderList  = $con->fetchOrderHistory();
 		
+		if(isset($_GET['action']))
+		{
+			$action = $_GET['action'];
+			if($_GET['action'] == "update")
+			{
+				$con->getPost();
+				$con->update();
+				header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/containers').'?action=usuccess');
+				exit;
+			}
+		} else {
+			$con_sizes = $con->getSizes();
+			$orderList  = $con->fetchOrderHistory();
+			$this->view('containers/viewinfo', ['container'=>$con,'action'=>'edit','sizes'=>$con_sizes,'orderList'=>$orderList]);
+		}
 		
-		$this->view('containers/viewinfo', ['container'=>$con,'action'=>'edit','sizes'=>$con_sizes,'orderList'=>$orderList]);
 	}
 
 	
