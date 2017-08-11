@@ -70,8 +70,8 @@ class Quote extends Model
 			$this->setId($id);
 		}
 		
-		$sql = 'SELECT * FROM quotes WHERE quote_id = '.$this->id;
-		$this->db->query($sql);
+		$sql = 'SELECT * FROM quotes WHERE quote_id = ?';
+		$this->db->query($sql, $this->getId());
 		$res = $this->db->single();
 	   
 		// Assign details to attributes.
