@@ -158,7 +158,7 @@
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').Config::get('site/customers').'/customerinfo/id=' . $cus->getId() .'" '.$tooltip.'>
+                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/customers/id/' . $cus->getId() .'" '.$tooltip.'>
                                                     <td>' . $cus->getCustomerName() . '</td>
                                                     <td>' . $cus->getCustomerPhone() . '</td>
                                                     <td>' . $cus->getCustomerExt() . '</td>

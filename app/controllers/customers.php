@@ -73,7 +73,33 @@ class Customers extends Controller
 		$this->view('customers/create');
 	}
 
-
+	public function id($id)
+	{
+		$customer = $this->model('Customer');
+		$customer->getDetails($id);
+		
+		
+		
+		if(isset($_GET['action']))
+		{
+			$action = $_GET['action'];
+			if($_GET['action'] == "update")
+			{
+				$customer->getPost();
+				$customer->update();
+				header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/customers').'?action=usuccess');
+				exit;
+			}
+		} else {
+			$quoteList = $customer->fetchQuoteHistory();
+			$orderList = $customer->fetchOrderHistory();
+			$rentalList = $customer->fetchRentalHistory();
+			$this->view('customers/viewinfo', ['customer'=>$customer,'action'=>'edit','quoteList'=>$quoteList,'orderList'=>$orderList,'rentalList'=>$rentalList]);
+		}
+		
+	}
+	
+	
 }
 
 ?>
