@@ -4,12 +4,13 @@
     ini_set('allow_url_fopen', 'on');
 
     // Create URL to CFG/SETTINGS.PHP file.
-    $cfgurl = dirname($_SERVER["DOCUMENT_ROOT"]).'/blpdev.com/app/core/Settings.php';
+    $cfgurl = dirname($_SERVER["DOCUMENT_ROOT"]).'/app/core/Settings.php';
 
     //Variable Constants
     include($cfgurl);
 
-    include(BASEURL.APP.CORE.'/Database.php');
+    include(dirname($_SERVER["DOCUMENT_ROOT"]).'/app/core/Database.php');
+    include(dirname($_SERVER["DOCUMENT_ROOT"]).'/app/core/Config.php');
 
     function parseToXML($htmlStr) {
         $xmlStr=str_replace('<','&lt;',$htmlStr);
@@ -21,13 +22,12 @@
     }
 
     //Create new database object and connect.
-    $db = new Database();
-    $db->connect();
+    $db = Database::getDBI();
 
     // Select all the rows in the markers table
     $query = "SELECT * FROM containers WHERE container_address <> ''";
-    $db->sql($query);
-    $coninfo = $db->getResult();
+    $db->query($query);
+    $coninfo = $db->results('arr');
 
     header("Content-type: text/xml");
 
