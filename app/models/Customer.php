@@ -189,54 +189,54 @@ class Customer extends Model
 	{
 		$sql = "SELECT * FROM quotes WHERE quote_customer = '".$this->getCustomerName()."'";
 		$this->db->query($sql);
-                              $res = $this->db->results('arr');
-                              
-                              $quoteList = array();
-                              
-                              if($res){
-                              	foreach ($res as $quo) {
-                              		$quote = new Quote($quo);
-                              		array_push($quoteList, $quote);
-                              	}
-                              }
-                              
-                              return $quoteList;
+		$res = $this->db->results('arr');
+
+		$quoteList = array();
+
+		if($res){
+			foreach ($res as $quo) {
+				$quote = new Quote($quo['quote_id']);
+				array_push($quoteList, $quote);
+			}
+		}
+
+		return $quoteList;
 	}
 	
 	public function fetchOrderHistory()
 	{
-		$sql = "SELECT * FROM orders WHERE order_customer = '".$this->getCustomerName()."' AND order_type = 'Sales' OR order_customer = '".$this->getCustomerName()."' AND order_type = 'Resale'";
+		$sql = 'SELECT * FROM orders WHERE order_customer = "'.$this->getCustomerName().'" AND order_type = "Sales" OR order_customer = "'.$this->getCustomerName().'" AND order_type = "Resale"';
 		$this->db->query($sql);
-                              $res = $this->db->results('arr');
-                              
-                              $orderList = array();
-                              
-                              if($res){
-                            		foreach ($res as $ord) {
-                              		$order = new Order($ord);
-                              		array_push($orderList, $order);
-                              	}
-                              }
-                              
-                              return $orderList;
+		$res = $this->db->results('arr');
+
+		$orderList = array();
+
+		if($res){
+			foreach ($res as $ord) {
+				$order = new Order($ord['order_id']);
+				array_push($orderList, $order);
+			}
+		}
+
+		return $orderList;
 	}
 	
 	public function fetchRentalHistory()
 	{
 		$sql = "SELECT * FROM orders WHERE order_customer = '".$this->getCustomerName()."' AND order_type = 'Rental'";
 		$this->db->query($sql);
-                              $res = $this->db->results('arr');
-                              
-                              $orderList = array();
-                              
-                              if($res){
-	                              foreach ($res as $ord) {
-	                              	$order = new Order($ord);
-	                              	array_push($orderList, $order);
-	                              }
-                              }
-                              
-                              return $orderList;
+		$res = $this->db->results('arr');
+
+		$orderList = array();
+
+		if($res){
+			foreach ($res as $ord) {
+				$order = new Order($ord['order_id']);
+				array_push($orderList, $order);
+			}
+		}
+
+		return $orderList;
 	}
 }
 

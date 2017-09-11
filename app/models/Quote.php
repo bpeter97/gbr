@@ -64,15 +64,15 @@ class Quote extends Model
 
 	public function getDetails($id = null)
 	{
+
+		$this->db->select('quotes',['quote_id'=>$this->getId()]);
+		$res = $this->db->single();
 	
 		if($id != null)
 		{
 			$this->setId($id);
 		}
 
-		$this->db->select('quotes',['quote_id'=>$this->getId()]);
-		$res = $this->db->single();
-	   
 		// Assign details to attributes.
 		$this->setCustomer($res->quote_customer);
 		$this->setType($res->quote_type);
