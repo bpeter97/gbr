@@ -1,5 +1,16 @@
 <DOCTYPE html>
 <?php $counter = 0; ?>
+<?php 
+
+if($data['customer']->getId() !== null)
+{
+    $customer = $data['customer']->getCustomerName();
+} else {
+    $customer = null;
+}
+
+
+?>
 <html>
     <head>
         <?php require_once(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
@@ -130,7 +141,17 @@
                                                     <select class="form-control" name="frmcustomername" id="frmcustomername">
                                                         <!-- Need to implement customer auto chosen when from create customer! -->
                                                         <!-- <option>php echo $cname; ?></option> -->
-                                                        <option>Choose One</option>
+                                                        <?php 
+                                                        if($customer == null)
+                                                        {
+                                                            echo '<option>Choose One</option>';
+                                                        } else {
+                                                            echo '<option>'.$customer.'</option>';
+                                                        }
+
+                                                        ?>
+
+                                                        
                                                         <!-- PHP to select customers names! -->
                                                         <?php         
 

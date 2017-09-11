@@ -225,7 +225,7 @@
                                             </tr>
                                             <?php
 
-                                                if($!empty($quoteList)){
+                                                if(!empty($quoteList)){
                                                     // List out each and every purchase made by the customer.
                                                     foreach($quoteList as $quote){
                                                         $quote_count += 1;
@@ -451,9 +451,7 @@
 
     </div>
 
-    <?php include(BASEURL.INCLUDES.'/modals.php'); ?>
-
-    <?php include(BASEURL.INCLUDES.'/botjsincludes.php'); ?>
+    <?php include(Config::get('site/baseurl').Config::get('site/assets').'/botjsincludes.php'); ?>
 
 </body>
 

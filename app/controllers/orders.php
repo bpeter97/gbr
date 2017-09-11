@@ -64,6 +64,11 @@ class Orders extends Controller
 			$customer = $this->model('Customer');
 			$custList = $customer->getCustomers();
 
+			if(isset($_GET['cust']))
+			{
+				$customer->getDetails($_GET['cust']);
+			}
+
 			$products = $this->model('Product');
 
 			if($type == 'rental')
@@ -83,7 +88,7 @@ class Orders extends Controller
 			$containerProducts = $products->getProducts($containerSQL);
 			$modificationProducts = $products->getProducts($modSQL);
 
-			$this->view('orders/create', ['custList'=>$custList, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts, 'order_type'=>$type]);
+			$this->view('orders/create', ['custList'=>$custList, 'customer'=>$customer, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts, 'order_type'=>$type]);
 			
 		}
 
