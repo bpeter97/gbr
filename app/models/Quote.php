@@ -64,14 +64,13 @@ class Quote extends Model
 
 	public function getDetails($id = null)
 	{
-		
+	
 		if($id != null)
 		{
 			$this->setId($id);
 		}
-		
-		$sql = 'SELECT * FROM quotes WHERE quote_id = ?';
-		$this->db->query($sql, $this->getId());
+
+		$this->db->select('quotes',['quote_id'=>$this->getId()]);
 		$res = $this->db->single();
 	   
 		// Assign details to attributes.

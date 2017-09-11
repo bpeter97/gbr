@@ -96,10 +96,6 @@ class Order extends Model
 	public function getDetails($id = '')
 	{
 
-		// Get the quote details.
-		$this->db->select('orders',['order_id'=>$this->getId()]);
-		$res = $this->db->single();
-
 		if($id != null)
 		{
 			$this->setId($id);
@@ -108,6 +104,12 @@ class Order extends Model
 		{
 			$this->setId($res->order_id);
 		}
+
+		// Get the quote details.
+		$this->db->select('orders',['order_id'=>$this->getId()]);
+		$res = $this->db->single();
+
+
 		// Assign details to attributes.
 		$this->setQuoteId($res->quote_id);
 		$this->setOrderCustomer($res->order_customer);

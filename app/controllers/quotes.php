@@ -19,7 +19,7 @@ class Quotes extends Controller
 	// This will be the page that shows all quotes.
 	public function masterlist()
 	{
-		$this->checkSession();
+		
 		if($this->checkLogin())
 		{
 			$quote = $this->model('Quote');

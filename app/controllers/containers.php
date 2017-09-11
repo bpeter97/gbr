@@ -26,6 +26,8 @@ class Containers extends Controller
 			if(isset($_GET['action']))
 			{
 				$action = $_GET['action'];
+			} else {
+				$action = "";
 			}
 			$container = $this->model('Container');
 
