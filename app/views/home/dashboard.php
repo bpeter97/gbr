@@ -3,10 +3,12 @@
 $chart = $data['chart'];
 $events = $data['events'];
 $con_list = $data['con_list'];
+$months = $data['months'];
 
 // echo '<pre>';
 // var_dump($events);
 // echo '</pre>';
+Functions::dump($events);
 
 ?>
 
@@ -491,26 +493,29 @@ $con_list = $data['con_list'];
 
       function createProdTable(event)
       {
-        var prodTable = '<table class="table table-striped table-hover">';
-        prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
-        <?php $i=1; ?>
-        var l = 1;
-        <?php foreach($events as $event): ?>
-        <?php if(!empty($event->order->getId())): ?>
-        eventOrderId = <?php echo $event->order->getId(); ?>;
-        console.log(event.order_id);
-        if(eventOrderId != ''){
-            if(eventOrderId == event.order_id)
-            {
-                <?php foreach($event->order->products as $prod): ?>
-                prodTable += '<tr><td><?php echo $prod->getModName(); ?></td><td><?php echo $prod->getProductQuantity(); ?></td></tr>';
-                <?php endforeach; ?>
-            }
-        }
+        // Check to see if the event has an order or products to create the table, if not, return empty variable.
+        <?php if($event->order !== null && $event->order->product !== null): ?>
+          var prodTable = '<table class="table table-striped table-hover">';
+          prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
+          <?php $i=1; ?>
+          var l = 1;
+          <?php foreach($events as $event): ?>
+            <?php if($event->getOrderId() !== null): ?>
+              eventOrderId = <?php echo $event->getOrderId(); ?>;
+              console.log(event.order_id);
+              if(eventOrderId != ''){
+                  if(eventOrderId == event.order_id)
+                  {
+                      <?php foreach($event->order->products as $prod): ?>
+                        prodTable += '<tr><td><?php echo $prod->getModName(); ?></td><td><?php echo $prod->getProductQuantity(); ?></td></tr>';
+                      <?php endforeach; ?>
+                  }
+              }
+            <?php endif; ?>
+            
+          <?php endforeach; ?>
+          prodTable += '</table>';
         <?php endif; ?>
-        
-        <?php endforeach; ?>
-        prodTable += '</table>';
         return prodTable;
       }
 
