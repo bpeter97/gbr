@@ -8,7 +8,6 @@ $months = $data['months'];
 // echo '<pre>';
 // var_dump($events);
 // echo '</pre>';
-Functions::dump($events);
 
 ?>
 

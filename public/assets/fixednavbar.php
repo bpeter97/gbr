@@ -109,8 +109,8 @@
                         <li class="dropdown '.$quotes_active.'">
                         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Quotes <span class="caret"></span></a>
                         	<ul class="dropdown-menu main-dropdown-effects">
-                        		<li><a href="'.$main_website.Config::get('site/quotes').'/create_quote.php">Create Quote</a></li>
-                        		<li><a href="'.$main_website.Config::get('site/quotes').'/quotes.php">View Quotes</a></li>
+                        		<li><a href="'.$main_website.Config::get('site/quotes').'/create_quote">Create Quote</a></li>
+                        		<li><a href="'.$quote_array[0].'/">View Quotes</a></li>
                         	</ul>
                         </li>
                         <li class="dropdown '.$orders_active.'">
