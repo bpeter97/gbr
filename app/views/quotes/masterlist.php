@@ -125,9 +125,9 @@
                                         foreach($data['quoteList'] as $quote) {
 
                                             if($quote->getStatus() == "Closed") {
-                                                $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
+                                                $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
                                             } else {
-                                                $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">';
+                                                $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
                                             }
 
                                             echo '

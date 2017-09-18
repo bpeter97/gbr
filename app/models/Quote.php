@@ -8,6 +8,7 @@ class Quote extends Model
 
 	private $id,
 		$quote_customer,
+		$quote_customer_id,
 		$quote_type,
 		$quote_date,
 		$quote_status,
@@ -20,6 +21,7 @@ class Quote extends Model
 		$total_cost,
 		$sales_tax,
 		$monthly_total;
+	private $products = array();
 	
 	function __construct($id = '')
 	{
@@ -34,6 +36,7 @@ class Quote extends Model
 	
 	public function getId() { return $this->id; }
 	public function getCustomer() { return $this->quote_customer; }
+	public function getCustomerId() {return $this->quote_customer_id; }
 	public function getType() { return $this->quote_type; }
 	public function getDate() { return $this->quote_date; }
 	public function getStatus() { return $this->quote_status; }
@@ -46,21 +49,23 @@ class Quote extends Model
 	public function getTotalCost() { return $this->total_cost; }
 	public function getSalesTax() { return $this->sales_tax; }
 	public function getMonthlyTotal() { return $this->monthly_total; }
+	public function getQuoteProducts() { return $this->products; }
 	
-	public function setId($id) { return $this->id = $id; }
-	public function setCustomer($customer) { return $this->quote_customer = $customer; }
-	public function setType($type) { return $this->quote_type = $type; }
-	public function setDate($date) { return $this->quote_date = $date; }
-	public function setStatus($status) { return $this->quote_status = $status; }
-	public function setJobName($name) { return $this->job_name = $name; }
-	public function setJobAddress($address) { return $this->job_address = $address; }
-	public function setJobCity($city) { return $this->job_city = $city; }
-	public function setJobZipcode($zipcode) { return $this->job_zipcode = $zipcode; }
-	public function setAttention($attn) { return $this->attn = $attn; }
-	public function setCostBeforeTax($before) { return $this->cost_before_tax = $before; }
-	public function setTotalCost($total) { return $this->total_cost = $total; }
-	public function setSalesTax($tax) { return $this->sales_tax = $tax; }
-	public function setMonthlyTotal($total) { return $this->monthly_total = $total; }
+	public function setId($id) { $this->id = $id; }
+	public function setCustomer($customer) { $this->quote_customer = $customer; }
+	public function setCustomerId($id) { $this->quote_customer_id = $id; }
+	public function setType($type) { $this->quote_type = $type; }
+	public function setDate($date) { $this->quote_date = $date; }
+	public function setStatus($status) { $this->quote_status = $status; }
+	public function setJobName($name) { $this->job_name = $name; }
+	public function setJobAddress($address) { $this->job_address = $address; }
+	public function setJobCity($city) { $this->job_city = $city; }
+	public function setJobZipcode($zipcode) { $this->job_zipcode = $zipcode; }
+	public function setAttention($attn) { $this->attn = $attn; }
+	public function setCostBeforeTax($before) { $this->cost_before_tax = $before; }
+	public function setTotalCost($total) { $this->total_cost = $total; }
+	public function setSalesTax($tax) { $this->sales_tax = $tax; }
+	public function setMonthlyTotal($total) { $this->monthly_total = $total; }
 
 	public function getDetails($id = null)
 	{
@@ -75,6 +80,7 @@ class Quote extends Model
 
 		// Assign details to attributes.
 		$this->setCustomer($res->quote_customer);
+		$this->setCustomerId($res->quote_customer_id);
 		$this->setType($res->quote_type);
 		$this->setDate($res->quote_date);
 		$this->setStatus($res->quote_status);
@@ -126,6 +132,23 @@ class Quote extends Model
 		}
 
 		return $list;
+	}
+
+	// Retrieves the quoted products belonging to this quote 
+	public function fetchQuoteProducts()
+	{
+
+		$this->db->query('SELECT * FROM product_orders WHERE quote_id = '.$this->getId());
+		$res = $this->db->results('arr');
+		foreach($res as $quotedProd)
+		{
+			$product = new Product($quotedProd['product_id']);
+			$product->setProductCost($quotedProd['product_cost']);
+			$product->setProductQuantity($quotedProd['product_qty']);
+			$product->setProductType($quotedProd['product_type']);
+
+			array_push($this->products, $product);
+		}
 	}
 
 }

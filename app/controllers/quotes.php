@@ -89,6 +89,37 @@ class Quotes extends Controller
 		}
 
 	}
+
+	public function viewinfo($id)
+	{
+		$this->checkSession();
+
+		$quote = new Quote($id);
+		$quote->fetchQuoteProducts();
+
+		$customer = new Customer($quote->getCustomerId());
+
+		$type = $quote->getType();
+		$customerName = $quote->getCustomer();
+		$attn = $quote->getAttention();
+		$jobName = $quote->getJobName();
+		$customerPhone = $customer->getCustomerPhone();
+		$customerFax = $customer->getCustomerFax();
+		$customerEmail = $customer->getCustomerEmail();
+
+		$products = $quote->getQuoteProducts();
+
+
+		$this->view('quotes/view',['quote'=>$quote,
+								 'type'=>$type, 
+								 'customer_name'=>$customerName,
+								 'job_name'=>$jobName,
+								 'attn'=>$attn,
+								 'customer_phone'=>$customerPhone,
+								 'customer_fax'=>$customerFax,
+								 'customer_email'=>$customerEmail,
+								 'products'=>$products]);
+	}
 	
 }
 
