@@ -222,6 +222,7 @@ class Order extends Model
 		$this->setTotalCost($_POST['cartTotalCost']);
 		$this->setSalesTax($_POST['cartTax']);
 		$this->setCostBeforeTax($_POST['cartBeforeTaxCost']);
+		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
 		// Assigning stage as one since it is a newly created order.
 		$this->stage = 1;
 
@@ -241,6 +242,7 @@ class Order extends Model
 				'tax_rate'=>$this->getTaxRate(),
 				'cost_before_tax'=>$this->getCostBeforeTax(),
 				'total_cost'=>$this->getTotalCost(),
+				'monthly_total'=>$this->getMonthlyTotal(),
 				'sales_tax'=>$this->getSalesTax(),
 				'stage'=>$this->getStage()]);
 

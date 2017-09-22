@@ -1,0 +1,2 @@
+Can't filter customers that are on other pages.
+Need to fix the display quote page, not displaying items properly and not calculating monthly rent properly on the rental quotes.

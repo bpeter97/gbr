@@ -77,14 +77,16 @@ var Cart = function (order_type)
 				// Remove item cost from total.
 				for(var j = 0; j < this.items[i][1]; j++)
 				{
-					this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
+					if($.inArray(this.items[i][0].msn, rentArray) != -1)
+					{
+						this.monthly_total = round((this.monthly_total - this.items[i][0].cost), 2);
+					} else {
+						this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
+					}
 				}
 				this.calculateTax();
 				this.alert(this.items[i][0], 'removed');
 				this.items.splice(i,1);
-				
-			} else {
-				console.log('No itemNumbers matched in ShoppingCart.js in removeItem function.');
 			}
 		}
 		this.itemCounter -= 1;
@@ -155,6 +157,7 @@ var Cart = function (order_type)
 			alert('You have no items in the cart!');
 		} else {
 			var cartData = '<input type="hidden" name="cartTotalCost" value="'+ this.total +'">';
+			cartData += '<input type="hidden" name"cartMonthlyTotal" value"'+ this.monthly_total +'">';
 			cartData += '<input type="hidden" name="cartTax" value="'+ this.tax +'">';
 			cartData += '<input type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
 			cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';

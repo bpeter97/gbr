@@ -17,6 +17,7 @@ class Quote extends Model
 		$job_city,
 		$job_zipcode,
 		$attn,
+		$tax_rate,
 		$cost_before_tax,
 		$total_cost,
 		$sales_tax,
@@ -45,6 +46,7 @@ class Quote extends Model
 	public function getJobCity() { return $this->job_city; }
 	public function getJobZipcode() { return $this->job_zipcode; }
 	public function getAttention() { return $this->attn; }
+	public function getTaxRate() { return $this->tax_rate; }
 	public function getCostBeforeTax() { return $this->cost_before_tax; }
 	public function getTotalCost() { return $this->total_cost; }
 	public function getSalesTax() { return $this->sales_tax; }
@@ -62,6 +64,7 @@ class Quote extends Model
 	public function setJobCity($city) { $this->job_city = $city; }
 	public function setJobZipcode($zipcode) { $this->job_zipcode = $zipcode; }
 	public function setAttention($attn) { $this->attn = $attn; }
+	public function setTaxRate($taxrate) { $this->tax_rate = $taxrate; }
 	public function setCostBeforeTax($before) { $this->cost_before_tax = $before; }
 	public function setTotalCost($total) { $this->total_cost = $total; }
 	public function setSalesTax($tax) { $this->sales_tax = $tax; }
@@ -89,6 +92,7 @@ class Quote extends Model
 		$this->setJobCity($res->job_city);
 		$this->setJobZipcode($res->job_zipcode);
 		$this->setAttention($res->attn);
+		$this->setTaxRate($res->tax_rate);
 		$this->setCostBeforeTax($res->cost_before_tax);
 		$this->setTotalCost($res->total_cost);
 		$this->setSalesTax($res->sales_tax);
@@ -148,6 +152,84 @@ class Quote extends Model
 			$product->setProductType($quotedProd['product_type']);
 
 			array_push($this->products, $product);
+		}
+	}
+
+	public function createQuote()
+	{
+
+		// Post the data from the quote form.
+		$this->setType($_POST['frmquotetype']);
+		$this->setDate($_POST['frmquotedate']);
+		$this->setStatus('Open');
+		$this->setJobName($_POST['frmjobname']);
+		$this->setJobAddress($_POST['frmjobaddress']);
+		$this->setJobCity($_POST['frmjobcity']);
+		$this->setJobZipcode($_POST['frmjobzipcode']);
+		$this->setAttention($_POST['frmattn']);
+		// Here we are going to post the tax rate and turn it into a float.
+		$unformatted_tax_rate = $_POST['frmtaxrate'];
+		$this->setTaxRate((float)$unformatted_tax_rate);
+		$this->setCostBeforeTax($_POST['cartBeforeTaxCost']);
+		$this->setTotalCost($_POST['cartTotalCost']);
+		$this->setSalesTax($_POST['cartTax']);
+		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
+
+		// Need to insert the new order into the database.
+		$this->db->insert('quotes',[
+				'quote_customer'=>$this->getCustomer(),
+				'quote_customer_id'=>$this->getCustomerId(),
+				'quote_date'=>$this->getDate(),
+				'quote_status'=>$this->getStatus(),
+				'quote_type'=>$this->getType(),
+				'job_name'=>$this->getJobName(),
+				'job_city'=>$this->getJobCity(),
+				'job_address'=>$this->getJobAddress(),
+				'job_zipcode'=>$this->getJobZipcode(),
+				'attn'=>$this->getAttention(),
+				'tax_rate'=>$this->getTaxRate(),
+				'cost_before_tax'=>$this->getCostBeforeTax(),
+				'total_cost'=>$this->getTotalCost(),
+				'sales_tax'=>$this->getSalesTax(),
+				'monthly_total'=>$this->getMonthlyTotal()]);
+
+		$res = $this->db->results('arr');
+
+		// If properly inserted, grab the ID, else throw error.
+		if($res == true)
+		{
+			$this->id = $this->db->grabID();
+		} 
+		else 
+		{
+			echo "There was an error inserting the order into the database.";
+		}
+		
+	}
+
+	/*
+	 * TODO implement this with quotes.
+	 */
+	public function insertQuotedProducts()
+	{
+		$i = 0;
+		while ($i < $_POST['itemCount'])
+		{
+			$post_product = json_decode($_POST['product'.$i], true);
+			$new_product = new Product($post_product['id']);
+			$new_product->setProductQuantity($post_product['qty']);
+			$new_product->setProductCost($post_product['cost']);
+			$i++;
+
+			$this->db->insert('product_orders',array('quote_id'=>$this->id,
+							'product_type'=>$new_product->getProductType(),
+							'product_msn'=>$new_product->getModShortName(),
+							'product_cost'=>$new_product->getProductCost(),
+							'product_qty'=>$new_product->getProductQuantity(),
+							'product_name'=>$new_product->getModName(),
+							'product_id'=>$new_product->getId()));
+
+			$res = $this->db->results('arr');
 		}
 	}
 

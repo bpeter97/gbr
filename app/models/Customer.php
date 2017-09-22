@@ -54,7 +54,7 @@ class Customer extends Model
 	public function setFlag($flag) { $this->flag = $flag; }
 	public function setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 
-	function __construct($id = '')
+	function __construct($id = null)
 	{
 		$this->db = Database::getDBI();
 		
