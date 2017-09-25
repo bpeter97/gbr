@@ -8,6 +8,7 @@
     $customerEmail = $data['customer_email'];
     $quote = $data['quote'];
     $products = $data['products'];
+    $rentArray = ['10CONRENT','20DDCONRENT','20CONRENT','40CONRENT','24CONRENT','20COMBORENT','20FULLRENT','40COMBORENT','40SCOMBORENT','20SHELVRENT','LOADRAMP'];
 ?>
 
 <!DOCTYPE html>
@@ -102,8 +103,7 @@
                     <div class="col-lg-12">
                         <div style="margin-top:30px;">
                             <div class="row">
-                            <?php
-                                if($type == "Sales" || $type == "Resale"){ ?>
+                            <?php if($type == "Sales" || $type == "Resale"): ?>
 
                                     <table class="cust_data_table table-bordered">
                                         <thead>
@@ -115,35 +115,33 @@
                                         </thead>
                                         <tbody>
 
-                                            <?php
-                                            foreach ($products as $item){
-                                            ?>
+                                            <?php foreach ($products as $item): ?>
 
                                             <tr>
                                                 <!-- Sales Quote -->
-                                                <td><?php echo $item->getModName(); ?></td>
-                                                <td class="text-center"><?php echo $item->getProductQuantity(); ?></td>
-                                                <td class="text-center">$ <?php echo $item->getProductCost(); ?></td>
+                                                <td><?= $item->getModName(); ?></td>
+                                                <td class="text-center"><?= $item->getProductQuantity(); ?></td>
+                                                <td class="text-center">$ <?= $item->getProductCost(); ?></td>
                                             </tr>
 
-                                            <?php } ?>
+                                            <?php endforeach; ?>
 
                                             <tr>
                                                 <td>Sales Tax</td>
                                                 <td class="text-center">1</td>
-                                                <td class="text-center">$ <?php echo $quote->getSalesTax(); ?></td>
+                                                <td class="text-center">$ <?= $quote->getSalesTax(); ?></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr class="sum_row">
                                                 <td>Total:</td>
                                                 <td class="text-center"></td>
-                                                <td class="text-center">$ <?php echo $quote->getTotalCost(); ?></td>
+                                                <td class="text-center">$ <?= $quote->getTotalCost(); ?></td>
                                             </tr>
                                         </tfoot>
                                     </table>
 
-                                <?php } elseif ($type == "Rental") { ?>
+                                <?php elseif ($type == "Rental"): ?>
 
                                     <table class="cust_data_table table-bordered">
                                         <thead>
@@ -156,37 +154,39 @@
                                         </thead>
                                         <tbody>
                                         <!-- Will obviously need to do a foreach here and then have the total row at the end after the foreach to display the proper total, easy enough. -->
-                                            <?php
-                                            foreach ($products as $item){
-
-                                            ?>
+                                            <?php foreach ($products as $item): ?>
                                             <tr>
                                                 <!-- Sales Quote -->
-                                                <td><?php echo $item->getModName(); ?></td>
-                                                <td class="text-center"><?php echo $item->getProductQuantity(); ?></td>
-                                                <td class="text-center">$ <?php echo $item->getProductCost(); ?></td>
-                                                <td class="text-center"></td>
+                                                <?php if(in_array($item->getModShortName(), $rentArray)): ?>
+                                                    <td><?= $item->getModName(); ?></td>
+                                                    <td class="text-center"><?= $item->getProductQuantity(); ?></td>
+                                                    <td class="text-center">$ <?= $item->getProductCost(); ?></td>
+                                                    <td class="text-center"></td>
+                                                <?php else: ?>
+                                                    <td><?= $item->getModName(); ?></td>
+                                                    <td class="text-center"><?= $item->getProductQuantity(); ?></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">$ <?= $item->getProductCost(); ?></td>
+                                                <?php endif; ?>
                                             </tr>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php endforeach; ?>
                                             <tr>
                                                 <td>Sales Tax</td>
-                                                <td class="text-center">1</td>
+                                                <td class="text-center"></td>
                                                 <td></td>
-                                                <td class="text-center">$ <?php echo $quote->getSalesTax(); ?></td>
+                                                <td class="text-center">$ <?= $quote->getSalesTax(); ?></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr class="sum_row">
                                                 <td>Total:</td>
                                                 <td class="text-center"></td>
-                                                <td class="text-center">$ <?php echo $quote->getTotalCost()-$quote->getSalesTax(); ?></td>
-                                                <td class="text-center">$ <?php echo $quote->getSalesTax(); ?></td>
+                                                <td class="text-center">$ <?= $quote->getMonthlyTotal(); ?></td>
+                                                <td class="text-center">$ <?= $quote->getTotalCost(); ?></td>
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    <?php } ?>
+                                    <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
                         <div style="margin-top:10px;">
                             <div class="row">
                                 <span class="manager_sig">
-                                    <?php echo $_SESSION['userfname'].' '.$_SESSION['userlname'].' - '.$_SESSION['usertitle']; ?>
+                                    <?= $_SESSION['userfname'].' '.$_SESSION['userlname'].' - '.$_SESSION['usertitle']; ?>
                                 </span>
                             </div>
                         </div>

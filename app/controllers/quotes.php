@@ -73,25 +73,11 @@ class Quotes extends Controller
 								 'products'=>$products]);
 	}
 
-	public function create($type, $action = null)
+	public function create($type)
 	{
 		
 		if($this->checkLogin())
 		{
-			if($action == 'create')
-			{
-				$c = new Customer($_POST['frmcustomername']);
-
-				// Create the order
-				$quote = $this->model('Quote');
-				$quote->setCustomer($c->getCustomerName());
-				$quote->setCustomerId($c->getId());
-				$quote->createQuote();
-				// create the products and insert them in the ordered products.
-				$quote->insertQuotedProducts();
-				// direct user to the orders view page. THIS IS NOT WORKING, NEED TO USE REDIRECT.
-				$this->masterlist();
-			} 
 
 			$customer = $this->model('Customer');
 			$custList = $customer->getCustomers();
@@ -124,6 +110,30 @@ class Quotes extends Controller
 			
 		}
 
+	}
+
+	public function submitQuote()
+	{
+		$c = new Customer($_POST['frmcustomername']);
+		// DO FUNCTION DUMP ON POST AND SEE WHAT IS BEING POSTED.
+		// CHECK TO SEE IF CUSTOMER IS BEING CREATED PROPERLY
+		// THEN CHECK TO SEE IF THE QUOTE DATA IS BEING FILLED PROPERLY.
+
+
+		// Create the order
+		$quote = new Quote();
+		$quote->setCustomer($c->getCustomerName());
+		$quote->setCustomerId($c->getId());
+
+
+
+		$quote->createQuote();
+
+		// create the products and insert them in the ordered products.
+		$quote->insertQuotedProducts();
+		
+		// direct user to the QUOTES view page.
+		// header('Location: '.Config::get('site/siteurl').Config::get('site/quotes'));
 	}
 	
 }

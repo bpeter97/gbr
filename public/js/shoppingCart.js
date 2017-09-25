@@ -157,7 +157,7 @@ var Cart = function (order_type)
 			alert('You have no items in the cart!');
 		} else {
 			var cartData = '<input type="hidden" name="cartTotalCost" value="'+ this.total +'">';
-			cartData += '<input type="hidden" name"cartMonthlyTotal" value"'+ this.monthly_total +'">';
+			cartData += '<input type="hidden" name="cartMonthlyTotal" value="'+ this.monthly_total +'">';
 			cartData += '<input type="hidden" name="cartTax" value="'+ this.tax +'">';
 			cartData += '<input type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
 			cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';

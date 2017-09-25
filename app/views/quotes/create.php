@@ -11,9 +11,9 @@ if($data['customer']->getId() !== null)
 
 if($data['quote_type'] == "sales")
 {
-    $formLink = "/create/sales/create";
+    $formLink = "/create/sales?action=create";
 } else {
-    $formLink = "/create/rental/create";
+    $formLink = "/create/rental?action=create";
 }
 
 
@@ -95,7 +95,7 @@ if($data['quote_type'] == "sales")
                                 <div class="panel-body">
                                     <!-- Need to fill in action when link is created. -->
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
-                                    <form action="<?php echo Config::get('site/siteurl').Config::get('site/quotes').$formLink; ?>" id="orderForm" method="post">
+                                    <form action="<?php echo Config::get('site/siteurl').Config::get('site/quotes').'/submitQuote' ?>" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -163,22 +163,19 @@ if($data['quote_type'] == "sales")
                                         </div><!-- End of 4th Row -->
                                         <div class="row"><!-- 5th Row -->
                                             <div class="col-lg-12">
-                                                <label class="col-md-4" for="frmquotetype" control-label">Quote Type</label>
+                                                <label class="col-md-4" for="frmquotetype" control-label>Quote Type</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="frmquotetype" id="frmquotetype" disabled>
                                                     <?php 
-
                                                     if($data['quote_type']=='rental')
                                                     {
-                                                        echo '<option value="Rental" id="cart_create" selected>Rental</option>';
+                                                        echo '<input class="form-control" type="text" id="cart_create" name="frmquotetype" value="Rental" readonly="readonly">';
                                                     }
                                                     elseif($data['quote_type']=='sales')
                                                     {
-                                                        echo '<option value="Sales" id="cart_create" selected>Sales</option>';
+                                                        echo '<input class="form-control" type="text" id="cart_create" name="frmquotetype" value="Sales" readonly="readonly">';
                                                     }
 
                                                     ?>
-                                                    </select>
                                                     <p class="help-block">Select what type of order this is.</p>
                                                 </div>
                                             </div>
@@ -247,7 +244,7 @@ if($data['quote_type'] == "sales")
                                                     <div class="panel-body">
                                                         <div id='cart'></div>
                                                         <div class="text-center">
-                                                            <input type="button" onclick='cart.postData();' class="btn btn-gbr" value="Submit Order"/>
+                                                            <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Order"/>
                                                         </div>
                                                     </div>
                                                 </div>

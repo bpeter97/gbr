@@ -176,27 +176,32 @@ class Quote extends Model
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
 
 		// Need to insert the new order into the database.
-		$this->db->insert('quotes',[
-				'quote_customer'=>$this->getCustomer(),
-				'quote_customer_id'=>$this->getCustomerId(),
-				'quote_date'=>$this->getDate(),
-				'quote_status'=>$this->getStatus(),
-				'quote_type'=>$this->getType(),
-				'job_name'=>$this->getJobName(),
-				'job_city'=>$this->getJobCity(),
-				'job_address'=>$this->getJobAddress(),
-				'job_zipcode'=>$this->getJobZipcode(),
-				'attn'=>$this->getAttention(),
-				'tax_rate'=>$this->getTaxRate(),
-				'cost_before_tax'=>$this->getCostBeforeTax(),
-				'total_cost'=>$this->getTotalCost(),
-				'sales_tax'=>$this->getSalesTax(),
-				'monthly_total'=>$this->getMonthlyTotal()]);
+		// THERE IS AN ISSUE WITH THIS INSERT STATEMENT...
+		// DOUBLE INSERTION &&&& RES DOES NOT COME BACK AS TRUE
+		$this->db->insert('quotes', [
+				'quote_customer' 		=> $this->getCustomer(),
+				'quote_customer_id' 	=> $this->getCustomerId(),
+				'quote_date' 			=> $this->getDate(),
+				'quote_status' 			=> $this->getStatus(),
+				'quote_type' 			=> $this->getType(),
+				'job_name' 				=> $this->getJobName(),
+				'job_city' 				=> $this->getJobCity(),
+				'job_address' 			=> $this->getJobAddress(),
+				'job_zipcode' 			=> $this->getJobZipcode(),
+				'attn' 					=> $this->getAttention(),
+				'tax_rate' 				=> $this->getTaxRate(),
+				'cost_before_tax' 		=> $this->getCostBeforeTax(),
+				'total_cost' 			=> $this->getTotalCost(),
+				'sales_tax' 			=> $this->getSalesTax(),
+				'monthly_total' 		=> $this->getMonthlyTotal()
+			]);
 
 		$res = $this->db->results('arr');
 
+		Functions::dump($res);
+
 		// If properly inserted, grab the ID, else throw error.
-		if($res == true)
+		if($res[0] == true)
 		{
 			$this->id = $this->db->grabID();
 		} 
