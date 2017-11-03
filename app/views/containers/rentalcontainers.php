@@ -154,7 +154,7 @@
                                             echo '
 
                                             <tbody>
-                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->getId().'" '.$tooltip.'>
+                                                <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/id/' . $con->getId().'" '.$tooltip.'>
                                                     <td>' . $con->getContainerNumber() . '</td>
                                                     <td>' . $con->getContainerSerialNumber() . '</td>
                                                     <td>' . $con->getContainerSize() . '</td>
