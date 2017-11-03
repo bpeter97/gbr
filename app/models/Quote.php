@@ -176,8 +176,6 @@ class Quote extends Model
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
 
 		// Need to insert the new order into the database.
-		// THERE IS AN ISSUE WITH THIS INSERT STATEMENT...
-		// DOUBLE INSERTION &&&& RES DOES NOT COME BACK AS TRUE
 		$this->db->insert('quotes', [
 				'quote_customer' 		=> $this->getCustomer(),
 				'quote_customer_id' 	=> $this->getCustomerId(),
@@ -196,18 +194,14 @@ class Quote extends Model
 				'monthly_total' 		=> $this->getMonthlyTotal()
 			]);
 
-		$res = $this->db->results('arr');
-
-		Functions::dump($res);
-
 		// If properly inserted, grab the ID, else throw error.
-		if($res[0] == true)
+		if($this->db->lastId() != null)
 		{
-			$this->id = $this->db->grabID();
+			$this->id = $this->db->lastId();
 		} 
 		else 
 		{
-			echo "There was an error inserting the order into the database.";
+			throw new Exception("There was an error inserting the quote into the database.");
 		}
 		
 	}
@@ -217,15 +211,21 @@ class Quote extends Model
 	 */
 	public function insertQuotedProducts()
 	{
+		// Insert each product into the database.
 		$i = 0;
 		while ($i < $_POST['itemCount'])
 		{
+			/*
+			 * Here we will decode the json and create each product and insert it into the
+			 * product orders database.
+			 */
 			$post_product = json_decode($_POST['product'.$i], true);
 			$new_product = new Product($post_product['id']);
 			$new_product->setProductQuantity($post_product['qty']);
 			$new_product->setProductCost($post_product['cost']);
 			$i++;
 
+			// Insert the data into the database.
 			$this->db->insert('product_orders',array('quote_id'=>$this->id,
 							'product_type'=>$new_product->getProductType(),
 							'product_msn'=>$new_product->getModShortName(),
@@ -234,7 +234,11 @@ class Quote extends Model
 							'product_name'=>$new_product->getModName(),
 							'product_id'=>$new_product->getId()));
 
-			$res = $this->db->results('arr');
+			// Check to see if the data was inserted into the db properly, else throw exception.
+			if($this->db->lastId() == null)
+			{
+				throw new Exception('The database did not insert products properly.');
+			}
 		}
 	}
 

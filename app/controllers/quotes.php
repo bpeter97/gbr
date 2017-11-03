@@ -125,8 +125,6 @@ class Quotes extends Controller
 		$quote->setCustomer($c->getCustomerName());
 		$quote->setCustomerId($c->getId());
 
-
-
 		$quote->createQuote();
 
 		// create the products and insert them in the ordered products.
@@ -134,6 +132,7 @@ class Quotes extends Controller
 		
 		// direct user to the QUOTES view page.
 		// header('Location: '.Config::get('site/siteurl').Config::get('site/quotes'));
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
 	}
 	
 }

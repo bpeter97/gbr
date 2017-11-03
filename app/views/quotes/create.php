@@ -93,7 +93,6 @@ if($data['quote_type'] == "sales")
                                     <b>Create Quote</b>
                                 </div>
                                 <div class="panel-body">
-                                    <!-- Need to fill in action when link is created. -->
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
                                     <form action="<?php echo Config::get('site/siteurl').Config::get('site/quotes').'/submitQuote' ?>" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->

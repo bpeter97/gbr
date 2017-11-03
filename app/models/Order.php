@@ -246,23 +246,18 @@ class Order extends Model
 				'sales_tax'=>$this->getSalesTax(),
 				'stage'=>$this->getStage()]);
 
-		$res = $this->db->results('arr');
-
 		// If properly inserted, grab the ID, else throw error.
-		if($res == true)
+		if($this->db->lastId() != null)
 		{
-			$this->id = $this->db->grabID();
+			$this->id = $this->db->lastId();
 		} 
 		else 
 		{
-			echo "There was an error inserting the order into the database.";
+			throw new Exception("There was an error inserting the order into the database.");
 		}
 		
 	}
 
-	/*
-	 * TODO implement this with quotes.
-	 */
 	public function insertOrderedProducts()
 	{
 		$i = 0;
@@ -282,7 +277,11 @@ class Order extends Model
 							'product_name'=>$new_product->getModName(),
 							'product_id'=>$new_product->getId()));
 
-			$res = $this->db->results('arr');
+			// Check to see if the data was inserted into the db properly, else throw exception.
+			if($this->db->lastId() == null)
+			{
+				throw new Exception('The database did not insert products properly.');
+			}
 		}
 	}
 
