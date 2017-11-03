@@ -21,7 +21,8 @@ class Quote extends Model
 		$cost_before_tax,
 		$total_cost,
 		$sales_tax,
-		$monthly_total;
+		$monthly_total,
+		$delivery_total;
 	private $products = array();
 	
 	function __construct($id = '')
@@ -52,6 +53,7 @@ class Quote extends Model
 	public function getSalesTax() { return $this->sales_tax; }
 	public function getMonthlyTotal() { return $this->monthly_total; }
 	public function getQuoteProducts() { return $this->products; }
+	public function getDeliveryTotal() { return $this->delivery_total; }
 	
 	public function setId($id) { $this->id = $id; }
 	public function setCustomer($customer) { $this->quote_customer = $customer; }
@@ -69,6 +71,7 @@ class Quote extends Model
 	public function setTotalCost($total) { $this->total_cost = $total; }
 	public function setSalesTax($tax) { $this->sales_tax = $tax; }
 	public function setMonthlyTotal($total) { $this->monthly_total = $total; }
+	public function setDeliveryTotal($total) { $this->delivery_total = $total; }
 
 	public function getDetails($id = null)
 	{
@@ -97,6 +100,7 @@ class Quote extends Model
 		$this->setTotalCost($res->total_cost);
 		$this->setSalesTax($res->sales_tax);
 		$this->setMonthlyTotal($res->monthly_total);
+		$this->setDeliveryTotal($res->delivery_total);
 	
 	}
 
@@ -174,6 +178,7 @@ class Quote extends Model
 		$this->setTotalCost($_POST['cartTotalCost']);
 		$this->setSalesTax($_POST['cartTax']);
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
+		$this->setDeliveryTotal($_POST['cartDeliveryTotal']);
 
 		// Need to insert the new order into the database.
 		$this->db->insert('quotes', [
@@ -191,7 +196,8 @@ class Quote extends Model
 				'cost_before_tax' 		=> $this->getCostBeforeTax(),
 				'total_cost' 			=> $this->getTotalCost(),
 				'sales_tax' 			=> $this->getSalesTax(),
-				'monthly_total' 		=> $this->getMonthlyTotal()
+				'monthly_total' 		=> $this->getMonthlyTotal(),
+				'delivery_total'		=> $this->getDeliveryTotal()
 			]);
 
 		// If properly inserted, grab the ID, else throw error.

@@ -29,7 +29,8 @@ class Order extends Model
 		$driver_notes,
 		$delivered,
 		$date_delivered,
-		$container;
+		$container,
+		$delivery_total;
 	public $products = array();
 		
 	public function getId() { return $this->id; }
@@ -56,6 +57,7 @@ class Order extends Model
 	public function getDelivered() { return $this->delivered; }
 	public function getDateDelivered() { return $this->date_delivered; }
 	public function getContainer() { return $this->container; }
+	public function getDeliveryTotal() { return $this->delivery_total; }
 	
 	public function setId($id) { $this->id = $id; }
 	public function setQuoteId($id) { $this->quote_id = $id; }
@@ -81,6 +83,7 @@ class Order extends Model
 	public function setDelivered($bool) { $this->delivered = $bool; }
 	public function setDateDelivered($datetime) { $this->date_delivered = $datetime; }
 	public function setContainer($container) { $this->container = $container; }
+	public function setDeliveryTotal($total) { $this->delivery_total = $total; }
 
 	function __construct($id = '')
 	{
@@ -133,6 +136,7 @@ class Order extends Model
 		$this->setDelivered($res->delivered);
 		$this->setDateDelivered($res->date_delivered);
 		$this->setContainer($res->container);
+		$this->setDeliveryTotal($res->delivery_total);
 		$this->getOrderProducts();
 		
 	}
@@ -223,28 +227,31 @@ class Order extends Model
 		$this->setSalesTax($_POST['cartTax']);
 		$this->setCostBeforeTax($_POST['cartBeforeTaxCost']);
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
+		$this->setDeliveryTotal($_POST['cartDeliveryTotal']);
+
 		// Assigning stage as one since it is a newly created order.
 		$this->stage = 1;
 
 		// Need to insert the new order into the database.
 		$this->db->insert('orders',[
-				'order_customer'=>$this->getOrderCustomer(),
-				'order_date'=>$this->getOrderDate(),
-				'order_time'=>$this->getOrderTime(),
-				'order_type'=>$this->getOrderType(),
-				'job_name'=>$this->getJobName(),
-				'job_city'=>$this->getJobCity(),
-				'job_address'=>$this->getJobAddress(),
-				'job_zipcode'=>$this->getJobZipcode(),
-				'ordered_by'=>$this->getOrderedBy(),
-				'onsite_contact'=>$this->getOnsiteContact(),
-				'onsite_contact_phone'=>$this->getOnsiteContactPhone(),
-				'tax_rate'=>$this->getTaxRate(),
-				'cost_before_tax'=>$this->getCostBeforeTax(),
-				'total_cost'=>$this->getTotalCost(),
-				'monthly_total'=>$this->getMonthlyTotal(),
-				'sales_tax'=>$this->getSalesTax(),
-				'stage'=>$this->getStage()]);
+				'order_customer'			=>	$this->getOrderCustomer(),
+				'order_date'				=>	$this->getOrderDate(),
+				'order_time'				=>	$this->getOrderTime(),
+				'order_type'				=>	$this->getOrderType(),
+				'job_name'					=>	$this->getJobName(),
+				'job_city'					=>	$this->getJobCity(),
+				'job_address'				=>	$this->getJobAddress(),
+				'job_zipcode'				=>	$this->getJobZipcode(),
+				'ordered_by'				=>	$this->getOrderedBy(),
+				'onsite_contact'			=>	$this->getOnsiteContact(),
+				'onsite_contact_phone'		=>	$this->getOnsiteContactPhone(),
+				'tax_rate'					=>	$this->getTaxRate(),
+				'cost_before_tax'			=>	$this->getCostBeforeTax(),
+				'total_cost'				=>	$this->getTotalCost(),
+				'monthly_total'				=>	$this->getMonthlyTotal(),
+				'sales_tax'					=>	$this->getSalesTax(),
+				'delivery_total'			=>	$this->getDeliveryTotal(),
+				'stage'						=>	$this->getStage()]);
 
 		// If properly inserted, grab the ID, else throw error.
 		if($this->db->lastId() != null)

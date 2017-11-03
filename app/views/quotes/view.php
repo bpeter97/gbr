@@ -161,7 +161,7 @@
                                                     <td><?= $item->getModName(); ?></td>
                                                     <td class="text-center"><?= $item->getProductQuantity(); ?></td>
                                                     <td class="text-center">$ <?= $item->getProductCost(); ?></td>
-                                                    <td class="text-center"></td>
+                                                    <td class="text-center">$ <?= $item->getProductCost(); ?></td>
                                                 <?php else: ?>
                                                     <td><?= $item->getModName(); ?></td>
                                                     <td class="text-center"><?= $item->getProductQuantity(); ?></td>

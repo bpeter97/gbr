@@ -243,7 +243,7 @@ if($data['quote_type'] == "sales")
                                                     <div class="panel-body">
                                                         <div id='cart'></div>
                                                         <div class="text-center">
-                                                            <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Order"/>
+                                                            <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Quote"/>
                                                         </div>
                                                     </div>
                                                 </div>
