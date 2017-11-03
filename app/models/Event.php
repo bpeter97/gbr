@@ -94,8 +94,8 @@ class Event extends Model
 			'end'=>$this->getEnd(),
 			'order_id'=>$this->getOrderId()
 			]);
-		$res = $this->db->getResult();
-		if(!res)
+	
+		if($this->db->lastId() == null)
 		{
 			echo 'There was an error inserting the event into the calendar!';
 		}
@@ -118,7 +118,10 @@ class Event extends Model
 						'order_id'=>$this->order_id,
 						'end'=>$this->end]);
 
-		$res = $this->db->getResult();
+		if($this->db->lastId() == null)
+		{
+			echo 'There was an error inserting the event into the calendar!';
+		}
 
 	}
 

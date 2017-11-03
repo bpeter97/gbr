@@ -161,7 +161,12 @@ class Customer extends Model
 				'flagged'=>$this->getFlag(),
 				'flag_reason'=>$this->getFlagReason()]);
 
-		$result = $this->db->results('arr');
+		if($this->db->lastId() == null)
+		{
+			echo 'There was an error inserting the event into the calendar!';
+		} else {
+			$result = true;
+		}
 
 		return $result;
 	}
