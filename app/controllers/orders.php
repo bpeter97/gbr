@@ -49,14 +49,26 @@ class Orders extends Controller
 		{
 			if($action == 'create')
 			{
-				// Create the order
+				// create the order object
 				$order = $this->model('Order');
-				$order->createOrder();
-				// create the products and insert them in the ordered products.
-				$order->insertOrderedProducts();
-				// create the event for the new order.
-				$event = $this->model('Event');
-				$event->addEvent($order->id);
+
+				try {
+
+					// create the order
+					$order->createOrder();
+					// create the products and insert them in the ordered products.
+					$order->insertOrderedProducts();
+
+					// create the event for the new order.
+					$event = $this->model('Event');
+					$event->addEvent($order->id);
+
+				} catch (Exception $e) {
+
+					echo $e->getMessage();
+
+				}
+
 				// direct user to the orders view page.
 				$this->masterlist();
 			} 

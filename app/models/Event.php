@@ -97,7 +97,7 @@ class Event extends Model
 	
 		if($this->db->lastId() == null)
 		{
-			echo 'There was an error inserting the event into the calendar!';
+			throw new Exception('There was an error inserting the event into the calendar!');
 		}
 		
 	}

@@ -114,21 +114,28 @@ class Quotes extends Controller
 
 	public function submitQuote()
 	{
+		// create a customer object to use in the quote.
 		$c = new Customer($_POST['frmcustomername']);
-		// DO FUNCTION DUMP ON POST AND SEE WHAT IS BEING POSTED.
-		// CHECK TO SEE IF CUSTOMER IS BEING CREATED PROPERLY
-		// THEN CHECK TO SEE IF THE QUOTE DATA IS BEING FILLED PROPERLY.
 
-
-		// Create the order
+		// Create the quote
 		$quote = new Quote();
 		$quote->setCustomer($c->getCustomerName());
 		$quote->setCustomerId($c->getId());
 
-		$quote->createQuote();
+		// Inser the quote & quoted products in the database.
+		try {
 
-		// create the products and insert them in the ordered products.
-		$quote->insertQuotedProducts();
+			// create the quote in the database.
+			$quote->createQuote();
+			
+			// create the products and insert them in the quoted products.
+			$quote->insertQuotedProducts();
+
+		} catch (Exception $e) {
+
+			echo $e->getMessage();
+
+		}
 		
 		// direct user to the QUOTES view page.
 		// header('Location: '.Config::get('site/siteurl').Config::get('site/quotes'));
