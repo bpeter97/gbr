@@ -8,7 +8,6 @@ As of 11/2/2017:
 
 CALENDAR
 - After creating an order - the calendar broke (data was inserted improperly).
-- If no events are in the database, the calendar will not work.
 
 MAP
 - Need to fix formatting when trying to print the map, the map is not fullscreen and it shows the search bar.

@@ -414,6 +414,7 @@ $months = $data['months'];
         },
 
         events: [
+        <?php if($events != null): ?>
         <?php foreach($events as $event): 
         
           $start = explode(" ", $event->getStart());
@@ -455,6 +456,7 @@ $months = $data['months'];
             ?>
           },
         <?php endforeach; ?>
+        <?php endif; ?>
         ]
       });
       
@@ -490,6 +492,7 @@ $months = $data['months'];
       function createProdTable(event)
       {
         // Check to see if the event has an order or products to create the table, if not, return empty variable.
+        <?php if($events != null): ?>
         <?php if($event->order !== null && $event->order->product !== null): ?>
           var prodTable = '<table class="table table-striped table-hover">';
           prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
@@ -513,6 +516,7 @@ $months = $data['months'];
           prodTable += '</table>';
         <?php endif; ?>
         return prodTable;
+        <?php endif; ?>
       }
 
       function postData(order_id){
