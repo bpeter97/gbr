@@ -164,7 +164,19 @@ class Containers extends Controller
 		
 	}
 
-	
+	public function delete($id)
+	{
+		$con = new Container($id);
+
+		try {
+			$con->delete();
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
+		
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/containers').'?action=dsuccess');
+	}
+
 }
 
 ?>

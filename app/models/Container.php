@@ -180,8 +180,11 @@ class Container extends Model
 		// Get the results of the deletion.
 		$res = $this->db->results('arr');
 
-		// Return the results of the query.
-		return $res;
+		// Check to see if the query ran properly.
+		if(!$res)
+		{
+			throw new Exception('The container was not deleted from the database.');
+		}
 	}
 
 	// This will insert a new container into the database.

@@ -13,7 +13,6 @@ MAP
 
 CONTAINERS
 - Need to connect containers to orders (can't test this yet).
-- Need to update tables and links on tables for currentrentals.php, rentalcontainers.php, and resalecontainers.php.
 
 CUSTOMERS
 - Can't filter customers that are on other pages through the search bar.
