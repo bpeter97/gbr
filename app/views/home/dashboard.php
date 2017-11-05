@@ -298,7 +298,7 @@ $months = $data['months'];
     <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="<?php echo Config::get('site/http').Config::get('site/httpurl').'/editEventTitle.php'; ?>">
+                <form class="form-horizontal" method="POST" action="<?php echo Config::get('site/http').Config::get('site/httpurl').'/home/modifyEvent'; ?>">
                     <div class="modal-header gbr-header" style="text-align: center;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edit Event</h4>
@@ -344,9 +344,6 @@ $months = $data['months'];
 
                             </div>
                         </div>
-
-
-
 
                         </div>
                         

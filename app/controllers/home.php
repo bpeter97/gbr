@@ -59,6 +59,29 @@ class Home extends Controller
 		$this->index();
 	}
 
+	public function modifyEvent()
+	{
+		$calendar = $this->model('Calendar');
+
+		if (isset($_POST['delete']) && isset($_POST['id'])){
+
+			$id = $_POST['id'];
+
+			$calendar->deleteEvent($id);
+
+		} elseif (isset($_POST['title']) && isset($_POST['color']) && isset($_POST['id'])){
+			
+			$id = $_POST['id'];
+			$title = $_POST['title'];
+			$color = $_POST['color'];
+
+			$calendar->editEvent($id, $color, $title);
+
+		}
+
+		$this->index();
+	}
+
 	public function logout()
 	{	
 		session_destroy();

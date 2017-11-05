@@ -27,6 +27,20 @@ class Calendar extends Model
 		return $this->events;
 	}
 
+	public function deleteEvent($id)
+	{
+
+		$event = new Event();
+		$event->deleteEvent($id);
+
+	}
+
+	public function editEvent($id, $color, $title)
+	{
+		$event = new Event($id);
+		$event->editEvent($color, $title);
+	}
+
 }
 
 ?>

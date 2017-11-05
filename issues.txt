@@ -7,7 +7,6 @@ Not sure how to fix:
 As of 11/2/2017:
 
 CALENDAR
-- Cannot delete custom created events on the calendar.
 - After creating an order - the calendar broke (data was inserted improperly).
 
 MAP

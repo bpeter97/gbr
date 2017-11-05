@@ -125,14 +125,41 @@ class Event extends Model
 
 	}
 
-	public function editEvent()
+	public function editEvent($color, $title)
 	{
+		$this->setTitle($title);
+		$this->setColor($color);
 
+		$this->update();
+		
 	}
 
-	public function deleteEvent()
+	public function deleteEvent($id)
 	{
+		
+		$res = $this->db->delete('events',['id'=>$id]);
+		if(!$res)
+		{
+			throw new Exception("There was an issue deleting the event.");
+		}
+			
+	}
 
+	public function update()
+	{
+		$res = $this->db->update('events', ['id'=>$this->getId()], 
+			[
+			'color'	=>	$this->getColor(), 
+			'title'		=>	$this->getTitle(),
+			'start'		=>	$this->getStart(),
+			'end'		=>	$this->getEnd(),
+			'order_id'	=>	$this->getOrderId()
+			]);
+
+		if(!$res)
+		{
+			throw new Exception("There has been an issue updating the event.");
+		}
 	}
 
 }

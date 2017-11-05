@@ -29,7 +29,7 @@ $GLOBALS['config'] = array(
 		'containers' => '/containers',
 		'orders' => '/orders',
 		'products' => '/products',
-		'calendar' => '/calendar'
+		'calendar' => '/calendars'
 		
 	),
 	'remember' => array(
