@@ -198,7 +198,7 @@
 											';
 
 										}
-											echo '</tbody>';
+										echo '</tbody>';
 
 										echo '</table>';
 										echo '</div>';

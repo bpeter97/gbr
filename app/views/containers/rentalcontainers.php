@@ -11,6 +11,17 @@
 
             <?php include(Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'); ?>
 
+            <script type="text/javascript">
+				
+				function deleteModal(con_id, con_number)
+				{
+					document.getElementById("deleteBodyText").innerHTML = "Are you sure you would like to delete container: " + con_number;
+					document.getElementById("deleteContainerForm").action = "<?= Config::get('site/siteurl').'/containers/delete/'; ?>" + con_id;
+					$("#deleteContainerModal").modal();
+				}
+
+			</script>
+
             <!-- Page Content -->
             <div id="page-content-wrapper">
 
@@ -104,7 +115,7 @@
                                         ';
 
                                         echo '
-
+                                        <div class="col-lg-10">
                                         <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
@@ -118,13 +129,13 @@
                                                     <th>Rental or Resale</th>
                                                     <th>Is it rented?</th>
                                                     <th>Release Number</th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                         ';
 
                                         $toolcount = 0;
 
+                                        echo '<tbody>';
                                         foreach($data['conList'] as $con) {
 
                                             if($con->getIsRented()=="TRUE"){
@@ -153,7 +164,6 @@
 
                                             echo '
 
-                                            <tbody>
                                                 <tr class="clickable-row '.$danger.'" data-href="'.Config::get('site/siteurl').'/containers/id/' . $con->getId().'" '.$tooltip.'>
                                                     <td>' . $con->getContainerNumber() . '</td>
                                                     <td>' . $con->getContainerSerialNumber() . '</td>
@@ -165,21 +175,47 @@
                                                     <td>' . $con->getRentalResale() . '</td>
                                                     <td>' . $isrented . '</td>
                                                     <td>' . $con->getReleaseNumber() . '</td>
-                                                    <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=edit&id=' . $con->getId().'">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                        </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.Config::get('site/siteurl').'/containers/editcontainer.php?of=mastercontainers&action=delete&id=' . $con->getId().'">
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                        </a>
-                                                    </td>
                                                 </tr>
-                                            </tbody>
                                             ';
 
                                         }
 
+                                        echo '</tbody>';
+                                        
                                         echo '</table>';
+                                        echo '</div>';
+                                        echo '<div class="col-xs-2">';
+                                        echo '
+
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tools</th>
+                                                </tr>
+                                            </thead>
+                                        ';
+                                        echo '<tbody>';
+                                        foreach($data['conList'] as $con) {
+                                        echo '
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        <a class="btn btn-xs btn-warning" href="'.Config::get('site/siteurl').'/containers/id/' . $con->getId().'">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                        '; ?>														
+                                                        <a class="btn btn-xs btn-danger" href="#" onclick='deleteModal(<?= $con->getId(); ?>,"<?= $con->getContainerNumber(); ?>")'>
+                                                        <?php
+                                                        echo '
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            ';
+
+                                        }
+                                        echo '</tbody>';
+                                        echo '</table>';
+                                        echo '</div>';
 
                                     } else {
 
@@ -200,6 +236,28 @@
                         </div>
                     </div>
                     <!-- End of 2nd Row. -->
+
+                    <div id="deleteContainerModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					  	<form action="" id="deleteContainerForm">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title" style="color=#FF0000;">!!!!! WARNING !!!!!</h4>
+					      </div>
+					      <div class="modal-body">
+					        <p id="deleteBodyText">This will be replaced.</p>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					      </div>
+					      </form>
+					    </div>
+
+					  </div>
+                    </div>
 
                     <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
 
