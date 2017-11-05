@@ -125,13 +125,21 @@ class Event extends Model
 
 	}
 
-	public function editEvent($color, $title)
+	public function editEvent($color, $title, $start, $end)
 	{
-		$this->setTitle($title);
-		$this->setColor($color);
+		if($color !== null)
+			$this->setColor($color);
+		
+		if($title !== null)
+			$this->setTitle($title);
+
+		if($start !== null)		
+		$this->setStart($start);
+
+		if($end !== null)
+			$this->setEnd($end);
 
 		$this->update();
-		
 	}
 
 	public function deleteEvent($id)
@@ -159,6 +167,8 @@ class Event extends Model
 		if(!$res)
 		{
 			throw new Exception("There has been an issue updating the event.");
+		} else {
+			return $res;
 		}
 	}
 

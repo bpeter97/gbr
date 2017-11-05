@@ -185,20 +185,19 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmordertype" control-label">Order Type</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="frmordertype" id="frmordertype" disabled>
+                                                  
                                                     <?php 
-
                                                     if($data['order_type']=='rental')
                                                     {
-                                                        echo '<option value="Rental" id="cart_create" selected>Rental</option>';
+                                                        echo '<input class="form-control" type="text" id="cart_create" name="frmordertype" value="Rental" readonly="readonly">';
                                                     }
                                                     elseif($data['order_type']=='sales')
                                                     {
-                                                        echo '<option value="Sales" id="cart_create" selected>Sales</option>';
+                                                        echo '<input class="form-control" type="text" id="cart_create" name="frmordertype" value="Sales" readonly="readonly">';
                                                     }
 
                                                     ?>
-                                                    </select>
+                                                    
                                                     <p class="help-block">Select what type of order this is.</p>
                                                 </div>
                                             </div>

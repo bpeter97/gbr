@@ -474,17 +474,13 @@ $months = $data['months'];
         Event[0] = id;
         Event[1] = start;
         Event[2] = end;
-        
+
         $.ajax({
-         url: '<?php echo Config::get('site/http').Config::get('site/httpurl').'/controllers/editEventDate.php'; ?>',
          type: "POST",
          data: {Event:Event},
-         success: function(rep) {
-            if(rep == 'OK'){
-              alert('Saved');
-            }else{
-              alert('Could not be saved. try again.'); 
-            }
+         url: "<?php echo Config::get('site/http').Config::get('site/httpurl').'/home/modifyEvent'; ?>",
+         success: function() {
+              alert('Date has been updated.');
           }
         });
       }
@@ -493,7 +489,7 @@ $months = $data['months'];
       {
         // Check to see if the event has an order or products to create the table, if not, return empty variable.
         <?php if($events != null): ?>
-        <?php if($event->order !== null && $event->order->product !== null): ?>
+        <?php if($event->order !== null && $event->order->products !== null): ?>
           var prodTable = '<table class="table table-striped table-hover">';
           prodTable += '<tr><th>Product</th><th>Quantity</th></tr>';
           <?php $i=1; ?>

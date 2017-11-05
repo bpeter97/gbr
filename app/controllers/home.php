@@ -61,6 +61,7 @@ class Home extends Controller
 
 	public function modifyEvent()
 	{
+		
 		$calendar = $this->model('Calendar');
 
 		if (isset($_POST['delete']) && isset($_POST['id'])){
@@ -75,8 +76,15 @@ class Home extends Controller
 			$title = $_POST['title'];
 			$color = $_POST['color'];
 
-			$calendar->editEvent($id, $color, $title);
+			$calendar->editEvent($id, $color, $title, null, null);
 
+		} elseif (isset($_POST['Event'][0]) && isset($_POST['Event'][1]) && isset($_POST['Event'][2])) {
+
+			$id = $_POST['Event'][0];
+			$start = $_POST['Event'][1];
+			$end = $_POST['Event'][2];
+
+			$calendar->editEvent($id, null, null, $start, $end);
 		}
 
 		$this->index();

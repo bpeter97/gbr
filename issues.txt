@@ -8,6 +8,7 @@ As of 11/2/2017:
 
 CALENDAR
 - After creating an order - the calendar broke (data was inserted improperly).
+- Cannot move events on calendar, the event does not update.
 
 MAP
 - Need to fix formatting when trying to print the map, the map is not fullscreen and it shows the search bar.
@@ -30,7 +31,6 @@ ORDERS
 - Need to figure out how to edit an order!
 - Need to update button links on the master list of orders!
 - Need a way to click the order and view it & update the stages.
-- When creating an order: Notice: Undefined index: frmordertype in C:\xampp\htdocs\app\gbr\app\models\Order.php on line 216
 
 PRODUCTS
 - Need to update the button links!

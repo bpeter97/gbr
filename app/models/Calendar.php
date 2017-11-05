@@ -35,10 +35,10 @@ class Calendar extends Model
 
 	}
 
-	public function editEvent($id, $color, $title)
+	public function editEvent($id, $color = null, $title = null, $start = null, $end = null)
 	{
 		$event = new Event($id);
-		$event->editEvent($color, $title);
+		$event->editEvent($color, $title, $start, $end);
 	}
 
 }
