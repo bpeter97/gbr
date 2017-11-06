@@ -141,7 +141,88 @@ class Quotes extends Controller
 		// header('Location: '.Config::get('site/siteurl').Config::get('site/quotes'));
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
 	}
+
+	public function edit($id)
+	{
+		
+		// create the quote object & fetch quote details.
+		$quote = new Quote($id);
+
+		// fetch the products that are linked with the quote.
+		$quote->fetchQuoteProducts();
+
+		// create the customer object from the quote's customer id.
+		$customer = new Customer($quote->getCustomerId());
+
+		// fetch the list of products based on the type of quote.
+		$products = $this->model('Product');
+
+		if($quote->getType() == 'rental' || $quote->getType() == 'Rental')
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly <> 0";
+			$modSQL = "monthly <> 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		} 
+		else
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly = 0";
+			$modSQL = "monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		}
+			
+		$shippingProducts = $products->getProducts($shipSQL);
+		$containerProducts = $products->getProducts($containerSQL);
+		$modificationProducts = $products->getProducts($modSQL);
+
+		// create the view.
+		$this->view('quotes/edit',['customer'=>$customer,
+									 'quote'=>$quote,
+									 'quotedProducts'=>$quote->getQuoteProducts(),
+									 'shippingProducts'=>$shippingProducts, 
+									 'containerProducts'=>$containerProducts, 
+									 'modificationProducts'=>$modificationProducts, 
+									 'quoteType'=>$quote->getType()
+									 ]);
+	}
 	
+	public function update()
+	{
+
+		// Create the quote object
+		$quote = new Quote($_POST['quoteid']);
+
+		// Delete previous products related to old quote
+		$quote->fetchQuoteProducts();
+		$oldProducts = $quote->getQuoteProducts();
+
+		foreach($oldProducts as $oProd)
+		{
+			// Delete the product from the product_orders table.
+			$oProd->deleteRequestedProduct($quote->getId());
+		}
+
+		// Update the the quote
+			// Set the quotes attributes
+		$quote->setDate($_POST['frmquotedate']);
+		$quote->setAttention($_POST['frmattn']);
+		$quote->setJobName($_POST['frmjobname']);
+		$quote->setJobAddress($_POST['frmjobaddress']);
+		$quote->setJobCity($_POST['frmjobcity']);
+		$quote->setJobZipcode($_POST['frmjobzipcode']);
+		$quote->setTaxRate($_POST['frmtaxrate']);
+		$quote->setTotalCost($_POST['cartTotalCost']);
+		$quote->setMonthlyTotal($_POST['cartMonthlyTotal']);
+		$quote->setDeliveryTotal($_POST['cartDeliveryTotal']);
+		$quote->setSalesTax($_POST['cartTax']);
+		$quote->setCostBeforeTax($_POST['cartBeforeTaxCost']);
+		$quote->update();
+
+		// Update the product_orders table with the new products.
+		$quote->insertQuotedProducts();
+		
+		// Send user back to masterlist upon success.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
+	}
 }
 
 ?>

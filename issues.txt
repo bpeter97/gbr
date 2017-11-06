@@ -7,22 +7,25 @@ Not sure how to fix:
 As of 11/2/2017:
 
 CALENDAR
+- None
+
+CART
+- None
 
 MAP
 - Need to fix formatting when trying to print the map, the map is not fullscreen and it shows the search bar.
 
 CONTAINERS
 - Need to connect containers to orders (can't test this yet).
+- Need to add success notifications to container views.
 
 CUSTOMERS
 - Can't filter customers that are on other pages through the search bar.
-- Need to update links for create sales/rental quotes on customer view info page.
 - After creating customer, it shows the create page on top of the master list page (it needs to go to the master list page with a success message)..
 
 QUOTES
 - Need to update buttons next to the quotes on the masterlist of quotes.
 - Need to create a way to transfer existing quote to a pre-made order form.
-- Need to figure out how to edit a quote!
 
 ORDERS
 - Need to figure out how to edit an order!

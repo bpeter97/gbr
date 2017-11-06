@@ -25,10 +25,10 @@ class Quote extends Model
 		$delivery_total;
 	private $products = array();
 	
-	function __construct($id = '')
+	function __construct($id = null)
 	{
 		$this->db = Database::getDBI();
-		if($id != null){
+		if($id !== null){
 			$this->setId($id);
 			$this->getDetails();
 		} else {
@@ -245,6 +245,50 @@ class Quote extends Model
 			{
 				throw new Exception('The database did not insert products properly.');
 			}
+		}
+	}
+
+	public function update()
+	{
+		// Need to update the quote in the database.
+		$this->db->update('quotes', ['quote_id'=>$this->getId()],[
+			'quote_customer' 		=> $this->getCustomer(),
+			'quote_customer_id' 	=> $this->getCustomerId(),
+			'quote_date' 			=> $this->getDate(),
+			'quote_status' 			=> $this->getStatus(),
+			'quote_type' 			=> $this->getType(),
+			'job_name' 				=> $this->getJobName(),
+			'job_city' 				=> $this->getJobCity(),
+			'job_address' 			=> $this->getJobAddress(),
+			'job_zipcode' 			=> $this->getJobZipcode(),
+			'attn' 					=> $this->getAttention(),
+			'tax_rate' 				=> $this->getTaxRate(),
+			'cost_before_tax' 		=> $this->getCostBeforeTax(),
+			'total_cost' 			=> $this->getTotalCost(),
+			'sales_tax' 			=> $this->getSalesTax(),
+			'monthly_total' 		=> $this->getMonthlyTotal(),
+			'delivery_total'		=> $this->getDeliveryTotal()
+		]);
+
+		// Get the results of the query.
+		$res = $this->db->results('arr');
+		
+		// Return the results of the query.
+		return $res;
+	}
+
+	public function delete()
+	{
+		// Delete the ordered/quoted product from the database.
+		$this->db->delete('quotes',['quote_id'=>$this->getId()]);
+		
+		// Get the results of the deletion.
+		$res = $this->db->results('arr');
+
+		// Check to see if the query ran properly.
+		if(!$res)
+		{
+			throw new Exception('The product was not deleted from the quote/order.');
 		}
 	}
 

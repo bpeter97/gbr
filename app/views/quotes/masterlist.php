@@ -140,7 +140,7 @@
                                                     <td>' . $quote->getType() . '</td>
                                                     <td>' . $quote->getStatus() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/createquote_sessions.php?pqid='.$quote->getId().'">
+                                                        <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/edit/'.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
                                                         <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convertquote.php?quote_id='.$quote->getId().'&url=listallquotes">

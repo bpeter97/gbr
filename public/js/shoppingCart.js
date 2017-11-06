@@ -19,7 +19,7 @@ var Cart = function (order_type)
 
 	this.addItem = function (product, quantity)
 	{   
-		
+
 		if(this.tax_rate_updated == false)
 		{
 			alert("Please enter a tax rate.");
@@ -29,13 +29,10 @@ var Cart = function (order_type)
 			
 			this.items.push([product, quantity, this.itemCounter]);
 
-			console.log(product.msn);
-			console.log($.inArray(product.msn, pickUpDelivery));
-
 			// Add product cost to the total. If in rental array, add it to monthly instead.
 			if($.inArray(product.msn, pickUpDelivery) == -1)
 			{
-				if(this.order_type == 'rental')
+				if(this.order_type == 'rental' || this.order_type == 'Rental')
 				{
 					if($.inArray(product.msn, rentArray) != -1){
 	
@@ -61,9 +58,11 @@ var Cart = function (order_type)
 			// Update the cart view.
 			this.updateCart();
 
-			// Alert the user an item has been added.
-			this.alert(product, 'added');
-
+			if(product.showAlert == true){
+				// Alert the user an item has been added.
+				this.alert(product, 'added');
+			}
+		
 			// Update the item counter.
 			this.itemCounter++;
 		}
@@ -106,6 +105,7 @@ var Cart = function (order_type)
 						if($.inArray(this.items[i][0].msn, rentArray) != -1)
 						{
 							this.monthly_total = round((this.monthly_total - this.items[i][0].cost), 2);
+							this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
 						} else {
 							this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
 						}
@@ -132,7 +132,7 @@ var Cart = function (order_type)
 		for(var i = 0; i < this.items.length; i++)
 		{
 			cartTable+= '<tr><td width="250" id="prod">'+cart.items[i][0].mod_name+'</td>';
-			if(this.order_type == 'rental') {
+			if(this.order_type == 'rental' || this.order_type == 'Rental') {
 				console.log(cart.items[i][0].msn);
 				if($.inArray(cart.items[i][0].msn, rentArray) != -1)	{
 					cartTable+= '<td width="250" id="prodCost">$0</td>';
@@ -149,10 +149,10 @@ var Cart = function (order_type)
 			cartTable+= '<td width="250" id="itemTotal">$'+round(cart.items[i][0].cost*cart.items[i][1], 2)+'</td>';
 			cartTable+= '<td width="50"><button type="button" class="btn btn-gbr" onclick="cart.removeItem('+cart.items[i][2]+');"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 		}
-		cartTable+= '<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total cost before tax:</td><td width="250"><strong>$'+cart.total_before_tax+'</strong></td><td></td>';
+		cartTable+= '<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Container Cost:</td><td width="250"><strong>$'+cart.total_before_tax+'</strong></td><td></td>';
+		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Delivery Cost:</td><td width="250"><strong>$'+cart.delivery_cost+'</strong></td><td></td>';
+		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Monthly Cost:</td><td width="250"><strong>$'+cart.monthly_total+'</strong></td><td></td>';
 		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total tax:</td><td width="250"><strong>$'+cart.tax+'</strong></td><td></td>';
-		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total Monthly Cost:</td><td width="250"><strong>$'+cart.monthly_total+'</strong></td><td></td>';
-		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total Delivery Cost:</td><td width="250"><strong>$'+cart.delivery_cost+'</strong></td><td></td>';
 		cartTable+='<tr><td width="250"></td><td width="250"></td></td><td width="250"></td><td width="250">Total after taxes:</td><td width="250"><strong>$'+cart.total+'</strong></td><td></td>';
 		cartTable+= '</tr></tbody></table>';
 		$('#cart').html(cartTable);                  
@@ -189,7 +189,7 @@ var Cart = function (order_type)
 		} else {
 			var cartData = '<input type="hidden" name="cartTotalCost" value="'+ this.total +'">';
 			cartData += '<input type="hidden" name="cartMonthlyTotal" value="'+ this.monthly_total +'">';
-			cartData += '<input type="hidden" name="cartDeliveryTotal" value="'+ this.delivery_total +'">';
+			cartData += '<input type="hidden" name="cartDeliveryTotal" value="'+ this.delivery_cost +'">';
 			cartData += '<input type="hidden" name="cartTax" value="'+ this.tax +'">';
 			cartData += '<input type="hidden" name="cartBeforeTaxCost" value="'+ this.total_before_tax +'">';
 			cartData += '<input type="hidden" name="itemCount" value="'+ this.items.length +'">';
@@ -225,7 +225,7 @@ var Cart = function (order_type)
 
 }
 
-var Product = function (id, mod_name, msn, cost, status)
+var Product = function (id, mod_name, msn, cost, status, showAlert)
 {
 	this.id = id;
 	this.mod_name = mod_name;
@@ -234,6 +234,7 @@ var Product = function (id, mod_name, msn, cost, status)
 	// Rental or Sales?
 	this.status = status;
 	this.qty = 0;
+	this.showAlert = showAlert || true;
 }
 
 function round(value, decimals) 

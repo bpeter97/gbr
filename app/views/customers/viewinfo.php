@@ -149,8 +149,8 @@
                                         <div class="col-md-6" style="float: right;">
                                             <button type="button" onclick="location.href='<?php echo $main_website.'/orders/create/sales?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;margin-left: 10px;">Create Sales Order</button>
                                             <button type="button" onclick="location.href='<?php echo $main_website.'/orders/create/rental?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;margin-left: 10px;">Create Rental Order</button>
-                                            <button type="button" onclick="onclick="location.href='<?php echo $main_website.'/quotes/create/sales?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;">Create Sales Quote</button>
-                                            <button type="button" onclick="onclick="location.href='<?php echo $main_website.'/quotes/create/rental?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;">Create Rental Quote</button>
+                                            <button type="button" onclick="location.href='<?php echo $main_website.'/quotes/create/sales?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;margin-left: 10px;">Create Sales Quote</button>
+                                            <button type="button" onclick="location.href='<?php echo $main_website.'/quotes/create/rental?cust='.$customer->getId(); ?>'" class="btn btn-default form-button btn-gbr" style="float: right;margin-left: 10px;">Create Rental Quote</button>
                                         </div>
                                     </div>
                                 </div>
