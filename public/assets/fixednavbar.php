@@ -60,7 +60,6 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-delay="10000" data-close-others="true" style=""><span class="glyphicon glyphicon-cog"></span></a>
                         <ul class="dropdown-menu main-dropdown-effects">
                             <li><a href="'.$main_website.'/users">View / Edit Users</a></li>
-                            <li><a href="#">View / Edit Taxrates</a></li>
                         </ul>
                     </li>';
         }

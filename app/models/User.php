@@ -65,7 +65,7 @@ class User extends Model
             $this->setLastname($res->lastname);
             $this->setPhone($res->phone);
             $this->setTitle($res->title);
-            $this->setType($res->type);
+            $this->setType($res->user_type);
         
     }
     
@@ -154,6 +154,44 @@ class User extends Model
         }
         else {
             echo "<strong>Incorrect password.<br/>";
+        }
+    }
+
+    public function update()
+    {
+        $this->setUsername($_POST['frmuname']);
+        $this->setPassword($_POST['frmupassword']);
+        $this->setFirstname($_POST['frmufirstname']);
+        $this->setLastname($_POST['frmulastname']);
+        $this->setPhone($_POST['frmuphone']);
+        $this->setTitle($_POST['frmutitle']);
+        $this->setType($_POST['frmutype']);
+
+        $res = $this->db->update('users',['userid'=>$this->getId()],[
+                                        'username'      =>  $this->getUsername(),
+                                        'password'      =>  $this->getPassword(),
+                                        'firstname'     =>  $this->getFirstname(),
+                                        'lastname'      =>  $this->getLastname(),
+                                        'phone'         =>  $this->getPhone(),
+                                        'title'         =>  $this->getTitle(),
+                                        'user_type'     =>  $this->getType()
+                                        ]);
+        
+        if(!$res)
+        {
+            throw new Exception("The user was not updated.");
+        }
+    }
+
+    public function delete()
+    {
+        // Delete the user from the database.
+		$res = $this->db->delete('users',['userid'=>$this->getId()]);
+        
+        // Check to see if the query ran properly.
+        if(!$res)
+        {
+            throw new Exception('The product was not deleted from the user.');
         }
     }
 }

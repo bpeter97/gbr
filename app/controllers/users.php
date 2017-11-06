@@ -37,6 +37,38 @@ class Users extends Controller
 			$this->view('users/masterlist', ['userList'=>$userList, 'row'=>$row]);
 		}
 	}
+
+	public function edit($id)
+	{
+		$user = new User($id);
+
+		$this->view('users/edit', ['user'=>$user]);
+	}
+
+	public function update()
+	{
+		$user = new User($_POST['userId']);
+		try {
+			$user->update();
+		} catch(Exception $e) {
+			echo $e->getMessage();
+		}
+		
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=usuccess');
+	}
+
+	public function delete($id)
+	{
+		// Create the user object.
+		$user = new User($id);
+
+		// Delete the user.
+		$user->delete();
+
+		// Refer back to the masterlist.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=dsuccess');
+
+	}
 }
 
 ?>

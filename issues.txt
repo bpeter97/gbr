@@ -23,6 +23,7 @@ CUSTOMERS
 
 QUOTES
 - Need to create a way to transfer existing quote to a pre-made order form.
+- Need a way to hide closed quotes.
 
 ORDERS
 - Need to figure out how to edit an order!
@@ -33,9 +34,7 @@ PRODUCTS
 - Need to update the button links!
 
 SEARCH
-- The form no longer shows up.
 - Need to re-create the results page.
 
 SETTINGS
-- Links no longer show up.
-- Need to re-create these pages as well.
+- None

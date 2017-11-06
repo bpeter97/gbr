@@ -145,6 +145,7 @@
                                                     <th>Last Name</th>
                                                     <th>Title</th>
                                                     <th>Username</th>
+                                                    <th>Phone Number</th>
                                                     <th>Account Type</th>
                                                     <th></th>
                                                 </tr>
@@ -153,7 +154,7 @@
 
                                         foreach($data['userList'] as $user) {
 
-                                            $tablebg = '<tr class="clickable-row" data-href="'.$usersUrl.'/edituser/?id=' . $user->getId() . '">';
+                                            $tablebg = '<tr class="clickable-row" data-href="'.$usersUrl.'/edit/' . $user->getId() . '">';
 
                                             echo '
 
@@ -166,10 +167,10 @@
                                                     <td>' . $user->getPhone() . '</td>
                                                     <td>' . $user->getType() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.$usersUrl.'/edituser/?id='.$user->getId().'">
+                                                        <a class="btn btn-xs btn-warning" href="'.$usersUrl.'/edit/'.$user->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.$usersUrl.'/deleteuser/?id='.$user->getId().'">
+                                                        <a class="btn btn-xs btn-danger" href="'.$usersUrl.'/delete/'.$user->getId().'">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                         </a>
                                                     </td>
