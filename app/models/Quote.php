@@ -280,10 +280,7 @@ class Quote extends Model
 	public function delete()
 	{
 		// Delete the ordered/quoted product from the database.
-		$this->db->delete('quotes',['quote_id'=>$this->getId()]);
-		
-		// Get the results of the deletion.
-		$res = $this->db->results('arr');
+		$res = $this->db->delete('quotes',['quote_id'=>$this->getId()]);
 
 		// Check to see if the query ran properly.
 		if(!$res)

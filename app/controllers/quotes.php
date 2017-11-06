@@ -223,6 +223,23 @@ class Quotes extends Controller
 		// Send user back to masterlist upon success.
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
 	}
+
+	public function delete($id)
+	{
+		// Create quote object,
+		$quote = new Quote($id);
+
+		// Delete the quote.
+		$quote->delete();
+
+		// Refer back to the masterlist.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=dsuccess');
+	}
+
+	public function convert($id)
+	{
+
+	}
 }
 
 ?>

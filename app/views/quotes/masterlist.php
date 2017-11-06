@@ -143,13 +143,13 @@
                                                         <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/edit/'.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
-                                                        <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convertquote.php?quote_id='.$quote->getId().'&url=listallquotes">
+                                                        <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convert/'.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-usd"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/reproquote.php?quote_id=' . $quote->getId() . '">
+                                                        <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">
                                                         <span class="glyphicon glyphicon-print"></span>
                                                         </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.$quotesUrl.'/deletequote.php?id='.$quote->getId().'&quote_status='.$quote->getStatus().'">
+                                                        <a class="btn btn-xs btn-danger" href="'.$quotesUrl.'/delete/'.$quote->getId().'">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                         </a>
                                                     </td>

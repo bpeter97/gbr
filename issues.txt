@@ -24,7 +24,6 @@ CUSTOMERS
 - After creating customer, it shows the create page on top of the master list page (it needs to go to the master list page with a success message)..
 
 QUOTES
-- Need to update buttons next to the quotes on the masterlist of quotes.
 - Need to create a way to transfer existing quote to a pre-made order form.
 
 ORDERS
