@@ -390,6 +390,45 @@ class Container extends Model
 			} 
 		}
 	}
+
+	public function search()
+	{
+
+		$query = $_POST['query'];
+
+		if(is_string($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_STRING);
+		} elseif(is_int($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_INT);
+		} elseif(is_float($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_FLOAT);
+		} else {
+			$clean_query = "";
+		}
+
+		if(is_numeric($clean_query) && strlen($clean_query) == 6){
+			$clean_query = substr_replace($clean_query, '-', 2, 0);
+		} elseif (is_numeric($clean_query) && strlen($clean_query) == 7){
+			$clean_query = substr_replace($clean_query, '-', 6, 0);
+		}
+
+		$this->db->query("SELECT * FROM containers WHERE
+						release_number LIKE '%". $clean_query ."%' OR container_size LIKE '%". $clean_query ."%' OR
+						container_serial_number LIKE '%". $clean_query ."%' OR
+						container_number LIKE '%". $clean_query ."%' OR
+						container_shelves LIKE '%". $clean_query ."%' OR
+						container_paint LIKE '%". $clean_query ."%' OR
+						container_onbox_numbers LIKE '%". $clean_query ."%' OR
+						container_signs LIKE '%". $clean_query ."%' OR
+						rental_resale LIKE '%". $clean_query ."%' OR
+						container_address LIKE '%". $clean_query ."%' OR
+						type LIKE '%". $clean_query ."%'
+						");
+
+		$results = $this->db->results('arr');
+		
+		return $results;
+	}
 }
 
 ?>

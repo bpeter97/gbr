@@ -239,7 +239,7 @@
                                                             <td>' . $quote->getType() . '</td>
                                                             <td>' . $quote->getStatus() . '</td>
                                                             <td>' . $quote->getTotalCost() . '</td>
-                                                            <td><a class="containerlink" href="/reproquote.php?quote_id='.$quote->getId().'">View Details</a></td>
+                                                            <td><a class="containerlink" href="'.Config::get('site/siteurl').'/quotes/viewinfo/' . $quote->getId() .'">View Details</a></td>
                                                         </tr>
 
                                                         ';

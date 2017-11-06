@@ -137,10 +137,22 @@ $months = $data['months'];
     <div id="wrapper">
 
         <?php include Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'; ?>
+
+        
     
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid" id="webbg">
+                <?php if(isset($_GET['action'])): ?>
+                    <?php if($_GET['action'] == 'searchError'): ?>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <strong>ERROR!</strong> You did not select a category when trying to search!
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-default">

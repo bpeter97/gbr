@@ -292,6 +292,48 @@ class Order extends Model
 		}
 	}
 
+	public function search()
+	{
+
+		$query = $_POST['query'];
+
+		if(is_string($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_STRING);
+		} elseif(is_int($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_INT);
+		} elseif(is_float($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_FLOAT);
+		} else {
+			$clean_query = "";
+		}
+
+		if(is_numeric($clean_query) && strlen($clean_query) == 6){
+			$clean_query = substr_replace($clean_query, '-', 2, 0);
+		} elseif (is_numeric($clean_query) && strlen($clean_query) == 7){
+			$clean_query = substr_replace($clean_query, '-', 6, 0);
+		}
+
+		$this->db->query("SELECT * FROM orders WHERE
+						order_customer LIKE '%". $clean_query ."%' OR
+						order_date LIKE '%". $clean_query ."%' OR
+						order_type LIKE '%". $clean_query ."%' OR
+						order_status LIKE '%". $clean_query ."%' OR
+						job_name LIKE '%". $clean_query ."%' OR
+						job_address LIKE '%". $clean_query ."%' OR
+						job_city LIKE '%". $clean_query ."%' OR
+						job_zipcode LIKE '%". $clean_query ."%' OR
+						attn LIKE '%". $clean_query ."%' OR
+						cost_before_tax LIKE '%". $clean_query ."%' OR
+						total_cost LIKE '%". $clean_query ."%' OR
+						sales_tax LIKE '%". $clean_query ."%' OR
+						monthly_total LIKE '%". $clean_query ."%'
+						");
+
+		$results = $this->db->results('arr');
+		
+		return $results;
+	}
+
 }
 
 ?>

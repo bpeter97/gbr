@@ -30,7 +30,8 @@ $GLOBALS['config'] = array(
 		'orders' 		=>	'/orders',
 		'products' 		=>	'/products',
 		'calendar' 		=>	'/calendars',
-		'users'			=>	'/users'
+		'users'			=>	'/users',
+		'search'		=>	'/search'
 		
 	),
 	'remember' => array(

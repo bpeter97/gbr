@@ -116,7 +116,7 @@
                         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-delay="10000" data-close-others="true" style=""><span class="glyphicon glyphicon-search"></span></a>
                             <div class="dropdown-menu main-dropdown-effects" style="width: 415px;">
                             	<div id="#sbox">
-	                                <form action="'.$main_website.'/view/search.php" method="post">
+	                                <form action="'.$main_website.Config::get('site/search').'" method="post">
 					                <ul class="nav navbar-nav">
 					                    <li style="margin-left: 10px;">
 					                        <select class="form-control" name="category" id="category">
@@ -125,7 +125,7 @@
 					                            <option value="customers">Customers</option>
 					                            <option value="quotes">Quotes</option>
 					                            <option value="orders">Orders</option>
-                                                <option value="modifications">Products</option>
+                                                <option value="products">Products</option>
 					                        </select>
 					                    </li>
 					                    <li style="margin-left:10px;"><input type="text" class="form-control" name="query" id="query"></li>

@@ -123,6 +123,37 @@ class Product extends Model
 
 	}
 
+	public function search()
+	{
+
+		$query = $_POST['query'];
+
+		if(is_string($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_STRING);
+		} elseif(is_int($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_INT);
+		} elseif(is_float($query)){
+			$clean_query = filter_var($query, FILTER_SANITIZE_NUMBER_FLOAT);
+		} else {
+			$clean_query = "";
+		}
+
+		if(is_numeric($clean_query) && strlen($clean_query) == 6){
+			$clean_query = substr_replace($clean_query, '-', 2, 0);
+		} elseif (is_numeric($clean_query) && strlen($clean_query) == 7){
+			$clean_query = substr_replace($clean_query, '-', 6, 0);
+		}
+
+		$this->db->query("SELECT * FROM modifications WHERE
+						mod_name LIKE '%". $clean_query ."%' OR
+						mod_short_name LIKE '%". $clean_query ."%'
+						");
+
+		$results = $this->db->results('arr');
+		
+		return $results;
+	}
+
 }
 
 ?>
