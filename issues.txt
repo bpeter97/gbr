@@ -17,11 +17,9 @@ MAP
 
 CONTAINERS
 - Need to connect containers to orders (can't test this yet).
-- Need to add success notifications to container views.
 
 CUSTOMERS
 - Can't filter customers that are on other pages through the search bar.
-- After creating customer, it shows the create page on top of the master list page (it needs to go to the master list page with a success message)..
 
 QUOTES
 - Need to create a way to transfer existing quote to a pre-made order form.

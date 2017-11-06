@@ -19,6 +19,34 @@
             <div id="page-content-wrapper">
 
                 <div class="container-fluid" id="webbg">
+                
+                <?php if(isset($_GET['action'])): ?>
+                    <?php
+
+                    switch ($_GET['action']) {
+                        case 'usuccess':
+                            $webAction = 'updated';
+                            break;
+                        case 'dsuccess':
+                            $webAction = 'deleted';
+                            break;
+                        case 'csuccess':
+                            $webAction = 'created';
+                            break;
+                        default:
+                            $webAction = 'submitted/saved';
+                    }
+                    
+                    ?>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Congratulations!</strong> You have successfully <?= $webAction ?> a quote!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <?php endif; ?>
+
                     <!-- 2nd Row. -->
                     <div class="row">
                         <div class="col-lg-12">
