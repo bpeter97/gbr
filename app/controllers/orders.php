@@ -117,7 +117,7 @@ class Orders extends Controller
 		$order = new Order($id);
 
 		// create the customer object from the order's customer_id
-		$customer = new Customer($order->getCustomer());
+		$customer = new Customer($order->getCustomer(), TRUE);
 
 		// create the product object
 		$products = new Product();
@@ -166,6 +166,7 @@ class Orders extends Controller
 
 		// Update the order
 		// Post the data from the order form.
+		$order->setStage($_POST['frmstage']);
 		$order->setOrderDate($_POST['frmorderdate']);
 		$order->setOrderTime($_POST['frmordertime']);
 		$order->setOrderedBy($_POST['frmorderedby']);
@@ -185,10 +186,41 @@ class Orders extends Controller
 		$order->setDeliveryTotal($_POST['cartDeliveryTotal']);
 
 		// Update the product_orders table with the new products.
-		$order->insertOrderedProducts();
-
+		try {
+			$order->update();
+			$order->insertOrderedProducts();
+		} catch (Exception $e) {
+			echo '<script> alert('.$e->getMessage().'); </script>';
+		}
+		
 		// Send the user back to the masterlist upon success.
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=usuccess'); 
+	}
+
+	public function delete($id)
+	{
+		// Create quote object,
+		$order = new Order($id);
+
+		// Create event object
+		$event = new Event();
+	
+		try {
+
+			// Get the event details using order_id and delete the event.
+			$event->getDetailsFromOrderId($id);
+			$event->deleteEvent($event->getId());
+
+			// Delete the quote.
+			$order->delete();
+		
+		} catch (Exception $e) {
+			echo '<script> alert('. $e->getMessage() .'); </script>';
+		}
+		
+
+		// Refer back to the masterlist.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=dsuccess'); 
 	}
 	
 }

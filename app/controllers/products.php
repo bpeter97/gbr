@@ -74,6 +74,18 @@ class Products extends Controller
 		// Send the user back to the masterlist upon success.
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=usuccess'); 
 	}
+
+	public function delete($id)
+	{
+		// Create quote object,
+		$product = new Product($id);
+
+		// Delete the quote.
+		$product->delete();
+
+		// Refer back to the masterlist.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=dsuccess'); 
+	}
 	
 }
 

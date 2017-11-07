@@ -54,17 +54,18 @@ class Customer extends Model
 	public function setFlag($flag) { $this->flag = $flag; }
 	public function setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 
-	function __construct($id = null)
+	function __construct($id = null, $use_name = null)
 	{
 		$this->db = Database::getDBI();
 		
 		if($id != null){
-			if(is_int($id)){
-				$this->setId($id);
-				$this->getDetails($this->getId());
-			}elseif(is_string($id)){
+			if($use_name != null)
+			{
 				$this->setCustomerName($id);
 				$this->getDetails();
+			} else {
+				$this->setId($id);
+				$this->getDetails($this->getId());
 			}
 		}
 	}

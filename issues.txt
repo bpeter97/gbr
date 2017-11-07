@@ -30,7 +30,7 @@ ORDERS
 - Need a way to click the order and view it & update the stages.
 
 PRODUCTS
-- Need to update the button links!
+- Need a way to create a product.
 
 SEARCH
 - None

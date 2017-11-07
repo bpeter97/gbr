@@ -73,6 +73,7 @@ if($data['customer']->getId() !== null)
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
                                     <form action="<?php echo Config::get('site/siteurl').Config::get('site/orders').'/update'; ?>" id="orderForm" method="post">
                                     <input class="form-control" type="hidden" name="orderid" value="<?= $order->getId(); ?>">
+                                    <input class="form-control" type="hidden" name="frmstage" value="1">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">

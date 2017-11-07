@@ -175,6 +175,18 @@ class Product extends Model
 		return $res;
 	}
 
+	public function delete()
+	{
+		// Delete the ordered/quoted product from the database.
+		$res = $this->db->delete('modifications',['mod_ID'=>$this->getId()]);
+		
+		// Check to see if the query ran properly.
+		if(!$res)
+		{
+			throw new Exception('The order was not deleted.');
+		}
+	}
+
 }
 
 ?>

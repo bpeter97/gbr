@@ -46,6 +46,20 @@ class Event extends Model
 		
 	}
 
+	public function getDetailsFromOrderId($id)
+	{
+		$sql = 'SELECT * FROM events WHERE order_id = ?';
+		$this->db->query($sql, array($id));
+		$res = $this->db->single();
+
+		$this->setId($res->id);
+		$this->setTitle($res->title);
+		$this->setColor($res->color);
+		$this->setStart($res->start);
+		$this->setEnd($res->end);
+		$this->setOrderId($res->order_id);
+	}
+
 	public function getDetails($id)
 	{
 		

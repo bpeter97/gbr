@@ -340,6 +340,48 @@ class Order extends Model
 		return $results;
 	}
 
+	public function update()
+	{
+		// Need to update the quote in the database.
+		$this->db->update('orders',['order_ID'=>$this->getID()],[
+			'order_date'				=>	$this->getDate(),
+			'order_time'				=>	$this->getTime(),
+			'order_type'				=>	$this->getType(),
+			'job_name'					=>	$this->getJobName(),
+			'job_city'					=>	$this->getJobCity(),
+			'job_address'				=>	$this->getJobAddress(),
+			'job_zipcode'				=>	$this->getJobZipcode(),
+			'ordered_by'				=>	$this->getOrderedBy(),
+			'onsite_contact'			=>	$this->getOnsiteContact(),
+			'onsite_contact_phone'		=>	$this->getOnsiteContactPhone(),
+			'tax_rate'					=>	$this->getTaxRate(),
+			'cost_before_tax'			=>	$this->getCostBeforeTax(),
+			'total_cost'				=>	$this->getTotalCost(),
+			'monthly_total'				=>	$this->getMonthlyTotal(),
+			'sales_tax'					=>	$this->getSalesTax(),
+			'delivery_total'			=>	$this->getDeliveryTotal(),
+			'stage'						=>	$this->getStage()
+		]);
+
+		// Get the results of the query.
+		$res = $this->db->results('arr');
+		
+		// Return the results of the query.
+		return $res;
+	}
+
+	public function delete()
+	{
+		// Delete the ordered/quoted product from the database.
+		$res = $this->db->delete('orders',['order_id'=>$this->getId()]);
+		
+		// Check to see if the query ran properly.
+		if(!$res)
+		{
+			throw new Exception('The order was not deleted.');
+		}
+	}
+
 }
 
 ?>
