@@ -23,8 +23,6 @@ CONTAINERS
 
 CUSTOMERS
 - Can't filter customers that are on other pages through the search bar.
-- Need to create function to delete customers.
-- Need to add buttons to masterlist of customers.
 
 QUOTES
 - Need to create a way to transfer existing quote to a pre-made order form.

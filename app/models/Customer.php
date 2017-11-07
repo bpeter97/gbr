@@ -296,6 +296,18 @@ class Customer extends Model
 		
 		return $results;
 	}
+
+	public function delete()
+    {
+        // Delete the user from the database.
+		$res = $this->db->delete('customers',['customer_ID'=>$this->getId()]);
+        
+        // Check to see if the query ran properly.
+        if(!$res)
+        {
+            throw new Exception('The customer was not deleted from the database, something went wrong in the SQL statement.');
+        }
+    }
 }
 
 ?>

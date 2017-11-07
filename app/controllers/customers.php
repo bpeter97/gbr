@@ -98,6 +98,22 @@ class Customers extends Controller
 		}
 		
 	}
+
+	public function delete($id)
+	{
+		$customer = new Customer($id);
+
+		try {
+			$customer->delete();
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
+
+		if(!$e){
+			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/customers').'?action=dsuccess');
+		}
+		
+	}
 	
 	
 }
