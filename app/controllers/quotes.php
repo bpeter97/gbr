@@ -139,7 +139,10 @@ class Quotes extends Controller
 		
 		// direct user to the QUOTES view page.
 		// header('Location: '.Config::get('site/siteurl').Config::get('site/quotes'));
-		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
+		if(!$e)
+		{
+			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=usuccess');
+		}
 	}
 
 	public function edit($id)

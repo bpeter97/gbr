@@ -54,7 +54,10 @@ class Users extends Controller
 			echo $e->getMessage();
 		}
 		
-		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=usuccess');
+		if(!$e)
+		{
+			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=usuccess');
+		}
 	}
 
 	public function delete($id)

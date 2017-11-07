@@ -194,7 +194,10 @@ class Orders extends Controller
 		}
 		
 		// Send the user back to the masterlist upon success.
-		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=usuccess'); 
+		if(!$e)
+		{
+			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=usuccess'); 
+		}
 	}
 
 	public function delete($id)
@@ -220,7 +223,10 @@ class Orders extends Controller
 		
 
 		// Refer back to the masterlist.
-		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=dsuccess'); 
+		if(!$e)
+		{
+			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=dsuccess'); 
+		}
 	}
 	
 }
