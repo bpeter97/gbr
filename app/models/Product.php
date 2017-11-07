@@ -187,6 +187,23 @@ class Product extends Model
 		}
 	}
 
+	public function create()
+	{
+		$res = $this->db->insert('modifications',[
+			'mod_name'=>$this->getModName(),
+			'mod_cost'=>$this->getModCost(),
+			'mod_short_name'=>$this->getModShortName(),
+			'monthly'=>$this->getMonthly(),
+			'item_type'=>$this->getItemType(),
+			'rental_type'=>$this->getRentalType()
+			]);
+
+		if(!$res)
+		{
+			throw new Exception('There was an error inserting the product into the database!');
+		}
+	}
+
 }
 
 ?>

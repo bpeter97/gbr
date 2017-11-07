@@ -108,7 +108,13 @@
                                 <li><a href="'.$main_website.Config::get('site/orders').'/">View Orders</a></li>
                             </ul>
                         </li>
-                        <li class="'.$prod_active.'"><a href="'.$main_website.Config::get('site/products').'/">Products</a></li>
+                        <li class="dropdown '.$prod_active.'">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200" data-close-others="true">Products <span class="caret"></span></a>
+                        <ul class="dropdown-menu main-dropdown-effects">
+                            <li><a href="'.$main_website.Config::get('site/products').'/create">Create Product</a></li>
+                            <li><a href="'.$main_website.Config::get('site/products').'/">View Products</a></li>
+                        </ul>
+                    </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="welcome_msg">Welcome, '.$_SESSION['userfname'].' '.$_SESSION['userlname'].'!</li>
