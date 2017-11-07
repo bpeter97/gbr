@@ -114,6 +114,14 @@ class Products extends Controller
 			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=csuccess');
 		}
 	}
+
+	public function test() 
+	{
+		$product = new Product();
+		$rentArray = $product->rentArray();
+		
+		Functions::dump($rentArray);
+	}
 	
 }
 

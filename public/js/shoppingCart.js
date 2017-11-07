@@ -1,8 +1,4 @@
-// This will be the shopping cart module for the order pages.
-rentArray = ['10CONRENT','20DDCONRENT','20CONRENT','40CONRENT','24CONRENT','20COMBORENT','20FULLRENT','40COMBORENT','40SCOMBORENT','20SHELVRENT','LOADRAMP'];
-pickUpDelivery = ['20DEL','40DEL','20PU','40PU'];
-
-var Cart = function (order_type) 
+var Cart = function (order_type, rentalArray, pudArray) 
 {
 	this.items = [];
 	this.itemCounter = 1;
@@ -16,6 +12,8 @@ var Cart = function (order_type)
 	this.order_type = order_type;
 	this.delivery_cost = 0.00;
 	this.total_delivery_cost = 0.00;
+	this.rentalArray = rentalArray;
+	this.pudArray = pudArray;
 
 	this.addItem = function (product, quantity)
 	{   
@@ -30,11 +28,11 @@ var Cart = function (order_type)
 			this.items.push([product, quantity, this.itemCounter]);
 
 			// Add product cost to the total. If in rental array, add it to monthly instead.
-			if($.inArray(product.msn, pickUpDelivery) == -1)
+			if($.inArray(product.msn, this.pudArray) == -1)
 			{
 				if(this.order_type == 'rental' || this.order_type == 'Rental')
 				{
-					if($.inArray(product.msn, rentArray) != -1){
+					if($.inArray(product.msn, this.rentalArray) != -1){
 	
 						this.monthly_total = round(this.monthly_total + (product.cost * quantity), 2);
 						this.total_before_tax = round(this.total_before_tax + (product.cost * quantity), 2);
@@ -100,9 +98,9 @@ var Cart = function (order_type)
 				// Remove item cost from total.
 				for(var j = 0; j < this.items[i][1]; j++)
 				{
-					if($.inArray(this.items[i][0].msn, pickUpDelivery) == -1)
+					if($.inArray(this.items[i][0].msn, this.pudArray) == -1)
 					{
-						if($.inArray(this.items[i][0].msn, rentArray) != -1)
+						if($.inArray(this.items[i][0].msn, this.rentalArray) != -1)
 						{
 							this.monthly_total = round((this.monthly_total - this.items[i][0].cost), 2);
 							this.total_before_tax = round((this.total_before_tax - this.items[i][0].cost), 2);
@@ -134,7 +132,7 @@ var Cart = function (order_type)
 			cartTable+= '<tr><td width="250" id="prod">'+cart.items[i][0].mod_name+'</td>';
 			if(this.order_type == 'rental' || this.order_type == 'Rental') {
 				console.log(cart.items[i][0].msn);
-				if($.inArray(cart.items[i][0].msn, rentArray) != -1)	{
+				if($.inArray(cart.items[i][0].msn, this.rentalArray) != -1)	{
 					cartTable+= '<td width="250" id="prodCost">$0</td>';
 					cartTable+= '<td width="250" id="prodMonthlyCost">$'+cart.items[i][0].cost+'</td>';
 				} else {
@@ -243,4 +241,4 @@ function round(value, decimals)
 }
 
 
-cart = new Cart(cart_order_type);
+cart = new Cart(cart_order_type, rentalArray, pudArray);

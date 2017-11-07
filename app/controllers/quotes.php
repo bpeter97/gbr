@@ -88,6 +88,8 @@ class Quotes extends Controller
 			}
 
 			$products = $this->model('Product');
+			$rentArray = $products->rentArray();
+			$pudArray = $products->pudArray();
 
 			if($type == 'rental')
 			{
@@ -106,7 +108,14 @@ class Quotes extends Controller
 			$containerProducts = $products->getProducts($containerSQL);
 			$modificationProducts = $products->getProducts($modSQL);
 
-			$this->view('quotes/create', ['custList'=>$custList, 'customer'=>$customer, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts, 'quote_type'=>$type]);
+			$this->view('quotes/create', ['custList'=>$custList, 
+										  'customer'=>$customer, 
+										  'shippingProducts'=>$shippingProducts, 
+										  'containerProducts'=>$containerProducts, 
+										  'modificationProducts'=>$modificationProducts, 
+										  'quote_type'=>$type, 
+										  'rentArray'=>$rentArray, 
+										  'pudArray'=>$pudArray]);
 			
 		}
 
@@ -159,6 +168,8 @@ class Quotes extends Controller
 
 		// fetch the list of products based on the type of quote.
 		$products = $this->model('Product');
+		$rentArray = $products->rentArray();
+		$pudArray = $products->pudArray();
 
 		if($quote->getType() == 'rental' || $quote->getType() == 'Rental')
 		{
@@ -184,7 +195,9 @@ class Quotes extends Controller
 									 'shippingProducts'=>$shippingProducts, 
 									 'containerProducts'=>$containerProducts, 
 									 'modificationProducts'=>$modificationProducts, 
-									 'quoteType'=>$quote->getType()
+									 'quoteType'=>$quote->getType(),
+									 'rentArray'=>$rentArray,
+									 'pudArray'=>$pudArray
 									 ]);
 	}
 	

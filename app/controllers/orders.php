@@ -53,7 +53,7 @@ class Orders extends Controller
 				$order = $this->model('Order');
 
 				// create a customer object to use in the quote.
-				$c = new Customer($_POST['frmcustomername']);
+				$c = new Customer($_POST['frmcustomername'], TRUE);
 
 				$order->setCustomerId($c->getId());
 
@@ -86,7 +86,9 @@ class Orders extends Controller
 				$customer->getDetails($_GET['cust']);
 			}
 
-			$products = $this->model('Product');
+			$products = new Product();
+			$rentArray = $products->rentArray();
+			$pudArray = $products->pudArray();
 
 			if($type == 'rental')
 			{
@@ -105,7 +107,15 @@ class Orders extends Controller
 			$containerProducts = $products->getProducts($containerSQL);
 			$modificationProducts = $products->getProducts($modSQL);
 
-			$this->view('orders/create', ['custList'=>$custList, 'customer'=>$customer, 'shippingProducts'=>$shippingProducts, 'containerProducts'=>$containerProducts, 'modificationProducts'=>$modificationProducts, 'order_type'=>$type]);
+			$this->view('orders/create', ['custList'				=>	$custList, 
+										  'customer'				=>	$customer, 
+										  'shippingProducts'		=>	$shippingProducts, 
+										  'containerProducts'		=>	$containerProducts, 
+										  'modificationProducts'	=>	$modificationProducts, 
+										  'order_type'				=>	$type, 
+										  'rentArray'				=>	$rentArray, 
+										  'pudArray'				=>	$pudArray
+										  ]);
 			
 		}
 
@@ -121,6 +131,8 @@ class Orders extends Controller
 
 		// create the product object
 		$products = new Product();
+		$rentArray = $products->rentArray();
+		$pudArray = $products->pudArray();
 
 		// get the list of products based on the order's type
 		if($order->getType() == 'rental' || $order->getType() == 'Rental') 
@@ -141,14 +153,16 @@ class Orders extends Controller
 		$modificationProducts = $products->getProducts($modSQL); 
 
 		// create the view
-		$this->view('orders/edit',['customer'=>$customer, 
-						'order'=>$order, 
-						'orderedProducts'=>$order->getProducts(), 
-						'shippingProducts'=>$shippingProducts,  
-						'containerProducts'=>$containerProducts,  
-						'modificationProducts'=>$modificationProducts,  
-						'orderType'=>$order->getType() 
-						]);
+		$this->view('orders/edit',['customer'				=>	$customer, 
+								   'order'					=>	$order, 
+								   'orderedProducts'		=>	$order->getProducts(), 
+								   'shippingProducts'		=>	$shippingProducts,  
+								   'containerProducts'		=>	$containerProducts,  
+								   'modificationProducts'	=>	$modificationProducts,  
+								   'orderType'				=>	$order->getType(),
+								   'rentArray'				=>	$rentArray, 
+								   'pudArray'				=>	$pudArray
+								  ]);
 	}
 
 	public function update()

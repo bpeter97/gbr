@@ -204,6 +204,38 @@ class Product extends Model
 		}
 	}
 
+	public function rentArray()
+	{
+		$rentArray = array();
+
+		$sql = 'SELECT mod_short_name FROM modifications WHERE rental_type = "Rental"';
+		$this->db->query($sql);
+		$res = $this->db->results('arr');
+
+		foreach ($res as $mod)
+		{
+			array_push($rentArray, $mod['mod_short_name']);
+		}
+
+		return $rentArray;
+	}
+
+	public function pudArray()
+	{
+		$pudArray = array();
+		
+			$sql = 'SELECT mod_short_name FROM modifications WHERE item_type = "pickup" OR item_type = "delivery"';
+			$this->db->query($sql);
+			$res = $this->db->results('arr');
+	
+			foreach ($res as $mod)
+			{
+				array_push($pudArray, $mod['mod_short_name']);
+			}
+	
+		return $pudArray;
+	}
+
 }
 
 ?>

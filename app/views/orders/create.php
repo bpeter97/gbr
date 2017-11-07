@@ -16,6 +16,8 @@ if($data['customer']->getId() !== null)
         <?php require_once(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
         <script type="text/javascript">
             cart_order_type = <?php echo '"'.$data['order_type'].'"'; ?>;
+            rentalArray = <?php echo json_encode($data['rentArray']); ?>;
+            pudArray = <?php echo json_encode($data['pudArray']); ?>;
         </script>
         <script type="text/javascript" src="<?php echo Config::get('site/siteurl').Config::get('site/resources/js').'/shoppingCart.js'; ?>"></script>
 

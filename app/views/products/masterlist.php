@@ -158,6 +158,7 @@
                                                     <th>Cost</th>
                                                     <th>Monthly Cost</th>
                                                     <th>Item Types</th>
+                                                    <th>Rental Type</th>
                                                 </tr>
                                             </thead>
                                         ';
@@ -173,6 +174,7 @@
                                                         <td>' . $product->getModCost() . '</td>
                                                         <td>' . $product->getMonthly() . '</td>
                                                         <td>' . $product->getItemType() . '</td>
+                                                        <td>' . $product->getRentalType() . '</td>
                                                     </tr>
                                             ';
 
