@@ -157,7 +157,7 @@
                                             echo '
 
                                                 <tbody>
-                                                    <tr class="clickable-row" data-href="'.$productsUrl.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->getId().'">
+                                                    <tr class="clickable-row" data-href="'.$productsUrl.'/edit/'.$product->getId().'">
                                                         <td>' . $product->getId() . '</td>
                                                         <td>' . $product->getModName() . '</td>
                                                         <td>' . $product->getModShortName() . '</td>
@@ -165,7 +165,7 @@
                                                         <td>' . $product->getMonthly() . '</td>
                                                         <td>' . $product->getItemType() . '</td>
                                                         <td>
-                                                            <a class="btn btn-xs btn-warning" href="'.$productsUrl.'/editproducts.php?from=viewproducts&action=edit&uid='.$product->getId().'">
+                                                            <a class="btn btn-xs btn-warning" href="'.$productsUrl.'/edit/'.$product->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                             </a>
                                                             <a class="btn btn-xs btn-danger" href="'.$productsUrl.'/editproducts.php?action=delete&uid='.$product->getId().'">

@@ -41,6 +41,39 @@ class Products extends Controller
 		}
 
 	}
+
+	public function edit($id)
+	{
+		// create product object & get product details (constructor)
+		$product = new Product($id);
+
+		// create the view
+		$this->view('products/edit',['product'=>$product]);
+	}
+
+	public function update()
+	{
+		// create product object
+		$product = new Product($_POST['productid']);
+
+		// set attributes
+		$product->setModName($_POST['frmpname']);
+		$product->setModShortName($_POST['frmmsn']);
+		$product->setModCost($_POST['frmpscost']);
+		$product->setMonthly($_POST['frmprcost']);
+		$product->setItemType($_POST['frmptype']);
+		$product->setRentalType($_POST['frmprtype']);
+
+		// update function
+		try {
+			$product->update();
+		} catch (Exception $e) {
+			echo '<script> alert('.$e->getMessage().'); </script>';
+		}
+		
+		// Send the user back to the masterlist upon success.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=usuccess'); 
+	}
 	
 }
 

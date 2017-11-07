@@ -31,7 +31,6 @@ ORDERS
 
 PRODUCTS
 - Need to update the button links!
-- Need to rebuild the edit product page or fix links, at least.
 
 SEARCH
 - None

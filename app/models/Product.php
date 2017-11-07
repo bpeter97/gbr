@@ -156,6 +156,25 @@ class Product extends Model
 		return $results;
 	}
 
+	public function update()
+	{
+		// Need to update the quote in the database.
+		$this->db->update('modifications', ['mod_ID'=>$this->getId()],[
+			'mod_name' 			=> $this->getModName(),
+			'mod_cost' 			=> $this->getModCost(),
+			'mod_short_name' 	=> $this->getModShortName(),
+			'monthly' 			=> $this->getMonthly(),
+			'item_type' 		=> $this->getItemType(),
+			'rental_type' 		=> $this->getRentalType()
+		]);
+
+		// Get the results of the query.
+		$res = $this->db->results('arr');
+		
+		// Return the results of the query.
+		return $res;
+	}
+
 }
 
 ?>
