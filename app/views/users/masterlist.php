@@ -15,6 +15,17 @@
 
             <?php include(Config::get('site/baseurl').Config::get('site/assets').'/fixednavbar.php'); ?>
 
+			<script type="text/javascript">
+            
+            function deleteModal(id, name)
+            {
+                document.getElementById("deleteBodyText").innerHTML = "Are you sure you would like to delete the user: " + name;
+                document.getElementById("deleteForm").action = "<?= Config::get('site/siteurl').'/users/delete/'; ?>" + id;
+                $("#deleteModal").modal();
+            }
+
+            </script>
+
             <!-- Page Content -->
             <div id="page-content-wrapper">
 
@@ -137,7 +148,8 @@
                                         ';
 
                                         echo '
-
+                                        
+                                        <div class="col-lg-10">
                                         <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
@@ -147,18 +159,17 @@
                                                     <th>Username</th>
                                                     <th>Phone Number</th>
                                                     <th>Account Type</th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                         ';
-
+                                        echo '<tbody>';
                                         foreach($data['userList'] as $user) {
 
                                             $tablebg = '<tr class="clickable-row" data-href="'.$usersUrl.'/edit/' . $user->getId() . '">';
 
                                             echo '
 
-                                            <tbody>
+                                            
                                                 '. $tablebg .'
                                                     <td>' . $user->getFirstname() . '</td>
                                                     <td>' . $user->getLastname() . '</td>
@@ -166,22 +177,45 @@
                                                     <td>' . $user->getUsername() . '</td>
                                                     <td>' . $user->getPhone() . '</td>
                                                     <td>' . $user->getType() . '</td>
-                                                    <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.$usersUrl.'/edit/'.$user->getId().'">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                        </a>
-                                                        <a class="btn btn-xs btn-danger" href="'.$usersUrl.'/delete/'.$user->getId().'">
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                        </a>
-                                                    </td>
                                                 </tr>
-                                            </tbody>
+                                            
                                             ';
 
                                         }
-
+                                        echo '</tbody>';
                                         echo '</table>';
+                                        echo '</div>';
+										echo '<div class="col-xs-2">';
+										echo '
 
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th style="text-align: center;">Tools</th>
+												</tr>
+											</thead>
+										';
+                                        echo '<tbody>';
+                                        
+                                        foreach($data['userList'] as $user) {
+                                            echo '                                                    
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        <a class="btn btn-xs btn-warning" href="'.$usersUrl.'/edit/'.$user->getId().'">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                        '; ?>														
+														<a class="btn btn-xs btn-danger" href="#" onclick='deleteModal(<?= $user->getId(); ?>,"<?= $user->getFirstName(); ?>")'>
+														<?php
+														echo '
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>';
+                                        }
+										echo '</tbody>';
+										echo '</table>';
+										echo '</div>';
                                     } else {
 
                                         echo "Couldn't issue database query.";
@@ -201,6 +235,29 @@
                         </div>
                     </div>
                     <!-- End of 2nd Row. -->
+
+                    
+					<div id="deleteModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					  	<form action="" id="deleteForm">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title" style="color=#FF0000;">!!!!! WARNING !!!!!</h4>
+					      </div>
+					      <div class="modal-body">
+					        <p id="deleteBodyText">This will be replaced.</p>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					      </div>
+					      </form>
+					    </div>
+
+					  </div>
+					</div>
 
                     <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
 

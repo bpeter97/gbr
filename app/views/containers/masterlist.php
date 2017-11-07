@@ -227,7 +227,7 @@
 										<table class="table table-striped table-hover">
 											<thead>
 												<tr>
-													<th>Tools</th>
+													<th style="text-align: center;">Tools</th>
 												</tr>
 											</thead>
 										';

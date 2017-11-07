@@ -72,6 +72,30 @@ class Users extends Controller
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=dsuccess');
 
 	}
+
+	public function create()
+	{
+		if($_POST)
+		{
+			// create the user object
+			$user = new User();
+
+			// run the create function.
+			try {
+				$user->create();
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+			
+			if(!$e){
+				// send the user back to the master list with success message.
+				header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/users').'?action=csuccess');
+			}
+		} else {
+			$this->view('users/create',[]);
+		}
+		
+	}
 }
 
 ?>

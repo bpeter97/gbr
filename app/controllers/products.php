@@ -89,29 +89,28 @@ class Products extends Controller
 
 	public function create()
 	{
-		$this->view('products/create',[]);
-	}
-
-	public function createnew()
-	{
-		$product = new Product();
-
-		$product->setModName($_POST['frmpname']);
-		$product->setModShortName($_POST['frmmsn']);
-		$product->setModCost($_POST['frmpscost']);
-		$product->setMonthly($_POST['frmprcost']);
-		$product->setItemType($_POST['frmptype']);
-		$product->setRentalType($_POST['frmprtype']);
-
-		try {
-			$product->create();
-		} catch (Exception $e) {
-			echo $e->getMessage();
-		}
-		
-		if(!$e)
-		{
-			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=csuccess');
+		if($_POST){
+			$product = new Product();
+			
+			$product->setModName($_POST['frmpname']);
+			$product->setModShortName($_POST['frmmsn']);
+			$product->setModCost($_POST['frmpscost']);
+			$product->setMonthly($_POST['frmprcost']);
+			$product->setItemType($_POST['frmptype']);
+			$product->setRentalType($_POST['frmprtype']);
+	
+			try {
+				$product->create();
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+			
+			if(!$e)
+			{
+				header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/products').'?action=csuccess');
+			}
+		} else {
+			$this->view('products/create',[]);
 		}
 	}
 

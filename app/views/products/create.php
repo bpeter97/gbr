@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="panel-body">
                                 <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
-                                <form action="<?php echo Config::get('site/siteurl').Config::get('site/products').'/createnew'; ?>" method="post">
+                                <form action="<?php echo Config::get('site/siteurl').Config::get('site/products').'/create'; ?>" method="post">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label class="col-md-2" for="frmpname" control-label>Product Name</label>
