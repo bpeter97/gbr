@@ -514,7 +514,11 @@ $months = $data['months'];
                   if(eventOrderId == event.order_id)
                   {
                       <?php foreach($event->order->products as $prod): ?>
-                        prodTable += '<tr><td><?php echo $prod->getModName(); ?></td><td><?php echo $prod->getProductQuantity(); ?></td></tr>';
+                        <?php
+                         if($prod->getItemType() != 'pickup' && $prod->getItemType() != 'delivery'){
+                             echo "prodTable += '<tr><td>".$prod->getModName()."</td><td>".$prod->getProductQuantity()."</td></tr>';";
+                         } 
+                         ?>
                       <?php endforeach; ?>
                   }
               }
