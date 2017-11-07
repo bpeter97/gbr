@@ -24,6 +24,7 @@ class Quote extends Model
 		$monthly_total,
 		$delivery_total;
 	private $products = array();
+	private $hidden = 0;
 	
 	function __construct($id = null)
 	{
@@ -54,6 +55,7 @@ class Quote extends Model
 	public function getMonthlyTotal() { return $this->monthly_total; }
 	public function getQuoteProducts() { return $this->products; }
 	public function getDeliveryTotal() { return $this->delivery_total; }
+	public function getHidden() { return $this->hidden; }
 	
 	public function setId($id) { $this->id = $id; }
 	public function setCustomer($customer) { $this->quote_customer = $customer; }
@@ -72,6 +74,7 @@ class Quote extends Model
 	public function setSalesTax($tax) { $this->sales_tax = $tax; }
 	public function setMonthlyTotal($total) { $this->monthly_total = $total; }
 	public function setDeliveryTotal($total) { $this->delivery_total = $total; }
+	public function setHidden($hidden) { $this->hidden = $hidden; }
 
 	public function getDetails($id = null)
 	{
@@ -101,6 +104,7 @@ class Quote extends Model
 		$this->setSalesTax($res->sales_tax);
 		$this->setMonthlyTotal($res->monthly_total);
 		$this->setDeliveryTotal($res->delivery_total);
+		$this->setHidden($res->hidden);
 	
 	}
 
@@ -179,6 +183,7 @@ class Quote extends Model
 		$this->setSalesTax($_POST['cartTax']);
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
 		$this->setDeliveryTotal($_POST['cartDeliveryTotal']);
+		$this->setHidden(0);
 
 		// Need to insert the new order into the database.
 		$this->db->insert('quotes', [
@@ -197,7 +202,8 @@ class Quote extends Model
 				'total_cost' 			=> $this->getTotalCost(),
 				'sales_tax' 			=> $this->getSalesTax(),
 				'monthly_total' 		=> $this->getMonthlyTotal(),
-				'delivery_total'		=> $this->getDeliveryTotal()
+				'delivery_total'		=> $this->getDeliveryTotal(),
+				'hidden'				=> $this->getHidden()
 			]);
 
 		// If properly inserted, grab the ID, else throw error.
@@ -250,6 +256,7 @@ class Quote extends Model
 
 	public function update()
 	{
+
 		// Need to update the quote in the database.
 		$this->db->update('quotes', ['quote_id'=>$this->getId()],[
 			'quote_customer' 		=> $this->getCustomer(),
@@ -267,7 +274,8 @@ class Quote extends Model
 			'total_cost' 			=> $this->getTotalCost(),
 			'sales_tax' 			=> $this->getSalesTax(),
 			'monthly_total' 		=> $this->getMonthlyTotal(),
-			'delivery_total'		=> $this->getDeliveryTotal()
+			'delivery_total'		=> $this->getDeliveryTotal(),
+			'hidden'				=> $this->getHidden()
 		]);
 
 		// Get the results of the query.

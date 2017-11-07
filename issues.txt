@@ -12,6 +12,9 @@ CALENDAR
 CART
 - None
 
+USERS
+- Need a way to create users.
+
 MAP
 - Need to fix formatting when trying to print the map, the map is not fullscreen and it shows the search bar.
 
@@ -20,10 +23,11 @@ CONTAINERS
 
 CUSTOMERS
 - Can't filter customers that are on other pages through the search bar.
+- Need to create function to delete customers.
+- Need to add buttons to masterlist of customers.
 
 QUOTES
 - Need to create a way to transfer existing quote to a pre-made order form.
-- Need a way to hide closed quotes.
 
 ORDERS
 - Need print pages (2).

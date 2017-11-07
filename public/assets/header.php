@@ -17,6 +17,7 @@
         <link type="text/css" href="<?= $css . '/bootstrap-multiselect.less'; ?>" rel="stylesheet">
         <link type="text/css" href="<?= $css . '/style.css'; ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?= $css . '/fullcalendar.css'; ?>" />
+        <link rel="stylesheet" href="<?= $css . '/font-awesome.css'; ?>" />
 
     <!-- Javascript -->
     <script src="<?= $js . '/moment.min.js'; ?>"></script>

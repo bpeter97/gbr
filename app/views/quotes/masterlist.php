@@ -22,6 +22,14 @@
 					document.getElementById("deleteBodyText").innerHTML = "Are you sure you would like to delete the quote for: " + name;
 					document.getElementById("deleteForm").action = "<?= Config::get('site/siteurl').'/quotes/delete/'; ?>" + id;
 					$("#deleteModal").modal();
+                }
+                
+                function hideModal(id, name)
+				{
+                    document.getElementById("hideBodyText").innerHTML = "Are you sure you would like to archive the quote for: " + name;
+                    document.getElementById("hideBodyText").innerHTML += "</br></br></br><strong>This will archive it forever!</strong>";
+					document.getElementById("hideForm").action = "<?= Config::get('site/siteurl').'/quotes/hide/'; ?>" + id;
+					$("#hideModal").modal();
 				}
 
 			</script>
@@ -43,6 +51,9 @@
                             break;
                         case 'csuccess':
                             $webAction = 'created';
+                            break;
+                        case 'hsuccess':
+                            $webAction = 'hidden';
                             break;
                         default:
                             $webAction = 'submitted/saved';
@@ -163,23 +174,25 @@
                                         echo '<tbody>';
                                         foreach($data['quoteList'] as $quote) {
 
-                                            if($quote->getStatus() == "Closed") {
-                                                $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
-                                            } else {
-                                                $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
+                                            if($quote->getHidden() == 0) {
+
+                                                if($quote->getStatus() == "Closed") {
+                                                    $tablebg = '<tr class="success clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
+                                                } else {
+                                                    $tablebg = '<tr class="danger clickable-row" data-href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">';
+                                                }
+
+                                                echo '
+
+                                                    '. $tablebg .'
+                                                        <td>' . $quote->getId() . '</td>
+                                                        <td>' . $quote->getCustomer() . '</td>
+                                                        <td>' . $quote->getDate() . '</td>
+                                                        <td>' . $quote->getType() . '</td>
+                                                        <td>' . $quote->getStatus() . '</td>
+                                                    </tr>
+                                                ';
                                             }
-
-                                            echo '
-
-                                                '. $tablebg .'
-                                                    <td>' . $quote->getId() . '</td>
-                                                    <td>' . $quote->getCustomer() . '</td>
-                                                    <td>' . $quote->getDate() . '</td>
-                                                    <td>' . $quote->getType() . '</td>
-                                                    <td>' . $quote->getStatus() . '</td>
-                                                </tr>
-                                            ';
-
                                         }
                                         echo '</tbody>';
                                         echo '</table>';
@@ -198,30 +211,37 @@
                                         echo '<tbody>';
                                         foreach($data['quoteList'] as $quote) {
 
-                                            if($quote->getStatus() == "Closed") {
-                                                $tablebg = '<tr class="success">';
-                                            } else {
-                                                $tablebg = '<tr class="danger">';
-                                            }
+                                            if($quote->getHidden() == 0) {
 
-                                            echo '
-                                                '. $tablebg .'
-                                                    <td style="text-align: center;">
-                                                        <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/edit/'.$quote->getId().'">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                        </a>
-                                                        <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convert/'.$quote->getId().'">
-                                                        <span class="glyphicon glyphicon-usd"></span>
-                                                        </a>
-                                                        <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">
-                                                        <span class="glyphicon glyphicon-print"></span>
-                                                        </a>';?>
-                                                        <a class="btn btn-xs btn-danger" href="#" onclick='deleteModal(<?= $quote->getId(); ?>,"<?= $quote->getCustomer(); ?>")'>
-                                                        <?php echo '
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                        </a>
-                                                    </td>
-                                                </tr>';
+                                                if($quote->getStatus() == "Closed") {
+                                                    $tablebg = '<tr class="success">';
+                                                } else {
+                                                    $tablebg = '<tr class="danger">';
+                                                }
+
+                                                echo '
+                                                    '. $tablebg .'
+                                                        <td style="text-align: center;">
+                                                            <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/edit/'.$quote->getId().'">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                            </a>
+                                                            <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convert/'.$quote->getId().'">
+                                                            <span class="glyphicon glyphicon-usd"></span>
+                                                            </a>
+                                                            <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">
+                                                            <span class="glyphicon glyphicon-print"></span>
+                                                            </a>';?>
+                                                            <a class="btn btn-xs btn-danger" href="#" onclick='deleteModal(<?= $quote->getId(); ?>,"<?= $quote->getCustomer(); ?>")'>
+                                                            <?php echo '
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                            </a>';?>
+                                                            <a class="btn btn-xs btn-danger" href="#" onclick='hideModal(<?= $quote->getId(); ?>,"<?= $quote->getCustomer(); ?>")'>
+                                                            <?php echo '
+                                                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>';
+                                            }
                                         }
                                         echo '</tbody>';
 										echo '</table>';
@@ -258,6 +278,28 @@
 					      </div>
 					      <div class="modal-body">
 					        <p id="deleteBodyText">This will be replaced.</p>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					      </div>
+					      </form>
+					    </div>
+
+					  </div>
+                    </div>
+                    
+                    <div id="hideModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					  	<form action="" id="hideForm">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title" style="color=#FF0000;">!!!!! WARNING !!!!!</h4>
+					      </div>
+					      <div class="modal-body">
+					        <p id="hideBodyText">This will be replaced.</p>
 					      </div>
 					      <div class="modal-footer">
 					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>

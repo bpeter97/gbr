@@ -256,6 +256,21 @@ class Quotes extends Controller
 	{
 
 	}
+
+	public function hide($id)
+	{
+		// create the quote.
+		$quote = new Quote($id);
+
+		// Set hidden to 1 to hide it.
+		$quote->setHidden(1);
+
+		// Update the quote.
+		$quote->update();
+
+		// Refer back to the masterlist.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=hsuccess');
+	}
 }
 
 ?>
