@@ -158,10 +158,10 @@
                                         foreach($data['orderList'] as $order) {
 
                                             if($order->getStage() == 1) {
-                                                $tablebg = '<tr class="warning clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
+                                                $tablebg = '<tr class="warning clickable-row" data-href="'.$orders_url.'/edit/'.$order->getId().'">';
                                             } elseif($order->getStage() == 2) {
                                                 $tablebg = '<tr class="info clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
-                                            } elseif($order->getStage() == 3){
+                                            } elseif($order->getStage() == 3) {
                                                 $tablebg = '<tr class="success clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
                                             }
 
@@ -171,15 +171,15 @@
                                                 '. $tablebg .'
                                                     <td>' . $order->getId() . '</td>
                                                     <td>' . $order->getStage() . '</td>
-                                                    <td>' . $order->getOrderCustomer() . '</td>
-                                                    <td>' . $order->getOrderDate() . '</td>
-                                                    <td>' . $order->getOrderTime() . '</td>
-                                                    <td>' . $order->getOrderType() . '</td>
+                                                    <td>' . $order->getCustomer() . '</td>
+                                                    <td>' . $order->getDate() . '</td>
+                                                    <td>' . $order->getTime() . '</td>
+                                                    <td>' . $order->getType() . '</td>
                                                     <td>' . $order->getOrderedBy() . '</td>
                                                     <td>' . $order->getOnsiteContact() . '</td>
                                                     <td>' . $order->getOnsiteContactPhone() . '</td>
                                                     <td>
-                                                        <a class="btn btn-xs btn-warning" href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">
+                                                        <a class="btn btn-xs btn-warning" href="'.$orders_url.'/edit/'.$order->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
                                                         <a class="btn btn-xs btn-info button-link" href="#">

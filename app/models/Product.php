@@ -107,13 +107,15 @@ class Product extends Model
 		return $list;
 	}
 
-	public function deleteRequestedProduct($quoteId)
+	public function deleteRequestedProduct($quoteId, $type)
 	{
-
-		// Delete the ordered/quoted product from the database.
-		$res = $this->db->delete('product_orders',['quote_id'=>$quoteId]);
-		
-		Functions::dump($res);
+		if($type == 'order'){
+			// Delete the ordered/quoted product from the database.
+			$res = $this->db->delete('product_orders',['order_id'=>$quoteId]);
+		} elseif ($type == 'quote') {
+			// Delete the ordered/quoted product from the database.
+			$res = $this->db->delete('product_orders',['quote_id'=>$quoteId]);
+		}
 
 		// Check to see if the query ran properly.
 		if(!$res)

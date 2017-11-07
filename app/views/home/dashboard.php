@@ -463,7 +463,7 @@ $months = $data['months'];
                     $prodCount++;
                 }
                 echo 'prodCount: '.$prodCount.','.PHP_EOL;
-                echo 'order_customer: "'.$event->order->getOrderCustomer().'"'.PHP_EOL;
+                echo 'order_customer: "'.$event->order->getCustomer().'"'.PHP_EOL;
             }
             ?>
           },

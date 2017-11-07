@@ -199,10 +199,10 @@
                                                     '. $tablebg .'
                                                         <td>' . $order->getId() . '</td>
                                                         <td>' . $order->getStage() . '</td>
-                                                        <td>' . $order->getOrderCustomer() . '</td>
-                                                        <td>' . $order->getOrderDate() . '</td>
-                                                        <td>' . $order->getOrderTime() . '</td>
-                                                        <td>' . $order->getOrderType() . '</td>
+                                                        <td>' . $order->getCustomer() . '</td>
+                                                        <td>' . $order->getDate() . '</td>
+                                                        <td>' . $order->getTime() . '</td>
+                                                        <td>' . $order->getType() . '</td>
                                                         <td>' . $order->getOrderedBy() . '</td>
                                                         <td>' . $order->getOnsiteContact() . '</td>
                                                         <td>' . $order->getOnsiteContactPhone() . '</td>

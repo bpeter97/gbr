@@ -9,6 +9,7 @@ class Order extends Model
 	public $id,
 		$quote_id,
 		$order_customer,
+		$order_customer_id,
 		$order_date,
 		$order_time,
 		$order_type,
@@ -35,10 +36,11 @@ class Order extends Model
 		
 	public function getId() { return $this->id; }
 	public function getQuoteId() { return $this->quote_id; }
-	public function getOrderCustomer() { return $this->order_customer; }
-	public function getOrderDate() { return $this->order_date; }
-	public function getOrderTime() { return $this->order_time; }
-	public function getOrderType() { return $this->order_type; }
+	public function getCustomer() { return $this->order_customer; }
+	public function getCustomerId() { return $this->order_customer_id; }
+	public function getDate() { return $this->order_date; }
+	public function getTime() { return $this->order_time; }
+	public function getType() { return $this->order_type; }
 	public function getJobName() { return $this->job_name; }
 	public function getJobCity() { return $this->job_city; }
 	public function getJobAddress() { return $this->job_address; }
@@ -58,10 +60,12 @@ class Order extends Model
 	public function getDateDelivered() { return $this->date_delivered; }
 	public function getContainer() { return $this->container; }
 	public function getDeliveryTotal() { return $this->delivery_total; }
+	public function getProducts() { return $this->products; }
 	
 	public function setId($id) { $this->id = $id; }
 	public function setQuoteId($id) { $this->quote_id = $id; }
-	public function setOrderCustomer($name) { $this->order_customer = $name; }
+	public function setCustomer($name) { $this->order_customer = $name; }
+	public function setCustomerId($id) { $this->order_customer_id = $id; }
 	public function setOrderDate($datetime) { $this->order_date = $datetime; }
 	public function setOrderTime($datetime) { $this->order_time = $datetime; }
 	public function setOrderType($type) { $this->order_type = $type; }
@@ -114,7 +118,8 @@ class Order extends Model
 
 		// Assign details to attributes.
 		$this->setQuoteId($res->quote_id);
-		$this->setOrderCustomer($res->order_customer);
+		$this->setCustomer($res->order_customer);
+		$this->setCustomerId($res->order_customer_id);
 		$this->setOrderDate($res->order_date);
 		$this->setOrderTime($res->order_time);
 		$this->setOrderType($res->order_type);
@@ -137,7 +142,7 @@ class Order extends Model
 		$this->setDateDelivered($res->date_delivered);
 		$this->setContainer($res->container);
 		$this->setDeliveryTotal($res->delivery_total);
-		$this->getOrderProducts();
+		$this->fetchOrderProducts();
 		
 	}
 
@@ -183,7 +188,7 @@ class Order extends Model
 
 	// Retrieves the ordered products belonging to this order 
 	// and then stores the event in the products array.
-	public function getOrderProducts()
+	public function fetchOrderProducts()
 	{
 
 		$this->db->query('SELECT * FROM product_orders WHERE order_id = '.$this->getId());
@@ -211,7 +216,7 @@ class Order extends Model
 		// Post the data from the order form.
 		$this->setOrderDate($_POST['frmorderdate']);
 		$this->setOrderTime($_POST['frmordertime']);
-		$this->setOrderCustomer($_POST['frmcustomername']);
+		$this->setCustomer($_POST['frmcustomername']);
 		$this->setOrderedBy($_POST['frmorderedby']);
 		$this->setOrderType($_POST['frmordertype']);
 		$this->setJobName($_POST['frmjobname']);
@@ -230,14 +235,15 @@ class Order extends Model
 		$this->setDeliveryTotal($_POST['cartDeliveryTotal']);
 
 		// Assigning stage as one since it is a newly created order.
-		$this->stage = 1;
+		$this->setStage(1);
 
 		// Need to insert the new order into the database.
 		$this->db->insert('orders',[
-				'order_customer'			=>	$this->getOrderCustomer(),
-				'order_date'				=>	$this->getOrderDate(),
-				'order_time'				=>	$this->getOrderTime(),
-				'order_type'				=>	$this->getOrderType(),
+				'order_customer'			=>	$this->getCustomer(),
+				'order_customer_id'			=>	$this->getCustomerId(),
+				'order_date'				=>	$this->getDate(),
+				'order_time'				=>	$this->getTime(),
+				'order_type'				=>	$this->getType(),
 				'job_name'					=>	$this->getJobName(),
 				'job_city'					=>	$this->getJobCity(),
 				'job_address'				=>	$this->getJobAddress(),

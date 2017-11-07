@@ -52,6 +52,11 @@ class Orders extends Controller
 				// create the order object
 				$order = $this->model('Order');
 
+				// create a customer object to use in the quote.
+				$c = new Customer($_POST['frmcustomername']);
+
+				$order->setCustomerId($c->getId());
+
 				try {
 
 					// create the order
@@ -69,8 +74,8 @@ class Orders extends Controller
 
 				}
 
-				// direct user to the orders view page.
-				$this->masterlist();
+				// Send the user back to the masterlist upon success.
+				header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=csuccess');
 			} 
 
 			$customer = $this->model('Customer');
@@ -104,6 +109,86 @@ class Orders extends Controller
 			
 		}
 
+	}
+
+	public function edit($id)
+	{
+		// create the order & get the order products
+		$order = new Order($id);
+
+		// create the customer object from the order's customer_id
+		$customer = new Customer($order->getCustomer());
+
+		// create the product object
+		$products = new Product();
+
+		// get the list of products based on the order's type
+		if($order->getType() == 'rental' || $order->getType() == 'Rental') 
+		{ 
+		  $shipSQL = "item_type = 'pickup' OR item_type = 'delivery'"; 
+		  $containerSQL = "item_type = 'container' AND monthly <> 0"; 
+		  $modSQL = "monthly <> 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'"; 
+		}  
+		else 
+		{ 
+		  $shipSQL = "item_type = 'pickup' OR item_type = 'delivery'"; 
+		  $containerSQL = "item_type = 'container' AND monthly = 0"; 
+		  $modSQL = "monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'"; 
+		} 
+
+		$shippingProducts = $products->getProducts($shipSQL); 
+		$containerProducts = $products->getProducts($containerSQL); 
+		$modificationProducts = $products->getProducts($modSQL); 
+
+		// create the view
+		$this->view('orders/edit',['customer'=>$customer, 
+						'order'=>$order, 
+						'orderedProducts'=>$order->getProducts(), 
+						'shippingProducts'=>$shippingProducts,  
+						'containerProducts'=>$containerProducts,  
+						'modificationProducts'=>$modificationProducts,  
+						'orderType'=>$order->getType() 
+						]);
+	}
+
+	public function update()
+	{
+		// Create the order object
+		$order = new Order($_POST['orderid']);
+
+		// Delete the order's previously ordered products
+		$order->fetchOrderProducts();
+		$oldProducts = $order->getProducts();
+
+		foreach ($oldProducts as $oProd) {
+			$oProd->deleteRequestedProduct($order->getId(), 'order');
+		}
+
+		// Update the order
+		// Post the data from the order form.
+		$order->setOrderDate($_POST['frmorderdate']);
+		$order->setOrderTime($_POST['frmordertime']);
+		$order->setOrderedBy($_POST['frmorderedby']);
+		$order->setJobName($_POST['frmjobname']);
+		$order->setJobAddress($_POST['frmjobaddress']);
+		$order->setJobCity($_POST['frmjobcity']);
+		$order->setJobZipcode($_POST['frmjobzipcode']);
+		// Here we are going to post the tax rate and turn it into a float.
+		$unformatted_tax_rate = $_POST['frmtaxrate'];
+		$order->setTaxRate((float)$unformatted_tax_rate);
+		$order->setOnsiteContact($_POST['frmcontact']);
+		$order->setOnsiteContactPhone($_POST['frmcontactphone']);
+		$order->setTotalCost($_POST['cartTotalCost']);
+		$order->setSalesTax($_POST['cartTax']);
+		$order->setCostBeforeTax($_POST['cartBeforeTaxCost']);
+		$order->setMonthlyTotal($_POST['cartMonthlyTotal']);
+		$order->setDeliveryTotal($_POST['cartDeliveryTotal']);
+
+		// Update the product_orders table with the new products.
+		$order->insertOrderedProducts();
+
+		// Send the user back to the masterlist upon success.
+		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=usuccess'); 
 	}
 	
 }

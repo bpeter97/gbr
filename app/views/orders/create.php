@@ -97,7 +97,7 @@ if($data['customer']->getId() !== null)
                                 <div class="panel-body">
                                     <!-- Need to fill in action when link is created. -->
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
-                                    <form action="<?php echo Config::get('site/siteurl').Config::get('site/orders').'/create/sales/create'; ?>" id="orderForm" method="post" onsubmit="return cart.postData()">
+                                    <form action="<?php echo Config::get('site/siteurl').Config::get('site/orders').'/create/sales/create'; ?>" id="orderForm" method="post">
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -286,7 +286,7 @@ if($data['customer']->getId() !== null)
                                                     <div class="panel-body">
                                                         <div id='cart'></div>
                                                         <div class="text-center">
-                                                            <input type="submit" class="btn btn-gbr" value="Submit Order"/>
+                                                        <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Quote"/>
                                                         </div>
                                                     </div>
                                                 </div>

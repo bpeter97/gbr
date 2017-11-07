@@ -26,8 +26,7 @@ QUOTES
 - Need a way to hide closed quotes.
 
 ORDERS
-- Need to figure out how to edit an order!
-- Need to update button links on the master list of orders!
+- Need print pages (2).
 - Need a way to click the order and view it & update the stages.
 
 PRODUCTS

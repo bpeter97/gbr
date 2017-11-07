@@ -59,21 +59,32 @@ class Customer extends Model
 		$this->db = Database::getDBI();
 		
 		if($id != null){
-			$this->setId($id);
-			$this->getDetails($this->getId());
+			if(is_int($id)){
+				$this->setId($id);
+				$this->getDetails($this->getId());
+			}elseif(is_string($id)){
+				$this->setCustomerName($id);
+				$this->getDetails();
+			}
 		}
 	}
 
 	// This function pulls the container details from the database and stores it in the object.
-	public function getDetails($id) 
+	public function getDetails($id = null) 
 	{
 
 		// Get the containers details.
-		$this->setId($id);
-		$this->db->query('SELECT * FROM customers WHERE customer_ID = ' . $this->getId());
-		$res = $this->db->single();
-
+		if($id != null){
+			$this->setId($id);
+			$this->db->query('SELECT * FROM customers WHERE customer_ID = ' . $this->getId());
+			$res = $this->db->single();
+		} else {
+			$this->db->query('SELECT * FROM customers WHERE customer_name = "' . $this->getCustomerName() . '"');
+			$res = $this->db->single();
+		}
+		
 		// Assign details to attributes.
+		$this->setId($res->customer_ID);
 		$this->setCustomerName($res->customer_name);
 		$this->setCustomerAddress1($res->customer_address1);
 		$this->setCustomerAddress2($res->customer_address2);

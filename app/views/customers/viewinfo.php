@@ -295,7 +295,7 @@
 
                                                <tr>
                                                     <td>' . $purchase_count . '</td>
-                                                    <td>' . $order->getOrderDate() . '</td>
+                                                    <td>' . $order->getDate() . '</td>
                                                     <td>' . $order->getId() . '</td>
                                                     <td>' . $order->getTotalCost() . '</td>
                                                     <td><a class="containerlink" href="#">View Details</a></td>
@@ -347,7 +347,7 @@
                                             // List out each and every purchase made by the customer.
                                             foreach($rentalList as $rental){
 
-                                                $start_date = $rental->getOrderDate();
+                                                $start_date = $rental->getDate();
                                                 $now = new DateTime();
                                                 $now->format('Y-m-d H:i:s');
                                                 $now->setTimezone(new DateTimeZone('America/Los_Angeles'));
@@ -370,7 +370,7 @@
 
                                                <tr>
                                                     <td>' . $rental_count . '</td>
-                                                    <td>' . $rental->getOrderDate() . '</td>
+                                                    <td>' . $rental->getDate() . '</td>
                                                     <td>' . $rental->getId() . '</td>
                                                     <td>' . $rental_amount . '</td>
                                                     <td><a class="containerlink" href="#">View Details</a></td>

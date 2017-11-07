@@ -379,7 +379,7 @@
                                                     <td>Start Date</td>
                                                     <td>End Date</td>
                                                     <td>Total Time (Months)</td>
-                                                    <td>' . $order->getOrderCustomer() . '</td>
+                                                    <td>' . $order->getCustomer() . '</td>
                                                     <td>'. $order->getMonthlyTotal() .'</td>
                                                 </tr>
 

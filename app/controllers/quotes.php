@@ -198,7 +198,7 @@ class Quotes extends Controller
 		foreach($oldProducts as $oProd)
 		{
 			// Delete the product from the product_orders table.
-			$oProd->deleteRequestedProduct($quote->getId());
+			$oProd->deleteRequestedProduct($quote->getId(), 'quote');
 		}
 
 		// Update the the quote
