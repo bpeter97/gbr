@@ -26,11 +26,7 @@ CUSTOMERS
 - None
 
 QUOTES
-- Need to create a way to transfer existing quote to a pre-made order form.
-    -- Move to order form (including products)
-    -- fill in rest of required fields (date, time, etc)
-    -- ensure there is a hidden field posting data that it is coming form a quote
-        -- if it is coming from quote, set status to quote as closed quote and create the order as normal.
+- None
 
 ORDERS
 - Need print pages (2).
