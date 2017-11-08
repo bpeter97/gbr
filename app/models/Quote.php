@@ -183,7 +183,7 @@ class Quote extends Model
 		$this->setSalesTax($_POST['cartTax']);
 		$this->setMonthlyTotal($_POST['cartMonthlyTotal']);
 		$this->setDeliveryTotal($_POST['cartDeliveryTotal']);
-		$this->setHidden(0);
+		$this->setHidden(null);
 
 		// Need to insert the new order into the database.
 		$this->db->insert('quotes', [
