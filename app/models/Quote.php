@@ -339,6 +339,18 @@ class Quote extends Model
 		return $results;
 	}
 
+	public function updateQuoteProductsWithOrderId($id)
+	{
+		// Update quoted items with the order_id.
+		$this->db->update('product_orders',['quote_id'=>$this->getId()],['order_id'=>$id]);
+
+		// Get the results of the query.
+		$res = $this->db->results('arr');
+		
+		// Return the results of the query.
+		return $res;
+	}
+
 }
 
 ?>

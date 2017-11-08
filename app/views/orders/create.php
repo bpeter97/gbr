@@ -9,13 +9,21 @@ if($data['customer']->getId() !== null)
     $customer = null;
 }
 
+if($data['quote']){
+    $quote = $data['quote'];
+    $type = $data['quoteType'];
+} else {
+    $quote = FALSE;
+    $type = $data['order_type'];
+}
+
 
 ?>
 <html>
     <head>
         <?php require_once(Config::get('site/baseurl').Config::get('site/assets').'/header.php'); ?>
         <script type="text/javascript">
-            cart_order_type = <?php echo '"'.$data['order_type'].'"'; ?>;
+            cart_order_type = <?php echo '"'.$type.'"'; ?>;
             rentalArray = <?php echo json_encode($data['rentArray']); ?>;
             pudArray = <?php echo json_encode($data['pudArray']); ?>;
         </script>
@@ -38,7 +46,7 @@ if($data['customer']->getId() !== null)
             })
         </script>
         ';
-         ?>
+        ?>
 
         <script type="text/javascript">
             $(function () {
@@ -47,8 +55,6 @@ if($data['customer']->getId() !== null)
                 });
             });
         </script>
-
-
 
 <!--     <script type="text/javascript">
 
@@ -100,6 +106,9 @@ if($data['customer']->getId() !== null)
                                     <!-- Need to fill in action when link is created. -->
                                     <!-- <form action="http://www.rebol.com/cgi-bin/test-cgi.cgi" id="orderForm" method="post"> -->
                                     <form action="<?php echo Config::get('site/siteurl').Config::get('site/orders').'/create/sales/create'; ?>" id="orderForm" method="post">
+                                    <?php if($quote): ?>
+                                    <input class="form-control" name="quoteid" type="hidden" value="<?= $quote->getId(); ?>">
+                                    <?php endif; ?>
                                         <div class="row"><!-- 1st Row -->
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -139,7 +148,15 @@ if($data['customer']->getId() !== null)
                                         <div class="row"><!-- 3rd Row -->
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmcustomername" control-label">Select a Customer</label>
-                                                <div class="col-md-7">
+                                                <?php 
+                                                
+                                                    if(!$quote){
+                                                        echo '<div class="col-md-7">';
+                                                    } else {
+                                                        echo '<div class="col-md-8">';
+                                                    }
+                                                       
+                                                ?>   
                                                     <select class="form-control" name="frmcustomername" id="frmcustomername">
                                                         <!-- Need to implement customer auto chosen when from create customer! -->
                                                         <!-- <option>php echo $cname; ?></option> -->
@@ -153,7 +170,6 @@ if($data['customer']->getId() !== null)
 
                                                         ?>
 
-                                                        
                                                         <!-- PHP to select customers names! -->
                                                         <?php         
 
@@ -168,10 +184,12 @@ if($data['customer']->getId() !== null)
                                                     
                                                     <p class="help-block">Select which customer is getting the order.</p>
                                                 </div>
+                                                <?php if(!$quote): ?>
                                                 <div class="col-md-1">
                                                     <!-- <button type="button" onclick="location.href='php echo $newcusturl; ?>'" class="btn btn-default btn-gbr">New</button> -->
                                                     <button type="button" onclick="" class="btn btn-default btn-gbr">New</button>
                                                 </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div><!-- End of 3rd Row -->
                                         <div class="row"><!-- 4th Row -->
@@ -189,11 +207,11 @@ if($data['customer']->getId() !== null)
                                                 <div class="col-md-8">
                                                   
                                                     <?php 
-                                                    if($data['order_type']=='rental')
+                                                    if($type == 'rental' || $type == 'Rental')
                                                     {
                                                         echo '<input class="form-control" type="text" id="cart_create" name="frmordertype" value="Rental" readonly="readonly">';
                                                     }
-                                                    elseif($data['order_type']=='sales')
+                                                    elseif($type == 'sales' || $type == 'Sales')
                                                     {
                                                         echo '<input class="form-control" type="text" id="cart_create" name="frmordertype" value="Sales" readonly="readonly">';
                                                     }
@@ -208,7 +226,7 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmjobname" control-label>Job Name</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="frmjobname">
+                                                    <input class="form-control" type="text" name="frmjobname" <?php if($quote){echo 'value="'.$quote->getJobName().'"';}?> >
                                                 <p class="help-block">Fill out the job name if there is one.</p>
                                                 </div>
                                             </div>
@@ -218,7 +236,7 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmjobaddress" control-label>Job Address</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="frmjobaddress">
+                                                    <input class="form-control" type="text" name="frmjobaddress" <?php if($quote){echo 'value="'.$quote->getJobAddress().'"';}?> >
                                                 <p class="help-block">Fill out just the <strong>STREET</strong> address.</p>
                                                 </div>
                                             </div>
@@ -228,7 +246,7 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmjobcity" control-label>Job City</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="frmjobcity">
+                                                    <input class="form-control" type="text" name="frmjobcity" <?php if($quote){echo 'value="'.$quote->getJobCity().'"';}?> >
                                                 <p class="help-block">Fill out the city of the job location.</p>
                                                 </div>
                                             </div>
@@ -238,7 +256,7 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmjobzipcode" control-label>Job Zipcode</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="frmjobzipcode">
+                                                    <input class="form-control" type="text" name="frmjobzipcode" <?php if($quote){echo 'value="'.$quote->getJobZipcode().'"';}?> >
                                                 <p class="help-block">Fill out the zipcode of the job location.</p>
                                                 </div>
                                             </div>
@@ -248,7 +266,7 @@ if($data['customer']->getId() !== null)
                                             <div class="col-lg-12">
                                                 <label class="col-md-4" for="frmtaxrate" control-label>Tax Rate</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="frmtaxrate" onchange="cart.getTaxRate(this.value)">
+                                                    <input class="form-control" type="text" name="frmtaxrate" onchange="cart.getTaxRate(this.value)" <?php if($quote){echo 'value="'.$quote->getTaxRate().'"';}?> >
                                                 <p class="help-block">Fill out the tax rate of the order.</p>
                                                 </div>
                                             </div>
@@ -288,7 +306,7 @@ if($data['customer']->getId() !== null)
                                                     <div class="panel-body">
                                                         <div id='cart'></div>
                                                         <div class="text-center">
-                                                        <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Quote"/>
+                                                        <input type="button" onclick="cart.postData();" class="btn btn-gbr" value="Submit Order"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -367,7 +385,7 @@ if($data['customer']->getId() !== null)
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $containerProducts->getMonthly();}else{echo $containerProducts->getModCost();} ?>"/>
+                                                                                        <input type="text" id="containerCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($type == 'rental' || $type == 'Rental'){echo $containerProducts->getMonthly();}else{echo $containerProducts->getModCost();} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input type="text" id="containerQty<?= $counter ?>" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
@@ -399,7 +417,7 @@ if($data['customer']->getId() !== null)
                                                                                 <td width="250">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" id="basic-addon1"><strong>$</strong></span>
-                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($data['order_type'] == 'rental'){echo $modificationProducts->getMonthly();}else{echo $modificationProducts->getModCost();} ?>"/>
+                                                                                        <input type="text" id="modCost<?= $counter ?>" name="cost" aria-describedby="basic-addon1" value="<?php if($type == 'rental' || $type == 'Rental'){echo $modificationProducts->getMonthly();}else{echo $modificationProducts->getModCost();} ?>"/>
                                                                                     </div>
                                                                                 </td> <!-- Cost -->
                                                                                 <td width="250"><input id="modQty<?= $counter ?>" type="text" name="quantity" value="1" size="2"/></td> <!-- Quantity -->
@@ -426,7 +444,25 @@ if($data['customer']->getId() !== null)
 
                     <!-- This is the alert for when an item is added or removed from the cart. -->
                     <div id="insertAlert"></div>
+
+                    <!-- If converting quote, add quoted products to shopping cart. -->
+                    <?php if($quote): ?>
+                    <script type="text/javascript">
+                    <?php 
+
+                    echo 'cart.getTaxRate('.$quote->getTaxRate().');';
                     
+                    foreach ($data['quotedProducts'] as $qProd)
+                    {
+
+                        echo 'cart.addItem(new Product('.$qProd->getId().',"'.$qProd->getModName().'","'.$qProd->getModShortName().'","'.$qProd->getProductCost().'","'.$qProd->getRentalType().'","false"),'.$qProd->getProductQuantity().');';
+                        echo "\n";
+                    }
+
+                    ?>
+                    </script>
+                    <?php endif; ?>
+
                     <?php include(Config::get('site/baseurl').Config::get('site/assets').'/copyright.php'); ?>
 
                 </div>

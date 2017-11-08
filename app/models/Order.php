@@ -271,29 +271,58 @@ class Order extends Model
 		
 	}
 
-	public function insertOrderedProducts()
+	public function insertOrderedProducts($id = null)
 	{
-		$i = 0;
-		while ($i < $_POST['itemCount'])
+		if($id !== null)
 		{
-			$post_product = json_decode($_POST['product'.$i], true);
-			$new_product = new Product($post_product['id']);
-			$new_product->setProductQuantity($post_product['qty']);
-			$new_product->setProductCost($post_product['cost']);
-			$i++;
-
-			$this->db->insert('product_orders',array('order_id'=>$this->id,
-							'product_type'=>$new_product->getProductType(),
-							'product_msn'=>$new_product->getModShortName(),
-							'product_cost'=>$new_product->getProductCost(),
-							'product_qty'=>$new_product->getProductQuantity(),
-							'product_name'=>$new_product->getModName(),
-							'product_id'=>$new_product->getId()));
-
-			// Check to see if the data was inserted into the db properly, else throw exception.
-			if($this->db->lastId() == null)
+			$i = 0;
+			while ($i < $_POST['itemCount'])
 			{
-				throw new Exception('The database did not insert products properly.');
+				$post_product = json_decode($_POST['product'.$i], true);
+				$new_product = new Product($post_product['id']);
+				$new_product->setProductQuantity($post_product['qty']);
+				$new_product->setProductCost($post_product['cost']);
+				$i++;
+	
+				$this->db->insert('product_orders',array('quote_id'=>$id,
+														 'order_id'=>$this->id,
+														 'product_type'=>$new_product->getProductType(),
+														 'product_msn'=>$new_product->getModShortName(),
+														 'product_cost'=>$new_product->getProductCost(),
+														 'product_qty'=>$new_product->getProductQuantity(),
+														 'product_name'=>$new_product->getModName(),
+														 'product_id'=>$new_product->getId()));
+	
+				// Check to see if the data was inserted into the db properly, else throw exception.
+				if($this->db->lastId() == null)
+				{
+					throw new Exception('The database did not insert products properly.');
+				}
+			}
+		} else {
+
+			$i = 0;
+			while ($i < $_POST['itemCount'])
+			{
+				$post_product = json_decode($_POST['product'.$i], true);
+				$new_product = new Product($post_product['id']);
+				$new_product->setProductQuantity($post_product['qty']);
+				$new_product->setProductCost($post_product['cost']);
+				$i++;
+
+				$this->db->insert('product_orders',array('order_id'=>$this->id,
+								'product_type'=>$new_product->getProductType(),
+								'product_msn'=>$new_product->getModShortName(),
+								'product_cost'=>$new_product->getProductCost(),
+								'product_qty'=>$new_product->getProductQuantity(),
+								'product_name'=>$new_product->getModName(),
+								'product_id'=>$new_product->getId()));
+
+				// Check to see if the data was inserted into the db properly, else throw exception.
+				if($this->db->lastId() == null)
+				{
+					throw new Exception('The database did not insert products properly.');
+				}
 			}
 		}
 	}

@@ -255,6 +255,58 @@ class Quotes extends Controller
 	public function convert($id)
 	{
 
+		// create the quote object to supply the view
+		$quote = new Quote($id);
+
+		// fetch the products that are linked with the quote.
+		$quote->fetchQuoteProducts();
+
+		// create the customer object from the quote's customer id.
+		$customer = new Customer($quote->getCustomerId());
+
+		// get the list of customers in case of customer change.
+		$custList = $customer->getCustomers();
+
+		// create the product to get the list of rental products and pickup/delivery products.
+		$products = new Product();
+		$rentArray = $products->rentArray();
+		$pudArray = $products->pudArray();
+
+		// Get the product lists
+		if($quote->getType() == 'rental' || $quote->getType() == 'Rental')
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly <> 0";
+			$modSQL = "monthly <> 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		} 
+		else
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly = 0";
+			$modSQL = "monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		}
+			
+		$shippingProducts = $products->getProducts($shipSQL);
+		$containerProducts = $products->getProducts($containerSQL);
+		$modificationProducts = $products->getProducts($modSQL);
+
+		// Move to order form (including products)
+		// fill in rest of required fields (date, time, etc)
+		// ensure there is a hidden field posting data that it is coming form a quote
+			// if it is coming from quote, set status to quote as closed quote and create the order as normal.
+		$this->view('orders/create',['quote'=>$quote,
+									 'quotedProducts'=>$quote->getQuoteProducts(),
+									 'quoteType'=>$quote->getType(),
+									 'customer'=>$customer,
+									 'custList'=>$custList,
+									 'shippingProducts'=>$shippingProducts, 
+									 'containerProducts'=>$containerProducts, 
+									 'modificationProducts'=>$modificationProducts,
+									 'rentArray'=>$rentArray, 
+									 'pudArray'=>$pudArray
+									 ]);
+
+
 	}
 
 	public function hide($id)
@@ -271,6 +323,7 @@ class Quotes extends Controller
 		// Refer back to the masterlist.
 		header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/quotes').'?action=hsuccess');
 	}
+
 }
 
 ?>

@@ -49,11 +49,22 @@ class Orders extends Controller
 		{
 			if($action == 'create')
 			{
+				// If quoteid is posted, we are converting a quote.
+				if($_POST['quoteid'])
+				{
+					$quote = new Quote($_POST['quoteid']);
+					$quote->fetchQuoteProducts();
+
+					// create a customer object to use in the quote.
+					$c = new Customer($quote->getCustomerId());
+				} else {
+
+					// create a customer object to use in the order.
+					$c = new Customer($_POST['frmcustomername'], TRUE);
+				}
+
 				// create the order object
 				$order = $this->model('Order');
-
-				// create a customer object to use in the quote.
-				$c = new Customer($_POST['frmcustomername'], TRUE);
 
 				$order->setCustomerId($c->getId());
 
@@ -61,11 +72,28 @@ class Orders extends Controller
 
 					// create the order
 					$order->createOrder();
+
 					// create the products and insert them in the ordered products.
-					$order->insertOrderedProducts();
+					if($_POST['quoteid']){
+						foreach ($quote->getQuoteProducts() as $product) {
+							// Delete the old products
+							$product->deleteRequestedProduct($quote->getId(), 'quote');
+						}
+						// Insert the new products with a quote_id as well.
+						$order->insertOrderedProducts($quote->getId());
+					} else {
+						$order->insertOrderedProducts();
+					}
+
+					// Update the old quotes status to closed!
+					if($_POST['quoteid']){
+						$quote->setStatus('Closed');
+						$quote->setHidden(null);
+						$quote->update();
+					}
 
 					// create the event for the new order.
-					$event = $this->model('Event');
+					$event = new Event();
 					$event->addEvent($order->id);
 
 				} catch (Exception $e) {

@@ -32,6 +32,14 @@
 					$("#hideModal").modal();
 				}
 
+                function convertModal(id, name)
+				{
+                    document.getElementById("convertBodyText").innerHTML = "Are you sure you would like to convert the quote for: " + name;
+					document.getElementById("convertForm").action = "<?= Config::get('site/siteurl').'/quotes/convert/'; ?>" + id;
+					$("#convertModal").modal();
+				}
+
+
 			</script>
 
             <!-- Page Content -->
@@ -224,9 +232,10 @@
                                                         <td style="text-align: center;">
                                                             <a class="btn btn-xs btn-warning" href="'.$quotesUrl.'/edit/'.$quote->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
-                                                            </a>
-                                                            <a type="button" class="btn btn-xs btn-success" href="'.$quotesUrl.'/convert/'.$quote->getId().'">
-                                                            <span class="glyphicon glyphicon-usd"></span>
+                                                            </a>';?>
+                                                            <a class="btn btn-xs btn-success" href="#" onclick='convertModal(<?= $quote->getId(); ?>,"<?= $quote->getCustomer(); ?>")'>
+                                                            <?php echo '
+                                                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                                             </a>
                                                             <a class="btn btn-xs btn-info button-link" href="'.$quotesUrl.'/viewinfo/' . $quote->getId() . '">
                                                             <span class="glyphicon glyphicon-print"></span>
@@ -300,6 +309,28 @@
 					      </div>
 					      <div class="modal-body">
 					        <p id="hideBodyText">This will be replaced.</p>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					      </div>
+					      </form>
+					    </div>
+
+					  </div>
+                    </div>
+                    
+                    <div id="convertModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					  	<form action="" id="convertForm">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title" style="color=#FF0000;">Convert A Quote</h4>
+					      </div>
+					      <div class="modal-body">
+					        <p id="convertBodyText">This will be replaced.</p>
 					      </div>
 					      <div class="modal-footer">
 					      	<button type="submit" class="btn btn-default" onclick="">Confirm</button>
