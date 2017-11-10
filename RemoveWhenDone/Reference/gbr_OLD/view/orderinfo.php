@@ -396,7 +396,7 @@
                                                         <option selected><?php echo $container_delivered; ?></option>
                                                         <!-- PHP to select customers names! -->
                                                         <?php
-                                                            foreach($container_response as $con){
+                                                            foreach ($container_response as $con) {
                                                                 echo '
                                                                         <option value="'.$con['container_ID'].'">'. $con['container_serial_number'] .' ('.$con['container_number'].')</option>
                                                                     ';
