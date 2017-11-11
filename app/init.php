@@ -12,9 +12,9 @@ require_once('core/lib/lightopenid.php');
 function __autoload($class_name) {
     $root = Config::get('site/root');
     $ds = Config::get('site/DS');
-    $core_path = $root.$ds.'core'.$ds.strtolower($class_name).'.php';
-    $controller_path = $root.$ds.'controllers'.$ds.strtolower($class_name).'.php';
-    $model_path = $root.$ds.'models'.$ds.strtolower($class_name).'.php';
+    $core_path = $root.$ds.'core'.$ds.$class_name.'.php';
+    $controller_path = $root.$ds.'controllers'.$ds.$class_name.'.php';
+    $model_path = $root.$ds.'models'.$ds.$class_name.'.php';
 
     if(file_exists($core_path)) {
         require_once($core_path);

@@ -142,7 +142,8 @@ class Orders extends Controller
 										  'modificationProducts'	=>	$modificationProducts, 
 										  'order_type'				=>	$type, 
 										  'rentArray'				=>	$rentArray, 
-										  'pudArray'				=>	$pudArray
+										  'pudArray'				=>	$pudArray,
+										  'quote'					=>	null
 										  ]);
 			
 		}
