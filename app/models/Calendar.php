@@ -10,14 +10,14 @@ class Calendar extends Model
 	
 	public function __construct()
 	{
-		$this->db = Database::getDBI();
+		
 	}
 
 	public function getEvents()
 	{
 
-		$this->db->query('SELECT * FROM events');
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT * FROM events');
+		$res = $this->getDB()->results('arr');
 
 		foreach ($res as $event) 
 		{

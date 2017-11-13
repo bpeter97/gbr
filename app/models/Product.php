@@ -20,7 +20,6 @@ class Product extends Model
 
 	function __construct($id = '')
 	{
-		$this->db = Database::getDBI();
 		if($id != null){
 			$this->id = $id;
 			$this->getDetails();
@@ -57,8 +56,8 @@ class Product extends Model
 	{
 		// Get the product details.
 		$sql = 'SELECT * FROM modifications WHERE mod_ID = '.$this->id;
-		$this->db->query($sql);
-		$res = $this->db->single();
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->single();
 
 		// Assign details to attributes.
 		$this->setModName($res->mod_name);
@@ -77,8 +76,8 @@ class Product extends Model
 		if($where != ''){
 			$new_where = 'WHERE '. $where .' ';
 		}
-		$this->db->query('SELECT COUNT(mod_ID) FROM modifications '. $new_where);
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT COUNT(mod_ID) FROM modifications '. $new_where);
+		$res = $this->getDB()->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(mod_ID)'];
@@ -97,8 +96,8 @@ class Product extends Model
 		}
 
 		$sql = 'SELECT * FROM modifications ' . $new_where . $limit;
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 		
 		foreach ($res as $con) {
 			array_push($list, new Product($con['mod_ID']));
@@ -111,10 +110,10 @@ class Product extends Model
 	{
 		if($type == 'order'){
 			// Delete the ordered/quoted product from the database.
-			$res = $this->db->delete('product_orders',['order_id'=>$quoteId]);
+			$res = $this->getDB()->delete('product_orders',['order_id'=>$quoteId]);
 		} elseif ($type == 'quote') {
 			// Delete the ordered/quoted product from the database.
-			$res = $this->db->delete('product_orders',['quote_id'=>$quoteId]);
+			$res = $this->getDB()->delete('product_orders',['quote_id'=>$quoteId]);
 		}
 
 		// Check to see if the query ran properly.
@@ -146,12 +145,12 @@ class Product extends Model
 			$clean_query = substr_replace($clean_query, '-', 6, 0);
 		}
 
-		$this->db->query("SELECT * FROM modifications WHERE
+		$this->getDB()->query("SELECT * FROM modifications WHERE
 						mod_name LIKE '%". $clean_query ."%' OR
 						mod_short_name LIKE '%". $clean_query ."%'
 						");
 
-		$results = $this->db->results('arr');
+		$results = $this->getDB()->results('arr');
 		
 		return $results;
 	}
@@ -159,7 +158,7 @@ class Product extends Model
 	public function update()
 	{
 		// Need to update the quote in the database.
-		$this->db->update('modifications', ['mod_ID'=>$this->getId()],[
+		$this->getDB()->update('modifications', ['mod_ID'=>$this->getId()],[
 			'mod_name' 			=> $this->getModName(),
 			'mod_cost' 			=> $this->getModCost(),
 			'mod_short_name' 	=> $this->getModShortName(),
@@ -169,7 +168,7 @@ class Product extends Model
 		]);
 
 		// Get the results of the query.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 		
 		// Return the results of the query.
 		return $res;
@@ -178,7 +177,7 @@ class Product extends Model
 	public function delete()
 	{
 		// Delete the ordered/quoted product from the database.
-		$res = $this->db->delete('modifications',['mod_ID'=>$this->getId()]);
+		$res = $this->getDB()->delete('modifications',['mod_ID'=>$this->getId()]);
 		
 		// Check to see if the query ran properly.
 		if(!$res)
@@ -189,7 +188,7 @@ class Product extends Model
 
 	public function create()
 	{
-		$res = $this->db->insert('modifications',[
+		$res = $this->getDB()->insert('modifications',[
 			'mod_name'=>$this->getModName(),
 			'mod_cost'=>$this->getModCost(),
 			'mod_short_name'=>$this->getModShortName(),
@@ -209,8 +208,8 @@ class Product extends Model
 		$rentArray = array();
 
 		$sql = 'SELECT mod_short_name FROM modifications WHERE rental_type = "Rental"';
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 
 		foreach ($res as $mod)
 		{
@@ -225,8 +224,8 @@ class Product extends Model
 		$pudArray = array();
 		
 			$sql = 'SELECT mod_short_name FROM modifications WHERE item_type = "pickup" OR item_type = "delivery"';
-			$this->db->query($sql);
-			$res = $this->db->results('arr');
+			$this->getDB()->query($sql);
+			$res = $this->getDB()->results('arr');
 	
 			foreach ($res as $mod)
 			{

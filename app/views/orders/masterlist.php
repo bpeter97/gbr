@@ -211,12 +211,27 @@
                                         
                                         foreach($data['orderList'] as $order) {
 
+                                            $stageup = '';
+                                            $stagedown = '';
+
                                             if($order->getStage() == 1) {
                                                 $tablebg = '<tr class="warning">';
+                                                $stageup =  '<a class="btn btn-xs btn-success" href="'.$orders_url.'/upgrade/'.$order->getId().'/2">
+                                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                                            </a>';
+                                                $stagedown = '';
                                             } elseif($order->getStage() == 2) {
                                                 $tablebg = '<tr class="info">';
+                                                $stageup =  '<a class="btn btn-xs btn-success" href="'.$orders_url.'/upgrade/'.$order->getId().'/3">
+                                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                                            </a>';
+                                                $stagedown = '<a class="btn btn-xs btn-warning" href="'.$orders_url.'/downgrade/'.$order->getId().'/1">
+                                                            <span class="glyphicon glyphicon-menu-down"></span>
+                                                            </a>';
                                             } elseif($order->getStage() == 3) {
                                                 $tablebg = '<tr class="success">';
+                                                $stageup = '';
+                                                $stagedown = '';
                                             }
 
                                             echo '
@@ -225,6 +240,8 @@
                                                         <a class="btn btn-xs btn-warning" href="'.$orders_url.'/edit/'.$order->getId().'">
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
+                                                        '.$stageup.'
+                                                        '.$stagedown.'
                                                         <a class="btn btn-xs btn-info button-link" href="#">
                                                             <span class="glyphicon glyphicon-print"></span>
                                                         </a>

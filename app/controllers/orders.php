@@ -315,15 +315,35 @@ class Orders extends Controller
 					 *	driver
 					 *	driver notes
 					 */
+					$order->setDelivered(TRUE);
+					$order->setDateDelivered();
+					$order->setDriver();
+					$order->setDriverNotes();
 
 					// Update the order.
+					$order->update();
 
 					// Create a rental history entry.
+					$order->rentalHistoryEntry($container->getId());
 
 				} else {
 
+					// Create a user object to get the list of employees.
+					$user_object = new User();
+					$con_object = new Container();
+
+					// Get a list of containers that are not rented and are labeled as rental containers.
+					$containers = $con_object->fetchContainers('is_rented = "FALSE" AND rental_resale = "Rental"');
+
+					// get the list of drivers.
+					$user_object->fetchEmployees('Driver');
+					$drivers = $user_object->getEmployees();
+
 					// create the form.
-					$this->view('orders/stage2.php',['order'=>$order]);
+					$this->view('orders/stage2',['order'=>$order,
+													 'drivers'=>$drivers,
+													 'containers'=>$containers
+													 ]);
 
 				}
 

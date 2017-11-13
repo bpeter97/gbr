@@ -14,6 +14,7 @@ class User extends Model
                 $phone,
                 $title,
                 $type;
+    private $employees = array();
     
     public function getId() { return $this->id; }
     public function getUsername() { return $this->username; }
@@ -23,6 +24,7 @@ class User extends Model
     public function getPhone() { return $this->phone; }
     public function getTitle() { return $this->title; }
     public function getType() { return $this->type; }
+    public function getEmployees() { return $this->employees; }
     
     public function setId($id) { $this->id = $id; }
     public function setUsername($username) { $this->username = $username; }
@@ -34,9 +36,8 @@ class User extends Model
     public function setType($type) { $this->type = $type; }
     
     public function __construct($id = null)
-    {
-        $this->db = Database::getDBI();
-        
+    {        
+
         if($id != null){
             $this->setId($id);
             $this->getUserInfo($this->getId());
@@ -48,15 +49,16 @@ class User extends Model
     //@TODO Code the get user info function.
     public function getUserInfo($id = null)
     {
+
         $sql = 'SELECT * FROM users WHERE userid = ?';
         
         if($id != null) {
-            $this->db->query($sql,array($id));
+            $this->getDB()->query($sql,array($id));
         } else {
-            $this->db->query($sql,array($this->id));
+            $this->getDB()->query($sql,array($this->id));
         }
             
-            $res = $this->db->single();
+            $res = $this->getDB()->single();
             
             $this->setId($res->userid);
             $this->setUsername($res->username);
@@ -72,14 +74,15 @@ class User extends Model
         // Function to count the containers for pagination.
     public function countUsers($where = '')
     {
+
         $row = '';
         $new_where = '';
 
         if($where != ''){
             $new_where = 'WHERE '. $where .' ';
         }
-        $this->db->query('SELECT COUNT(userid) FROM users '. $new_where);
-        $res = $this->db->results('arr');
+        $this->getDB()->query('SELECT COUNT(userid) FROM users '. $new_where);
+        $res = $this->getDB()->results('arr');
 
         foreach($res as $count){
             $row = $count['COUNT(userid)'];
@@ -91,6 +94,7 @@ class User extends Model
     // Function to grab containers depending on params.
     public function fetchUsers($where = '',$limit = '')
     {
+
         $list = array();
 
         $new_where = '';
@@ -99,8 +103,8 @@ class User extends Model
         }
 
         $sql = 'SELECT * FROM users ' . $new_where . $limit;
-        $this->db->query($sql);
-        $res = $this->db->results('arr');
+        $this->getDB()->query($sql);
+        $res = $this->getDB()->results('arr');
         
         foreach ($res as $user) {
             array_push($list, new User($user['userid']));
@@ -124,11 +128,11 @@ class User extends Model
 
     private function checkLogin()
     {
-        
+
         $sql = 'SELECT * FROM users WHERE username = ?';
-        $this->db->query($sql, array($this->getUsername()));
-        $results = $this->db->results('arr');
-        $rows = $this->db->count();
+        $this->getDB()->query($sql, array($this->getUsername()));
+        $results = $this->getDB()->results('arr');
+        $rows = $this->getDB()->count();
 
         if($rows == 1){  
             $this->logUserIn();
@@ -139,10 +143,11 @@ class User extends Model
 
     private function logUserIn()
     {
+
         $sql = 'SELECT * FROM users WHERE username = "'. $this->getUsername() .'" AND password = "' . $this->getPassword() . '"';
-        $this->db->query($sql);
-        $results = $this->db->single();
-        $rows = $this->db->count();
+        $this->getDB()->query($sql);
+        $results = $this->getDB()->single();
+        $rows = $this->getDB()->count();
 
         if ($rows == 1) {
             $_SESSION['username'] = $this->getUsername();
@@ -167,15 +172,16 @@ class User extends Model
         $this->setTitle($_POST['frmutitle']);
         $this->setType($_POST['frmutype']);
 
-        $res = $this->db->update('users',['userid'=>$this->getId()],[
-                                        'username'      =>  $this->getUsername(),
-                                        'password'      =>  $this->getPassword(),
-                                        'firstname'     =>  $this->getFirstname(),
-                                        'lastname'      =>  $this->getLastname(),
-                                        'phone'         =>  $this->getPhone(),
-                                        'title'         =>  $this->getTitle(),
-                                        'user_type'     =>  $this->getType()
-                                        ]);
+
+        $res = $this->getDB()->update('users',['userid'=>$this->getId()],[
+                                    'username'      =>  $this->getUsername(),
+                                    'password'      =>  $this->getPassword(),
+                                    'firstname'     =>  $this->getFirstname(),
+                                    'lastname'      =>  $this->getLastname(),
+                                    'phone'         =>  $this->getPhone(),
+                                    'title'         =>  $this->getTitle(),
+                                    'user_type'     =>  $this->getType()
+                                    ]);
         
         if(!$res)
         {
@@ -185,8 +191,9 @@ class User extends Model
 
     public function delete()
     {
+
         // Delete the user from the database.
-		$res = $this->db->delete('users',['userid'=>$this->getId()]);
+		$res = $this->getDB()->delete('users',['userid'=>$this->getId()]);
         
         // Check to see if the query ran properly.
         if(!$res)
@@ -206,7 +213,8 @@ class User extends Model
         $this->setTitle($_POST['frmutitle']);
         $this->setType($_POST['frmutype']);
 
-        $res = $this->db->insert('users',[
+
+        $res = $this->getDB()->insert('users',[
                         'username'      =>  $this->getUsername(),
                         'password'      =>  $this->getPassword(),
                         'firstname'     =>  $this->getFirstname(),
@@ -221,6 +229,26 @@ class User extends Model
 			throw new Exception('There was an error inserting the product into the database!');
 		}
     }
+
+    public function fetchEmployees($type)
+    {
+
+        // Get the list of employee's based on the type.
+        $res = $this->getDB()->select('users',['title'=>$type]);
+
+        if($res)
+        {
+            // Grab the statement results.
+            $results = $this->getDB()->results('arr');
+
+            // For each employee found, add them to the employees list.
+            foreach ($results as $emp) {
+                $employee = new User($emp['userid']);
+                array_push($this->employees, $employee);
+            }
+        }
+    }
+
 }
 
 ?>

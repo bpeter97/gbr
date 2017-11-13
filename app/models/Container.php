@@ -71,9 +71,7 @@ class Container extends Model
 	
 	// Assign the id property the ID and the db property that was passed when the object was created.
 	function __construct($id = '') 
-	{
-		$this->db = Database::getDBI();
-		
+	{		
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails($this->getId());
@@ -89,8 +87,8 @@ class Container extends Model
 
 		// Get the containers details.
 		$this->setId($new_id);
-		$this->db->query('SELECT * FROM containers WHERE container_ID = ' . $this->getId());
-		$res = $this->db->single();
+		$this->getDB()->query('SELECT * FROM containers WHERE container_ID = ' . $this->getId());
+		$res = $this->getDB()->single();
 
 		// Assign details to attributes.
 		$this->setReleaseNumber($res->release_number);
@@ -133,8 +131,9 @@ class Container extends Model
 
 	public function getSizes()
 	{
-		$this->db->query('SELECT DISTINCT container_size FROM containers');
-		$res = $this->db->results('arr');
+
+		$this->getDB()->query('SELECT DISTINCT container_size FROM containers');
+		$res = $this->getDB()->results('arr');
 		
 		return $res;
 	}
@@ -145,7 +144,7 @@ class Container extends Model
 
 		$this->getLatLon($this->getContainerAddress());
 		// Update the contianers table using the object attributes.
-		$this->db->update('containers',['container_ID'=>$this->getId()],[
+		$this->getDB()->update('containers',['container_ID'=>$this->getId()],[
 			'container_size'=>$this->getContainerSize(),
 			'container_size_code'=>$this->getContainerSizeCode(),
 			'container_serial_number'=>$this->getContainerSerialNumber(),
@@ -164,7 +163,7 @@ class Container extends Model
 			'flag_reason'=>$this->getFlagReason()]);
 
 		// Get the results of the query.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 
 		// Return the results of the query.
 		return $res;
@@ -175,10 +174,10 @@ class Container extends Model
 	{
 
 		// Delete the container from the database.
-		$this->db->delete('containers',['container_ID'=>$this->getId()]);
+		$this->getDB()->delete('containers',['container_ID'=>$this->getId()]);
 
 		// Get the results of the deletion.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 
 		// Check to see if the query ran properly.
 		if(!$res)
@@ -197,7 +196,7 @@ class Container extends Model
 		$this->postData(true);
 
 		// Insert the new container into the database.
-		$this->db->insert('containers',[
+		$this->getDB()->insert('containers',[
 			'release_number'=>$this->getReleaseNumber(),
 			'container_size'=>$this->getContainerSize(),
 			'container_size_code'=>$this->getContainerSizeCode(),
@@ -215,7 +214,7 @@ class Container extends Model
 			'type'=>$this->getType()]);
 
 		// Get the results of the query.
-		if($this->db->lastId() == null)
+		if($this->getDB()->lastId() == null)
 		{
 			echo 'There was an error inserting the event into the calendar!';
 		} else {
@@ -240,11 +239,11 @@ class Container extends Model
 		}
 
 		// Perform db update.
-		$this->db->update('containers',['container_ID'=>$this->getId()],[
+		$this->getDB()->update('containers',['container_ID'=>$this->getId()],[
 				'rental_resale'=>$this->getRentalResale(),
 				'container_address'=>$this->getContainerAddress(),
 				'is_rented'=>$this->getIsRented()]);
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 
 		// Return the results.
 		return $res;
@@ -276,8 +275,8 @@ class Container extends Model
 		if($where != ''){
 			$new_where = 'WHERE '. $where .' ';
 		}
-		$this->db->query('SELECT COUNT(container_ID) FROM containers '. $new_where);
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT COUNT(container_ID) FROM containers '. $new_where);
+		$res = $this->getDB()->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(container_ID)'];
@@ -297,8 +296,8 @@ class Container extends Model
 		}
 
 		$sql = 'SELECT * FROM containers ' . $new_where . $limit;
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 		
 		foreach ($res as $con) {
 			array_push($list, new Container($con['container_ID']));
@@ -310,8 +309,8 @@ class Container extends Model
 	public function fetchOrderHistory()
 	{
 		$sql = "SELECT * FROM orders WHERE container = ?";
-		$this->db->query($sql, array($this->getId()));
-                              $res = $this->db->results('arr');
+		$this->getDB()->query($sql, array($this->getId()));
+                              $res = $this->getDB()->results('arr');
                               
                               $orderList = array();
                               
@@ -356,8 +355,8 @@ class Container extends Model
 			$this->setContainerOnboxNumbers($_POST['container_onbox_numbers']);
 			$this->setContainerSigns($_POST['container_signs']);
 			
-			$this->db->query('SELECT DISTINCT container_size, container_size_code FROM containers');
-			$res = $this->db->results('arr');
+			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code FROM containers');
+			$res = $this->getDB()->results('arr');
 			
 			foreach ($res as $r){
 				if($this->getContainerSize() == $r['container_size']){
@@ -381,8 +380,8 @@ class Container extends Model
 			$this->setContainerAddress("6988 Ave 304, Visalia, CA 93291");
 			$this->getLatLon($this->getContainerAddress());  
 			
-			$this->db->query('SELECT DISTINCT container_size, container_size_code FROM containers');
-			$res = $this->db->results('arr');
+			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code FROM containers');
+			$res = $this->getDB()->results('arr');
 			foreach ($res as $r){
 				if($this->getContainerSize() == $r['container_size']){
 					$this->setContainerSizeCode($r['container_size_code']);
@@ -412,7 +411,7 @@ class Container extends Model
 			$clean_query = substr_replace($clean_query, '-', 6, 0);
 		}
 
-		$this->db->query("SELECT * FROM containers WHERE
+		$this->getDB()->query("SELECT * FROM containers WHERE
 						release_number LIKE '%". $clean_query ."%' OR container_size LIKE '%". $clean_query ."%' OR
 						container_serial_number LIKE '%". $clean_query ."%' OR
 						container_number LIKE '%". $clean_query ."%' OR
@@ -425,7 +424,7 @@ class Container extends Model
 						type LIKE '%". $clean_query ."%'
 						");
 
-		$results = $this->db->results('arr');
+		$results = $this->getDB()->results('arr');
 		
 		return $results;
 	}

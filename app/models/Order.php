@@ -91,7 +91,6 @@ class Order extends Model
 
 	function __construct($id = '')
 	{
-		$this->db = Database::getDBI();
 		if($id != null){
 			$this->setId($id);
 			$this->getDetails();
@@ -102,10 +101,9 @@ class Order extends Model
 
 	public function getDetails($id = '')
 	{
-
 		// Get the quote details.
-		$this->db->select('orders',['order_id'=>$this->getId()]);
-		$res = $this->db->single();
+		$this->getDB()->select('orders',['order_id'=>$this->getId()]);
+		$res = $this->getDB()->single();
 
 		if($id != null)
 		{
@@ -147,16 +145,15 @@ class Order extends Model
 	}
 
 	public function countOrders($where = '')
-	{
-		
+	{		
 		$row = '';
 		$new_where = '';
 		
 		if($where != ''){
 			$new_where = 'WHERE '. $where .' ';
 		}
-		$this->db->query('SELECT COUNT(order_id) FROM orders '. $new_where);
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT COUNT(order_id) FROM orders '. $new_where);
+		$res = $this->getDB()->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(order_id)'];
@@ -176,8 +173,8 @@ class Order extends Model
 		}
 
 		$sql = 'SELECT * FROM orders ' . $new_where . $limit;
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 		
 		foreach ($res as $con) {
 			array_push($list, new Order($con['order_id']));
@@ -190,9 +187,8 @@ class Order extends Model
 	// and then stores the event in the products array.
 	public function fetchOrderProducts()
 	{
-
-		$this->db->query('SELECT * FROM product_orders WHERE order_id = '.$this->getId());
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT * FROM product_orders WHERE order_id = '.$this->getId());
+		$res = $this->getDB()->results('arr');
 		foreach($res as $orderedProd)
 		{
 			$product = new Product($orderedProd['product_id']);
@@ -212,7 +208,6 @@ class Order extends Model
 	 */
 	public function createOrder()
 	{
-
 		// Post the data from the order form.
 		$this->setOrderDate($_POST['frmorderdate']);
 		$this->setOrderTime($_POST['frmordertime']);
@@ -237,8 +232,10 @@ class Order extends Model
 		// Assigning stage as one since it is a newly created order.
 		$this->setStage(1);
 
+		
+
 		// Need to insert the new order into the database.
-		$this->db->insert('orders',[
+		$this->getDB()->insert('orders',[
 				'order_customer'			=>	$this->getCustomer(),
 				'order_customer_id'			=>	$this->getCustomerId(),
 				'order_date'				=>	$this->getDate(),
@@ -260,9 +257,9 @@ class Order extends Model
 				'stage'						=>	$this->getStage()]);
 
 		// If properly inserted, grab the ID, else throw error.
-		if($this->db->lastId() != null)
+		if($this->getDB()->lastId() != null)
 		{
-			$this->id = $this->db->lastId();
+			$this->id = $this->getDB()->lastId();
 		} 
 		else 
 		{
@@ -284,7 +281,7 @@ class Order extends Model
 				$new_product->setProductCost($post_product['cost']);
 				$i++;
 	
-				$this->db->insert('product_orders',array('quote_id'=>$id,
+				$this->getDB()->insert('product_orders',array('quote_id'=>$id,
 														 'order_id'=>$this->id,
 														 'product_type'=>$new_product->getProductType(),
 														 'product_msn'=>$new_product->getModShortName(),
@@ -294,7 +291,7 @@ class Order extends Model
 														 'product_id'=>$new_product->getId()));
 	
 				// Check to see if the data was inserted into the db properly, else throw exception.
-				if($this->db->lastId() == null)
+				if($this->getDB()->lastId() == null)
 				{
 					throw new Exception('The database did not insert products properly.');
 				}
@@ -310,7 +307,7 @@ class Order extends Model
 				$new_product->setProductCost($post_product['cost']);
 				$i++;
 
-				$this->db->insert('product_orders',array('order_id'=>$this->id,
+				$this->getDB()->insert('product_orders',array('order_id'=>$this->id,
 								'product_type'=>$new_product->getProductType(),
 								'product_msn'=>$new_product->getModShortName(),
 								'product_cost'=>$new_product->getProductCost(),
@@ -319,7 +316,7 @@ class Order extends Model
 								'product_id'=>$new_product->getId()));
 
 				// Check to see if the data was inserted into the db properly, else throw exception.
-				if($this->db->lastId() == null)
+				if($this->getDB()->lastId() == null)
 				{
 					throw new Exception('The database did not insert products properly.');
 				}
@@ -348,7 +345,7 @@ class Order extends Model
 			$clean_query = substr_replace($clean_query, '-', 6, 0);
 		}
 
-		$this->db->query("SELECT * FROM orders WHERE
+		$this->getDB()->query("SELECT * FROM orders WHERE
 						order_customer LIKE '%". $clean_query ."%' OR
 						order_date LIKE '%". $clean_query ."%' OR
 						order_type LIKE '%". $clean_query ."%' OR
@@ -364,7 +361,7 @@ class Order extends Model
 						monthly_total LIKE '%". $clean_query ."%'
 						");
 
-		$results = $this->db->results('arr');
+		$results = $this->getDB()->results('arr');
 		
 		return $results;
 	}
@@ -372,7 +369,7 @@ class Order extends Model
 	public function update()
 	{
 		// Need to update the quote in the database.
-		$this->db->update('orders',['order_ID'=>$this->getID()],[
+		$this->getDB()->update('orders',['order_ID'=>$this->getID()],[
 			'order_date'				=>	$this->getDate(),
 			'order_time'				=>	$this->getTime(),
 			'order_type'				=>	$this->getType(),
@@ -393,7 +390,7 @@ class Order extends Model
 		]);
 
 		// Get the results of the query.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 		
 		// Return the results of the query.
 		return $res;
@@ -402,12 +399,27 @@ class Order extends Model
 	public function delete()
 	{
 		// Delete the ordered/quoted product from the database.
-		$res = $this->db->delete('orders',['order_id'=>$this->getId()]);
+		$res = $this->getDB()->delete('orders',['order_id'=>$this->getId()]);
 		
 		// Check to see if the query ran properly.
 		if(!$res)
 		{
 			throw new Exception('The order was not deleted.');
+		}
+	}
+
+	public function rentalHistoryEntry($con_id)
+	{
+		$this->getDB()->insert('rental_history',[
+						'container_id'=>$con_id,
+						'start_date'=>$this->getDate(),
+						'customer'=>$this->getCustomer()
+						]);
+
+		// Check to see if the data was inserted into the db properly, else throw exception.
+		if($this->getDB()->lastId() == null)
+		{
+			throw new Exception('The database did not insert the rental history entry properly.');
 		}
 	}
 

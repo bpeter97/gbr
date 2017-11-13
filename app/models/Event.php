@@ -31,9 +31,7 @@ class Event extends Model
 	public function setOrder($obj) { $this->order = $obj; }	
 	
 	function __construct($id = '')
-	{
-		$this->db = Database::getDBI();
-		
+	{		
 		if($id != null){
 			$this->getDetails($id);
 			if($this->getOrderId() != 0)
@@ -49,8 +47,8 @@ class Event extends Model
 	public function getDetailsFromOrderId($id)
 	{
 		$sql = 'SELECT * FROM events WHERE order_id = ?';
-		$this->db->query($sql, array($id));
-		$res = $this->db->single();
+		$this->getDB()->query($sql, array($id));
+		$res = $this->getDB()->single();
 
 		$this->setId($res->id);
 		$this->setTitle($res->title);
@@ -65,8 +63,8 @@ class Event extends Model
 		
 		$this->setId($id);
 		$sql = 'SELECT * FROM events WHERE id = ?';
-		$this->db->query($sql, array($id));
-		$res = $this->db->single();
+		$this->getDB()->query($sql, array($id));
+		$res = $this->getDB()->single();
 
 		$this->setTitle($res->title);
 		$this->setColor($res->color);
@@ -101,7 +99,7 @@ class Event extends Model
 		$latertime = strtotime($this->getStart()) + 60*60;
 		$this->setEnd(date('Y/m/d H:i:s', $latertime));
 
-		$this->db->insert('events',[
+		$this->getDB()->insert('events',[
 			'title'=>$this->getTitle(),
 			'color'=>$this->getColor(),
 			'start'=>$this->getStart(),
@@ -109,7 +107,7 @@ class Event extends Model
 			'order_id'=>$this->getOrderId()
 			]);
 	
-		if($this->db->lastId() == null)
+		if($this->getDB()->lastId() == null)
 		{
 			throw new Exception('There was an error inserting the event into the calendar!');
 		}
@@ -126,13 +124,13 @@ class Event extends Model
 		$this->setEnd($_POST['end']);
 		$this->setOrderId('');
 
-		$this->db->insert('events',['title'=>$this->title,
+		$this->getDB()->insert('events',['title'=>$this->title,
 						'color'=>$this->color,
 						'start'=>$this->start,
 						'order_id'=>$this->order_id,
 						'end'=>$this->end]);
 
-		if($this->db->lastId() == null)
+		if($this->getDB()->lastId() == null)
 		{
 			echo 'There was an error inserting the event into the calendar!';
 		}
@@ -159,7 +157,7 @@ class Event extends Model
 	public function deleteEvent($id)
 	{
 		
-		$res = $this->db->delete('events',['id'=>$id]);
+		$res = $this->getDB()->delete('events',['id'=>$id]);
 		if(!$res)
 		{
 			throw new Exception("There was an issue deleting the event.");
@@ -169,7 +167,7 @@ class Event extends Model
 
 	public function update()
 	{
-		$res = $this->db->update('events', ['id'=>$this->getId()], 
+		$res = $this->getDB()->update('events', ['id'=>$this->getId()], 
 			[
 			'color'	=>	$this->getColor(), 
 			'title'		=>	$this->getTitle(),

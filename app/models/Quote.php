@@ -28,7 +28,6 @@ class Quote extends Model
 	
 	function __construct($id = null)
 	{
-		$this->db = Database::getDBI();
 		if($id !== null){
 			$this->setId($id);
 			$this->getDetails();
@@ -79,8 +78,8 @@ class Quote extends Model
 	public function getDetails($id = null)
 	{
 
-		$this->db->select('quotes',['quote_id'=>$this->getId()]);
-		$res = $this->db->single();
+		$this->getDB()->select('quotes',['quote_id'=>$this->getId()]);
+		$res = $this->getDB()->single();
 	
 		if($id != null)
 		{
@@ -116,8 +115,8 @@ class Quote extends Model
 		if($where != ''){
 			$new_where = 'WHERE '. $where .' ';
 		}
-		$this->db->query('SELECT COUNT(quote_id) FROM quotes '. $new_where);
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT COUNT(quote_id) FROM quotes '. $new_where);
+		$res = $this->getDB()->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(quote_id)'];
@@ -136,8 +135,8 @@ class Quote extends Model
 		}
 
 		$sql = 'SELECT * FROM quotes ' . $new_where . $limit;
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 		
 		foreach ($res as $con) {
 			array_push($list, new Quote($con['quote_id']));
@@ -150,8 +149,8 @@ class Quote extends Model
 	public function fetchQuoteProducts()
 	{
 
-		$this->db->query('SELECT * FROM product_orders WHERE quote_id = '.$this->getId());
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT * FROM product_orders WHERE quote_id = '.$this->getId());
+		$res = $this->getDB()->results('arr');
 		foreach($res as $quotedProd)
 		{
 			$product = new Product($quotedProd['product_id']);
@@ -186,7 +185,7 @@ class Quote extends Model
 		$this->setHidden(null);
 
 		// Need to insert the new order into the database.
-		$this->db->insert('quotes', [
+		$this->getDB()->insert('quotes', [
 				'quote_customer' 		=> $this->getCustomer(),
 				'quote_customer_id' 	=> $this->getCustomerId(),
 				'quote_date' 			=> $this->getDate(),
@@ -207,9 +206,9 @@ class Quote extends Model
 			]);
 
 		// If properly inserted, grab the ID, else throw error.
-		if($this->db->lastId() != null)
+		if($this->getDB()->lastId() != null)
 		{
-			$this->id = $this->db->lastId();
+			$this->id = $this->getDB()->lastId();
 		} 
 		else 
 		{
@@ -238,7 +237,7 @@ class Quote extends Model
 			$i++;
 
 			// Insert the data into the database.
-			$this->db->insert('product_orders',array('quote_id'=>$this->id,
+			$this->getDB()->insert('product_orders',array('quote_id'=>$this->id,
 							'product_type'=>$new_product->getProductType(),
 							'product_msn'=>$new_product->getModShortName(),
 							'product_cost'=>$new_product->getProductCost(),
@@ -247,7 +246,7 @@ class Quote extends Model
 							'product_id'=>$new_product->getId()));
 
 			// Check to see if the data was inserted into the db properly, else throw exception.
-			if($this->db->lastId() == null)
+			if($this->getDB()->lastId() == null)
 			{
 				throw new Exception('The database did not insert products properly.');
 			}
@@ -258,7 +257,7 @@ class Quote extends Model
 	{
 
 		// Need to update the quote in the database.
-		$this->db->update('quotes', ['quote_id'=>$this->getId()],[
+		$this->getDB()->update('quotes', ['quote_id'=>$this->getId()],[
 			'quote_customer' 		=> $this->getCustomer(),
 			'quote_customer_id' 	=> $this->getCustomerId(),
 			'quote_date' 			=> $this->getDate(),
@@ -279,7 +278,7 @@ class Quote extends Model
 		]);
 
 		// Get the results of the query.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 		
 		// Return the results of the query.
 		return $res;
@@ -288,7 +287,7 @@ class Quote extends Model
 	public function delete()
 	{
 		// Delete the ordered/quoted product from the database.
-		$res = $this->db->delete('quotes',['quote_id'=>$this->getId()]);
+		$res = $this->getDB()->delete('quotes',['quote_id'=>$this->getId()]);
 
 		// Check to see if the query ran properly.
 		if(!$res)
@@ -318,7 +317,7 @@ class Quote extends Model
 			$clean_query = substr_replace($clean_query, '-', 6, 0);
 		}
 
-		$this->db->query("SELECT * FROM quotes WHERE
+		$this->getDB()->query("SELECT * FROM quotes WHERE
 						quote_customer LIKE '%". $clean_query ."%' OR
 						quote_date LIKE '%". $clean_query ."%' OR
 						quote_type LIKE '%". $clean_query ."%' OR
@@ -334,7 +333,7 @@ class Quote extends Model
 						monthly_total LIKE '%". $clean_query ."%'
 						");
 
-		$results = $this->db->results('arr');
+		$results = $this->getDB()->results('arr');
 		
 		return $results;
 	}
@@ -342,10 +341,10 @@ class Quote extends Model
 	public function updateQuoteProductsWithOrderId($id)
 	{
 		// Update quoted items with the order_id.
-		$this->db->update('product_orders',['quote_id'=>$this->getId()],['order_id'=>$id]);
+		$this->getDB()->update('product_orders',['quote_id'=>$this->getId()],['order_id'=>$id]);
 
 		// Get the results of the query.
-		$res = $this->db->results('arr');
+		$res = $this->getDB()->results('arr');
 		
 		// Return the results of the query.
 		return $res;

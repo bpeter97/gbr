@@ -22,7 +22,6 @@ class Chart extends Model
 
 	public function __construct()
 	{
-		$this->db = Database::getDBI();
 		$this->fetchAllQuotes();
 		$this->fetchAllOrders();
 		$this->getRentalContainers();
@@ -35,8 +34,8 @@ class Chart extends Model
 		while ($this->getCurMonth() != 13) {
 
 			// Query to see how many quotes there are for the current year.
-			$this->db->query("SELECT COUNT(quote_id) FROM quotes WHERE MONTH(quote_date) = $this->begmonth AND YEAR(quote_date) = ".date('Y'));
-			$pag_response = $this->db->results('arr');
+			$this->getDB()->query("SELECT COUNT(quote_id) FROM quotes WHERE MONTH(quote_date) = $this->begmonth AND YEAR(quote_date) = ".date('Y'));
+			$pag_response = $this->getDB()->results('arr');
 			foreach($pag_response as $rowcount){
 				$row = $rowcount["COUNT(quote_id)"];
 			}
@@ -56,8 +55,8 @@ class Chart extends Model
 		while ($this->getCurMonth() != 13) {
 
 			// Query to see how many orders there are for the current year.
-			$this->db->query("SELECT COUNT(order_id) FROM orders WHERE MONTH(order_date) = $this->begmonth AND YEAR(order_date) = ".date('Y'));
-			$pag_response = $this->db->results('arr');
+			$this->getDB()->query("SELECT COUNT(order_id) FROM orders WHERE MONTH(order_date) = $this->begmonth AND YEAR(order_date) = ".date('Y'));
+			$pag_response = $this->getDB()->results('arr');
 			foreach($pag_response as $rowcount){
 				$row = $rowcount["COUNT(order_id)"];
 			}
@@ -75,8 +74,8 @@ class Chart extends Model
 	{
 		for($x=0; $x<16; $x++)
 		{
-			$this->db->query("SELECT COUNT(container_ID) FROM containers WHERE container_size_code = ".$this->con_array[$x]." AND rental_resale = 'Rental' AND is_rented = 'FALSE'");
-			$first_res = $this->db->results('arr');
+			$this->getDB()->query("SELECT COUNT(container_ID) FROM containers WHERE container_size_code = ".$this->con_array[$x]." AND rental_resale = 'Rental' AND is_rented = 'FALSE'");
+			$first_res = $this->getDB()->results('arr');
 			foreach($first_res as $rowcount){
 				$row = $rowcount["COUNT(container_ID)"];
 			}
@@ -88,8 +87,8 @@ class Chart extends Model
 	{
 		for($x=0; $x<16; $x++)
 		{
-			$this->db->query("SELECT COUNT(container_ID) FROM containers WHERE container_size_code = ".$this->con_array[$x]." AND rental_resale = 'Resale' AND is_rented = 'FALSE'");
-			$first_res = $this->db->results('arr');
+			$this->getDB()->query("SELECT COUNT(container_ID) FROM containers WHERE container_size_code = ".$this->con_array[$x]." AND rental_resale = 'Resale' AND is_rented = 'FALSE'");
+			$first_res = $this->getDB()->results('arr');
 			foreach($first_res as $rowcount){
 				$row = $rowcount["COUNT(container_ID)"];
 			}

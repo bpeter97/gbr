@@ -55,9 +55,7 @@ class Customer extends Model
 	public function setFlagReason($flag_reason) { $this->flag_reason = $flag_reason; }
 
 	function __construct($id = null, $use_name = null)
-	{
-		$this->db = Database::getDBI();
-		
+	{		
 		if($id != null){
 			if($use_name != null)
 			{
@@ -77,11 +75,11 @@ class Customer extends Model
 		// Get the containers details.
 		if($id != null){
 			$this->setId($id);
-			$this->db->query('SELECT * FROM customers WHERE customer_ID = ' . $this->getId());
-			$res = $this->db->single();
+			$this->getDB()->query('SELECT * FROM customers WHERE customer_ID = ' . $this->getId());
+			$res = $this->getDB()->single();
 		} else {
-			$this->db->query('SELECT * FROM customers WHERE customer_name = "' . $this->getCustomerName() . '"');
-			$res = $this->db->single();
+			$this->getDB()->query('SELECT * FROM customers WHERE customer_name = "' . $this->getCustomerName() . '"');
+			$res = $this->getDB()->single();
 		}
 		
 		// Assign details to attributes.
@@ -112,8 +110,8 @@ class Customer extends Model
 		if($where != ''){
 			$new_where = 'WHERE '. $where .' ';
 		}
-		$this->db->query('SELECT COUNT(customer_ID) FROM customers '. $new_where);
-		$res = $this->db->results('arr');
+		$this->getDB()->query('SELECT COUNT(customer_ID) FROM customers '. $new_where);
+		$res = $this->getDB()->results('arr');
 
 		foreach($res as $count){
 			$row = $count['COUNT(customer_ID)'];
@@ -134,12 +132,12 @@ class Customer extends Model
 
 		if($filter == ''){
 			$sql = 'SELECT * FROM customers ' . $new_where . $limit;
-			$this->db->query($sql);
-			$res = $this->db->results('arr');
+			$this->getDB()->query($sql);
+			$res = $this->getDB()->results('arr');
 		} else {
 			$sql = 'SELECT * FROM customers WHERE customer_name LIKE "' . $filter .'%" ORDER BY customer_name ' . $limit;
-			$this->db->query($sql);
-			$res = $this->db->results('arr');
+			$this->getDB()->query($sql);
+			$res = $this->getDB()->results('arr');
 		}
 
 		foreach ($res as $cus) {
@@ -157,7 +155,7 @@ class Customer extends Model
 
 		$this->postData();
 
-		$this->db->insert('customers',[
+		$this->getDB()->insert('customers',[
 				'customer_name'=>$this->getCustomerName(),
 				'customer_address1'=>$this->getCustomerAddress1(),
 				'customer_address2'=>$this->getCustomerAddress2(),
@@ -173,7 +171,7 @@ class Customer extends Model
 				'flagged'=>$this->getFlag(),
 				'flag_reason'=>$this->getFlagReason()]);
 
-		if($this->db->lastId() == null)
+		if($this->getDB()->lastId() == null)
 		{
 			echo 'There was an error inserting the event into the calendar!';
 		} else {
@@ -205,8 +203,8 @@ class Customer extends Model
 	public function fetchQuoteHistory()
 	{
 		$sql = "SELECT * FROM quotes WHERE quote_customer = '".$this->getCustomerName()."'";
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 
 		$quoteList = array();
 
@@ -223,8 +221,8 @@ class Customer extends Model
 	public function fetchOrderHistory()
 	{
 		$sql = 'SELECT * FROM orders WHERE order_customer = "'.$this->getCustomerName().'" AND order_type = "Sales" OR order_customer = "'.$this->getCustomerName().'" AND order_type = "Resale"';
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 
 		$orderList = array();
 
@@ -241,8 +239,8 @@ class Customer extends Model
 	public function fetchRentalHistory()
 	{
 		$sql = "SELECT * FROM orders WHERE order_customer = '".$this->getCustomerName()."' AND order_type = 'Rental'";
-		$this->db->query($sql);
-		$res = $this->db->results('arr');
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
 
 		$orderList = array();
 
@@ -277,7 +275,7 @@ class Customer extends Model
 			$clean_query = substr_replace($clean_query, '-', 6, 0);
 		}
 
-		$this->db->query("SELECT * FROM customers WHERE
+		$this->getDB()->query("SELECT * FROM customers WHERE
 						customer_name LIKE '%". $clean_query ."%' OR
 						customer_address1 LIKE '%". $clean_query ."%' OR
 						customer_address2 LIKE '%". $clean_query ."%' OR
@@ -292,7 +290,7 @@ class Customer extends Model
 						customer_notes LIKE '%". $clean_query ."%'
 						");
 
-		$results = $this->db->results('arr');
+		$results = $this->getDB()->results('arr');
 		
 		return $results;
 	}
@@ -300,7 +298,7 @@ class Customer extends Model
 	public function delete()
     {
         // Delete the user from the database.
-		$res = $this->db->delete('customers',['customer_ID'=>$this->getId()]);
+		$res = $this->getDB()->delete('customers',['customer_ID'=>$this->getId()]);
         
         // Check to see if the query ran properly.
         if(!$res)

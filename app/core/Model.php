@@ -5,19 +5,10 @@
 */
 class Model
 {
-    
-    protected $res;
-    protected $db;
-
-    public function __construct()
+    protected function getDB()
     {
-    	$this->db = Database::getDBI();
-    }
-
-    protected function resetResDb()
-    {
-	$this->res = '';
-	$this->db = '';
+        // get database instance
+        return Database::getDBI();
     }
 }
 
