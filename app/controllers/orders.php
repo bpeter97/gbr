@@ -271,6 +271,79 @@ class Orders extends Controller
 			header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=dsuccess'); 
 		}
 	}
+
+	public function changestage()
+	{
+
+	}
+
+	public function upgrade($id, $stage)
+	{
+		// Create the order based off of the id passed in.
+		$order = new Order($id);
+
+		// Switch cases based on the stage we are upgrading too.
+		switch ($stage) 
+		{
+
+			case '2':
+
+				// If orderedContainer has been posted, 
+				// then the form has been filled out.
+				if(isset($_POST['orderedContainer']))
+				{
+
+					// Create the container off of the orderedContainer.
+					$container = new Container($_POST['orderedContainer']);
+
+					// Deliver the container.
+					// Double check that we may need to add the full address in before 
+					// delivering the container.
+					$container->deliver($order->getJobAddress(), TRUE);
+					$container->update();
+
+					// Create the customer from the orderId.
+					$customer = new Customer($order->getCustomerId());
+
+					// Set the order to stage 2.
+					$order->setStage(2);
+
+					// Update the rest of the order's details.
+					/*
+					 *	set it delivered
+					 *	date delivered
+					 *	driver
+					 *	driver notes
+					 */
+
+					// Update the order.
+
+					// Create a rental history entry.
+
+				} else {
+
+					// create the form.
+					$this->view('orders/stage2.php',['order'=>$order]);
+
+				}
+
+				break;
+
+			case '3':
+				break;
+			
+			default:
+				# code...
+				break;
+		
+		}
+
+	}
+
+	public function downgrade($stage)
+	{
+
+	}
 	
 }
 
