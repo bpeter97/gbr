@@ -375,7 +375,7 @@ class Orders extends Controller
 					$drivers = $user_object->getEmployees();
 
 					// create the form.
-					$this->view('orders/stage2',['order'=>$order,
+					$this->view('orders/deliver',['order'=>$order,
 												'drivers'=>$drivers,
 												'containers'=>$containers
 												]);
@@ -398,6 +398,55 @@ class Orders extends Controller
 	public function downgrade($stage)
 	{
 
+	}
+
+	public function viewinfo($id)
+	{
+		// create the order & get the order products
+		$order = new Order($id);
+		
+		// create the customer object from the order's customer_id
+		$customer = new Customer($order->getCustomer(), TRUE);
+
+		if($order->getDelivered() == TRUE)
+		{
+			$driver = new User($order->getDriver());
+		} else {
+			$driver = null;
+		}
+
+		$products = new Product();
+		$rentArray = $products->rentArray();
+		$pudArray = $products->pudArray();
+
+		if($order->getType() == 'rental')
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly <> 0";
+			$modSQL = "monthly <> 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		} 
+		else
+		{
+			$shipSQL = "item_type = 'pickup' OR item_type = 'delivery'";
+			$containerSQL = "item_type = 'container' AND monthly = 0";
+			$modSQL = "monthly = 0 AND item_type <> 'container' AND item_type <> 'pickup' AND item_type <> 'delivery'";
+		}
+			
+		$shippingProducts = $products->getProducts($shipSQL);
+		$containerProducts = $products->getProducts($containerSQL);
+		$modificationProducts = $products->getProducts($modSQL);
+
+		$this->view('orders/viewinfo', ['customer'				=>	$customer, 
+										'order'					=>	$order, 
+										'orderedProducts'		=>	$order->getProducts(), 
+										'shippingProducts'		=>	$shippingProducts,  
+										'containerProducts'		=>	$containerProducts,  
+										'modificationProducts'	=>	$modificationProducts,  
+										'orderType'				=>	$order->getType(),
+										'rentArray'				=>	$rentArray, 
+										'pudArray'				=>	$pudArray,
+										'driver'				=>	$driver
+									   ]);
 	}
 	
 }

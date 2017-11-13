@@ -170,10 +170,8 @@
 
                                             if($order->getStage() == 1) {
                                                 $tablebg = '<tr class="warning clickable-row" data-href="'.$orders_url.'/edit/'.$order->getId().'">';
-                                            } elseif($order->getStage() == 2) {
-                                                $tablebg = '<tr class="info clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
-                                            } elseif($order->getStage() == 3) {
-                                                $tablebg = '<tr class="success clickable-row" data-href="'.$orders_url.'/orderinfo.php?oid='.$order->getId().'">';
+                                            } elseif($order->getStage() == 2 || $order->getStage() == 3) {
+                                                $tablebg = '<tr class="info clickable-row" data-href="'.$orders_url.'/viewinfo/'.$order->getId().'">';
                                             }
 
                                             echo '

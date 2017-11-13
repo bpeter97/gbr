@@ -21,6 +21,7 @@ class User extends Model
     public function getPassword() { return $this->password; }
     public function getFirstname() { return $this->firstname; }
     public function getLastname() { return $this->lastname; }
+    public function getFullName() { return $this->getFirstName().' '.$this->getLastName(); }
     public function getPhone() { return $this->phone; }
     public function getTitle() { return $this->title; }
     public function getType() { return $this->type; }

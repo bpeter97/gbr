@@ -374,7 +374,7 @@
                                                     <td>' . $rental->getDate() . '</td>
                                                     <td>' . $rental->getId() . '</td>
                                                     <td>' . $rental_amount . '</td>
-                                                    <td><a class="containerlink" href="#">View Details</a></td>
+                                                    <td><a class="containerlink" href="'. $main_website.Config::get('site/orders') .'/'.$rental->getId().'">View Details</a></td>
                                                 </tr>
 
                                                 ';
