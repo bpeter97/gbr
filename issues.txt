@@ -22,6 +22,9 @@ CONTAINERS
 - Need to connect containers to orders (can't test this yet).
     -- This will be implimented with the orders changing stages, once a container is selected as delivered, the status will change.
 
+- Need to link containers with rental history!!!
+    -- Need a way to look up the container's MSN in the order it is linked to to get the price it cost the customer.
+
 CUSTOMERS
 - None
 
@@ -31,10 +34,18 @@ QUOTES
 ORDERS
 - Need print pages (2).
 - Need a way to click the order and view it & update the stages.
-    -- Have stage buttons on master list to make it quicker to change stages
-        -- once button is clicked to chagne stages, go to form to fill in rest of required fields.
-        -- return to masterlist with success message
+
+    -- CAN UPGRADE FROM STAGE 1 TO STAGE 2
+        -- Updates driver who delivered it
+        -- Updates container location
+        -- Updates container is_rented status
+        -- Removes Delivery event from calendar
+        -- Adds driver notes to order
+        -- Creates a rental_history row
+
     -- have a button in the view order form to change status doing the same as above.
+
+    -- Need a different view order info page once status goes from 1 to 2!
 
 PRODUCTS
 - None

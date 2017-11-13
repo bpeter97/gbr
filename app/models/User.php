@@ -37,7 +37,6 @@ class User extends Model
     
     public function __construct($id = null)
     {        
-
         if($id != null){
             $this->setId($id);
             $this->getUserInfo($this->getId());

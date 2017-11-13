@@ -272,11 +272,6 @@ class Orders extends Controller
 		}
 	}
 
-	public function changestage()
-	{
-
-	}
-
 	public function upgrade($id, $stage)
 	{
 		// Create the order based off of the id passed in.
@@ -290,20 +285,43 @@ class Orders extends Controller
 
 				// If orderedContainer has been posted, 
 				// then the form has been filled out.
-				if(isset($_POST['orderedContainer']))
+				if(isset($_POST['productcount']))
 				{
-
-					// Create the container off of the orderedContainer.
-					$container = new Container($_POST['orderedContainer']);
-
-					// Deliver the container.
-					// Double check that we may need to add the full address in before 
-					// delivering the container.
-					$container->deliver($order->getJobAddress(), TRUE);
-					$container->update();
-
 					// Create the customer from the orderId.
 					$customer = new Customer($order->getCustomerId());
+					
+					// Double check that we may need to add the full address in before 
+					// delivering the container.
+					if($_POST['productcount'] == 1) {
+
+						// Create the container off of the orderedContainer.
+						$container = new Container($_POST['frmcontainer1']);
+						// Deliver the container.
+						$container->deliver($order->getJobAddress(), 'TRUE');
+						// Update the container
+						$container->update();
+
+						// Create a rental history entry.
+						$order->rentalHistoryEntry($container->getId());
+
+					} else {
+
+						$count = 1;
+						while ($count < $_POST['productcount']+1)	{
+							// Create the container off of the orderedContainer.
+							$container = new Container($_POST['frmcontainer'.$count]);
+							// Deliver the container.
+							$container->deliver($order->getJobAddress(), TRUE);
+							// Update the container
+							$container->update();
+
+							// Create a rental history entry.
+							$order->rentalHistoryEntry($container->getId());
+
+							$count++;
+
+						}
+					}
 
 					// Set the order to stage 2.
 					$order->setStage(2);
@@ -316,15 +334,19 @@ class Orders extends Controller
 					 *	driver notes
 					 */
 					$order->setDelivered(TRUE);
-					$order->setDateDelivered();
-					$order->setDriver();
-					$order->setDriverNotes();
+					$order->setDateDelivered($_POST['frmdatedelivered']);
+					$order->setDriver($_POST['frmdriver']);
+					$order->setDriverNotes($_POST['frmdrivernotes']);
 
 					// Update the order.
 					$order->update();
 
-					// Create a rental history entry.
-					$order->rentalHistoryEntry($container->getId());
+					// Need to delete the previous delivery event.
+					$event = new Event();
+					$event->getDetailsFromOrderId($id);
+					$event->deleteEvent($event->getId());
+
+					header('Location: '.Config::get('site/http').Config::get('site/httpurl').Config::get('site/orders').'?action=usuccess'); 
 
 				} else {
 

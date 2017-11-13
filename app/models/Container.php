@@ -242,7 +242,7 @@ class Container extends Model
 		$this->getDB()->update('containers',['container_ID'=>$this->getId()],[
 				'rental_resale'=>$this->getRentalResale(),
 				'container_address'=>$this->getContainerAddress(),
-				'is_rented'=>$this->getIsRented()]);
+				'is_rented'=>"TRUE"]);
 		$res = $this->getDB()->results('arr');
 
 		// Return the results.
