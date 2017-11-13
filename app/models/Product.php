@@ -235,6 +235,22 @@ class Product extends Model
 		return $pudArray;
 	}
 
+	public function conArray()
+	{
+		$conArray = array();
+		
+		$sql = 'SELECT * FROM modifications WHERE item_type = "container"';
+		$this->getDB()->query($sql);
+		$res = $this->getDB()->results('arr');
+
+		foreach ($res as $con)
+		{
+			array_push($conArray, $con['mod_short_name']);
+		}
+
+		return $conArray;
+	}
+
 }
 
 ?>

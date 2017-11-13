@@ -29,7 +29,8 @@ class Container extends Model
 		$type,
 		$flag,
 		$flag_reason,
-		$container_size_code;
+		$container_size_code,
+		$container_short_name;
 		
 	public function getId() { return $this->id; }
 	public function getReleaseNumber() { return $this->release_number; }
@@ -49,6 +50,7 @@ class Container extends Model
 	public function getFlag() { return $this->flag; }
 	public function getFlagReason() { return $this->flag_reason; }
 	public function getContainerSizeCode() { return $this->container_size_code; }
+	public function getShortName() { return $this->container_short_name; }
 	
 	public function setId($id) { $this->id = $id; }
 	public function setReleaseNumber($num) { $this->release_number = $num; }
@@ -68,6 +70,7 @@ class Container extends Model
 	public function setFlag($bool) { $this->flag = $bool; }
 	public function setFlagReason($reason) { $this->flag_reason = $reason; }
 	public function setContainerSizeCode($code) { $this->container_size_code = $code; }
+	public function setShortName($shortName) { $this->container_short_name = $shortName; }
 	
 	// Assign the id property the ID and the db property that was passed when the object was created.
 	function __construct($id = '') 
@@ -108,6 +111,7 @@ class Container extends Model
 		$this->setFlag($res->flag);
 		$this->setFlagReason($res->flag_reason);
 		$this->setContainerSizeCode($res->container_size_code);
+		$this->setShortName($res->container_short_name);
 
 	}
 	
@@ -147,6 +151,7 @@ class Container extends Model
 		$this->getDB()->update('containers',['container_ID'=>$this->getId()],[
 			'container_size'=>$this->getContainerSize(),
 			'container_size_code'=>$this->getContainerSizeCode(),
+			'container_short_name'=>$this->getShortName(),
 			'container_serial_number'=>$this->getContainerSerialNumber(),
 			'container_number'=>$this->getContainerNumber(),
 			'container_shelves'=>$this->getContainerShelves(),
@@ -200,6 +205,7 @@ class Container extends Model
 			'release_number'=>$this->getReleaseNumber(),
 			'container_size'=>$this->getContainerSize(),
 			'container_size_code'=>$this->getContainerSizeCode(),
+			'container_short_name'=>$this->getShortName(),
 			'container_serial_number'=>$this->getContainerSerialNumber(),
 			'container_number'=>$this->getContainerNumber(),
 			'container_shelves'=>$this->getContainerShelves(),
@@ -308,18 +314,14 @@ class Container extends Model
 	
 	public function fetchOrderHistory()
 	{
-		$sql = "SELECT * FROM orders WHERE container = ?";
+		// Get the history of rental's for this container.
+		$sql = "SELECT * FROM rental_history WHERE container_id = ?";
 		$this->getDB()->query($sql, array($this->getId()));
-                              $res = $this->getDB()->results('arr');
+		$res = $this->getDB()->results('arr');
                               
-                              $orderList = array();
+        $orderList = $res;
                               
-                              foreach ($res as $ord) {
-                              	$order = new Order($ord);
-                              	array_push($orderList, $order);
-                              }
-                              
-                              return $orderList;
+		return $res;
 	}
 
 	// Simple function to set checkbox values.
@@ -355,12 +357,13 @@ class Container extends Model
 			$this->setContainerOnboxNumbers($_POST['container_onbox_numbers']);
 			$this->setContainerSigns($_POST['container_signs']);
 			
-			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code FROM containers');
+			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code, container_short_name FROM containers');
 			$res = $this->getDB()->results('arr');
 			
 			foreach ($res as $r){
 				if($this->getContainerSize() == $r['container_size']){
 					$this->setContainerSizeCode($r['container_size_code']);
+					$this->setShortName($r['container_short_name']);
 				}
 			}
 
@@ -380,11 +383,12 @@ class Container extends Model
 			$this->setContainerAddress("6988 Ave 304, Visalia, CA 93291");
 			$this->getLatLon($this->getContainerAddress());  
 			
-			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code FROM containers');
+			$this->getDB()->query('SELECT DISTINCT container_size, container_size_code, container_short_name FROM containers');
 			$res = $this->getDB()->results('arr');
 			foreach ($res as $r){
 				if($this->getContainerSize() == $r['container_size']){
 					$this->setContainerSizeCode($r['container_size_code']);
+					$this->setShortName($r['container_short_name']);
 				}
 			} 
 		}
@@ -421,6 +425,7 @@ class Container extends Model
 						container_signs LIKE '%". $clean_query ."%' OR
 						rental_resale LIKE '%". $clean_query ."%' OR
 						container_address LIKE '%". $clean_query ."%' OR
+						container_short_name '%". $clean_query ."%' OR
 						type LIKE '%". $clean_query ."%'
 						");
 

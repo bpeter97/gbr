@@ -371,16 +371,24 @@
                                             // List out each and every purchase made by the customer.
                                             foreach($orders as $order){
                                                 $purchase_count += 1;
-                                                $total_amount += $order->getMonthlyTotal();
+                                                $total_amount += $order['cost'];
+                                                if($order['end_date'] == '0000-00-00')
+                                                {
+                                                    $end_date = 'Still Renting';
+                                                    $time = Functions::dateDifference($order['start_date'], date("Y-m-d"), '%m Month %d Day');
+                                                } else {
+                                                    $time = Functions::dateDifference($order['start_date'], $order['end_date'], '%m Month %d Day');
+                                                }
+
                                                 echo '
 
                                                <tr>
                                                     <td>' . $purchase_count . '</td>
-                                                    <td>Start Date</td>
-                                                    <td>End Date</td>
-                                                    <td>Total Time (Months)</td>
-                                                    <td>' . $order->getCustomer() . '</td>
-                                                    <td>'. $order->getMonthlyTotal() .'</td>
+                                                    <td>' . $order['start_date'] . '</td>
+                                                    <td>' . $end_date . '</td>
+                                                    <td>' . $time . '</td>
+                                                    <td>' . $order['customer'] . '</td>
+                                                    <td>' . $order['cost'] . '</td>
                                                 </tr>
 
                                                 ';
@@ -391,8 +399,8 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td><strong>" . $total_amount . "</strong></td>
                                                     <td></td>
+                                                    <td><strong>" . $total_amount . "</strong></td>
                                                 </tr>
                                             ";
                                         } else {

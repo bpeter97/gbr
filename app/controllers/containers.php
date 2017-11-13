@@ -158,7 +158,10 @@ class Containers extends Controller
 			}
 		} else {
 			$con_sizes = $con->getSizes();
-			$orderList  = $con->fetchOrderHistory();
+
+			// get the list of rental history for this container.
+			$orderList = $con->fetchOrderHistory();
+
 			$this->view('containers/viewinfo', ['container'=>$con,'action'=>'edit','sizes'=>$con_sizes,'orderList'=>$orderList]);
 		}
 		

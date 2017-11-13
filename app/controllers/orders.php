@@ -311,7 +311,7 @@ class Orders extends Controller
 							// Create the container off of the orderedContainer.
 							$container = new Container($_POST['frmcontainer'.$count]);
 							// Deliver the container.
-							$container->deliver($order->getJobAddress(), TRUE);
+							$container->deliver($order->getJobAddress(), 'TRUE');
 							// Update the container
 							$container->update();
 
@@ -333,7 +333,7 @@ class Orders extends Controller
 					 *	driver
 					 *	driver notes
 					 */
-					$order->setDelivered(TRUE);
+					$order->setDelivered('TRUE');
 					$order->setDateDelivered($_POST['frmdatedelivered']);
 					$order->setDriver($_POST['frmdriver']);
 					$order->setDriverNotes($_POST['frmdrivernotes']);
@@ -353,9 +353,22 @@ class Orders extends Controller
 					// Create a user object to get the list of employees.
 					$user_object = new User();
 					$con_object = new Container();
+					$order = new Order($id);
+					$containers = array();
+					
+					foreach($order->getProducts() as $product)
+					{
+						if(in_array($product->getModShortName(), $product->conArray()))
+						{
+							$sql = 'is_rented = "FALSE" AND rental_resale = "Rental" AND container_short_name = "' . $product->getModShortName() . '"';
+							$new_containers = $con_object->fetchContainers($sql);
 
-					// Get a list of containers that are not rented and are labeled as rental containers.
-					$containers = $con_object->fetchContainers('is_rented = "FALSE" AND rental_resale = "Rental"');
+							foreach ($new_containers as $con)
+							{
+								array_push($containers, $con);
+							}
+						}
+					}
 
 					// get the list of drivers.
 					$user_object->fetchEmployees('Driver');
@@ -363,9 +376,9 @@ class Orders extends Controller
 
 					// create the form.
 					$this->view('orders/stage2',['order'=>$order,
-													 'drivers'=>$drivers,
-													 'containers'=>$containers
-													 ]);
+												'drivers'=>$drivers,
+												'containers'=>$containers
+												]);
 
 				}
 

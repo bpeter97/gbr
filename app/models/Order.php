@@ -386,7 +386,11 @@ class Order extends Model
 			'monthly_total'				=>	$this->getMonthlyTotal(),
 			'sales_tax'					=>	$this->getSalesTax(),
 			'delivery_total'			=>	$this->getDeliveryTotal(),
-			'stage'						=>	$this->getStage()
+			'stage'						=>	$this->getStage(),
+			'driver'					=>	$this->getDriver(),
+			'driver_notes'				=>	$this->getDriverNotes(),
+			'delivered'					=>	$this->getDelivered(),
+			'date_delivered'			=>	$this->getDateDelivered()
 		]);
 
 		// Get the results of the query.
@@ -410,10 +414,24 @@ class Order extends Model
 
 	public function rentalHistoryEntry($con_id)
 	{
+		$itemCost = 0;
+
+		$container = new Container($con_id);
+		
+		foreach($this->getProducts() as $product)
+		{
+			if($product->getModShortName() == $container->getShortName())
+			{
+				$itemCost = $product->getProductCost();
+			}
+		}
+
 		$this->getDB()->insert('rental_history',[
 						'container_id'=>$con_id,
 						'start_date'=>$this->getDate(),
-						'customer'=>$this->getCustomer()
+						'customer'=>$this->getCustomer(),
+						'order_id'=>$this->getId(),
+						'cost'=>$itemCost
 						]);
 
 		// Check to see if the data was inserted into the db properly, else throw exception.

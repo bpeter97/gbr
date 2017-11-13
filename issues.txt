@@ -22,9 +22,6 @@ CONTAINERS
 - Need to connect containers to orders (can't test this yet).
     -- This will be implimented with the orders changing stages, once a container is selected as delivered, the status will change.
 
-- Need to link containers with rental history!!!
-    -- Need a way to look up the container's MSN in the order it is linked to to get the price it cost the customer.
-
 CUSTOMERS
 - None
 

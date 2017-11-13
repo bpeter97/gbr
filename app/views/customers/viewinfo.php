@@ -354,13 +354,14 @@
                                                 $now->getTimestamp();
                                                 $monthCount = nb_mois($start_date, $now);
                                                 $monthCounter = 1;
+                                                $rental_amount = $rental->getTotalCost();
                                                 
                                                 while ($monthCounter <= $monthCount){
                                                     $rental_amount += $rental->getMonthlyTotal();
                                                     $monthCounter++;
                                                 }
                                                 if($monthCount == 0){
-                                                    $rental_amount = $rental->getMonthlyTotal();
+                                                    $rental_amount = $rental->getTotalCost();
                                                 }
                                                 
                                                 $rental_count += 1;
