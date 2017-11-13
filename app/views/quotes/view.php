@@ -8,7 +8,7 @@
     $customerEmail = $data['customer_email'];
     $quote = $data['quote'];
     $products = $data['products'];
-    $rentArray = ['10CONRENT','20DDCONRENT','20CONRENT','40CONRENT','24CONRENT','20COMBORENT','20FULLRENT','40COMBORENT','40SCOMBORENT','20SHELVRENT','LOADRAMP'];
+    $rentArray = $data['rentArray'];
 ?>
 
 <!DOCTYPE html>

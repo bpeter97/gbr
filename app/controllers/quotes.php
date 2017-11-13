@@ -60,6 +60,9 @@ class Quotes extends Controller
 		$customerEmail = $customer->getCustomerEmail();
 
 		$products = $quote->getQuoteProducts();
+		$prod = new Product();
+		$rentArray = $prod->rentArray();
+		
 
 
 		$this->view('quotes/view',['quote'=>$quote,
@@ -70,6 +73,7 @@ class Quotes extends Controller
 								 'customer_phone'=>$customerPhone,
 								 'customer_fax'=>$customerFax,
 								 'customer_email'=>$customerEmail,
+								 'rentArray'=>$rentArray,
 								 'products'=>$products]);
 	}
 
