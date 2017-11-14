@@ -527,3 +527,17 @@ http://jsfiddle.net/jonschlinkert/4NQTp/4/
 .rightalign {
   text-align: right;
 }
+
+.deliveryBox {
+    border: 3px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+.checkBox {
+    border: 3px solid black;
+    width: 50px;
+    height: 30px;
+    text-align:center;
+    font-size:18px;
+}

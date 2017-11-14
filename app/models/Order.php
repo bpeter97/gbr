@@ -283,7 +283,7 @@ class Order extends Model
 	
 				$this->getDB()->insert('product_orders',array('quote_id'=>$id,
 														 'order_id'=>$this->id,
-														 'product_type'=>$new_product->getProductType(),
+														 'product_type'=>$new_product->getModType(),
 														 'product_msn'=>$new_product->getModShortName(),
 														 'product_cost'=>$new_product->getProductCost(),
 														 'product_qty'=>$new_product->getProductQuantity(),

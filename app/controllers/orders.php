@@ -448,6 +448,19 @@ class Orders extends Controller
 										'driver'				=>	$driver
 									   ]);
 	}
+
+	public function rentalorder($id)
+	{
+		$order = new Order($id);
+
+		$customer = new Customer($order->getCustomerId());
+
+		$prod = new Product();
+		$conArray = $prod->conArray();
+		$pudArray = $prod->pudArray();
+
+		$this->view('orders/rentalorder',['order'=>$order, 'conArray'=>$conArray, 'pudArray'=>$pudArray, 'customer'=>$customer]);
+	}
 	
 }
 

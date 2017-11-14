@@ -24,7 +24,19 @@
 					$("#deleteModal").modal();
 				}
 
-			</script>
+            </script>
+            
+            <script type="text/javascript">
+                function openOrders(link1, link2)
+                {
+                    count = 0
+                    linkArray = [link1, link2];
+                    while (count < 2) {
+                        window.open(linkArray[count]);
+                        count++;
+                    }
+                }
+            </script>
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
@@ -239,9 +251,12 @@
                                                             <span class="glyphicon glyphicon-pencil"></span>
                                                         </a>
                                                         '.$stageup.'
-                                                        '.$stagedown.'
-                                                        <a class="btn btn-xs btn-info button-link" href="#">
+                                                        '.$stagedown; ?>
+                                                        
+                                                        <a class="btn btn-xs btn-info button-link" href="#" onclick="openOrders('<?= $orders_url ?>/rentalorder/<?= $order->getId() ?>','<?= $orders_url ?>/rentalagreement/<?= $order->getId()?>')">
                                                             <span class="glyphicon glyphicon-print"></span>
+                                                        <?php
+                                                        echo '
                                                         </a>
 														'; ?>														
 														<a class="btn btn-xs btn-danger" href="#" onclick='deleteModal(<?= $order->getId(); ?>,"<?= $order->getCustomer(); ?>")'>
