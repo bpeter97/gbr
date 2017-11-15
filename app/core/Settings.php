@@ -2,12 +2,19 @@
 
 $GLOBALS['config'] = array(
 	'mysql' => array(
-		'host' => 'localhost',
-		'user' => 'root',
-		'pass' => '',
-		'dbname' => 'gbr',
-		'charset' => 'UTF8'
- 	 ),
+		'host' 			=> 'localhost',
+		'user' 			=> 'root',
+		'pass' 			=> '',
+		'dbname' 		=> 'gbr',
+		'charset' 		=> 'UTF8'
+	),
+	'company' => array(
+		'name' 			=>	'Green Box Rentals, Inc.',
+		'address1' 		=>	'6988 Avenue 304',
+		'address2'		=>	'Visalia, CA 93291',
+		'phone'			=>	'559-733-5345',
+		'fax'			=>	'559-651-4288'
+	),
 	'site' => array(
 		'siteurl' 		=>	'http://'.$_SERVER['HTTP_HOST'],
 		'baseurl' 		=>	$_SERVER['DOCUMENT_ROOT'],
@@ -35,18 +42,18 @@ $GLOBALS['config'] = array(
 		
 	),
 	'remember' => array(
-		'cookie_name' => 'hash',
+		'cookie_name' 	=> 'hash',
 		'cookie_expiry' => 604800
   	),
 	'session' => array(
-		'user_session' => 'user',
-		'token_name' => 'csrf_token'
+		'user_session' 	=> 'user',
+		'token_name' 	=> 'csrf_token'
 	  ),
 	'security' => array(
-		'salt' => 'YouWillWantToChangeMe'
+		'salt' 			=> 'YouWillWantToChangeMe'
 	),
 	'steam' => array(
-		'apikey' => 'YouWillWantToChangeMe',
-		'redirecturl' => 'localhost/user/profile'
+		'apikey' 		=> 'YouWillWantToChangeMe',
+		'redirecturl' 	=> 'localhost/user/profile'
 	)
 );

@@ -461,6 +461,19 @@ class Orders extends Controller
 
 		$this->view('orders/rentalorder',['order'=>$order, 'conArray'=>$conArray, 'pudArray'=>$pudArray, 'customer'=>$customer]);
 	}
+
+	public function rentalagreement($id)
+	{
+		$order = new Order($id);
+		
+		$customer = new Customer($order->getCustomerId());
+
+		$prod = new Product();
+		$conArray = $prod->conArray();
+		$pudArray = $prod->pudArray();
+
+		$this->view('orders/rentalagreement',['order'=>$order, 'conArray'=>$conArray, 'pudArray'=>$pudArray, 'customer'=>$customer]);
+	}
 	
 }
 
