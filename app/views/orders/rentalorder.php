@@ -178,8 +178,8 @@
                                         </tr>
                                         <tr align="left">
                                             <td class="" style="border: 1px solid black;font-size:12px;height: 30px;width: 15%;">&nbsp;&nbsp;&nbsp;<strong>Phone:</strong></td>
-                                            <?php if($customer->getCustomerFax() != ''): ?>
-                                            <td class="" style="border: 1px solid black;font-size:12px;height: 30px;text-align:center;">&nbsp;&nbsp;&nbsp;<strong><?= $customer->getCustomerPhone().'&nbsp;&nbsp;Ext: '.$customer->getCustomerFax(); ?></strong></td>
+                                            <?php if($customer->getCustomerExt() != ''): ?>
+                                            <td class="" style="border: 1px solid black;font-size:12px;height: 30px;text-align:center;">&nbsp;&nbsp;&nbsp;<strong><?= $customer->getCustomerPhone().'&nbsp;&nbsp;Ext: '.$customer->getCustomerExt(); ?></strong></td>
                                             <?php else: ?>
                                             <td class="" style="border: 1px solid black;font-size:12px;height: 30px;text-align:center;">&nbsp;&nbsp;&nbsp;<strong><?= $customer->getCustomerPhone(); ?></strong></td>
                                             <?php endif; ?>

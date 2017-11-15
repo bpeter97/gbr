@@ -238,7 +238,7 @@ class Quote extends Model
 
 			// Insert the data into the database.
 			$this->getDB()->insert('product_orders',array('quote_id'=>$this->id,
-							'product_type'=>$new_product->getModType(),
+							'product_type'=>$new_product->getItemType(),
 							'product_msn'=>$new_product->getModShortName(),
 							'product_cost'=>$new_product->getProductCost(),
 							'product_qty'=>$new_product->getProductQuantity(),
