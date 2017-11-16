@@ -7,7 +7,7 @@ Not sure how to fix:
 As of 11/2/2017:
 
 CALENDAR
-- None
+- Make delivery events stay on the calendar.
 
 CART
 - None
@@ -28,17 +28,42 @@ QUOTES
 - None
 
 ORDERS
-- Need a way to click the order and view it & update the stages.
+- None
 
-    -- CAN UPGRADE FROM STAGE 1 TO STAGE 2
-        -- Updates driver who delivered it
-        -- Updates container location
-        -- Updates container is_rented status
-        -- Removes Delivery event from calendar
-        -- Adds driver notes to order
-        -- Creates a rental_history row
+PICKUPS
+    - Customer_id
+    - date
+    - time
+    - order_id
+    - scheduled
+    - completed
 
-    -- have a button in the view order form to change status doing the same as above.
+- Process:
+    -- Pick up all of the order or part of the order?
+        - If part of order
+            -- How many products will be picked up?
+            -- Select the products that will be picked up. (No unit numbers selected yet)
+            -- Create the pickup order.
+
+            -- Fill in the unit numbers.
+            -- Fill out driver
+            -- Submit
+            
+            -- Set containers back to available (or needs repair, etc)
+            -- Remove the products from the order
+            -- Update order costs
+
+        - else if all of the order
+            
+            -- Create the pickup order.
+
+            -- Fill in the unit numbers.
+            -- Fill out driver
+            -- Submit
+            
+            -- Set containers back to available (or needs repair, etc)
+            -- Remove the products from the order
+            -- Update order costs
 
 PRODUCTS
 - None
