@@ -74,9 +74,6 @@ SEARCH
 SETTINGS
 - None
 
-
-
-
 -------------------- NOTES FROM MEETING WITH DAD --------------------
 
 Dashboard

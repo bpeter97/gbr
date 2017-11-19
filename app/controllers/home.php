@@ -106,6 +106,11 @@ class Home extends Controller
 		return ($order->products);
 	}
 
+	public function testpage()
+	{
+		$this->view('home/test',[]);
+	}
+
 }
 
 

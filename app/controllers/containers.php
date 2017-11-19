@@ -23,28 +23,12 @@ class Containers extends Controller
 	{
 		if($this->checkLogin())
 		{
-			if(isset($_GET['action']))
-			{
-				$action = $_GET['action'];
-			} else {
-				$action = "";
-			}
 			$container = $this->model('Container');
 
-			$pagenum = 1;
-
-			if(isset($_GET['pn'])){
-				$pagenum = $_GET['pn'];
-			} 
-
-			$page_rows = 100;
-			$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 			// Grab the container information with the limit.
-			$conList = $container->fetchContainers('',$limit);
+			$conList = $container->fetchContainers('','');
 
-			$row = $container->countContainers();
-
-			$this->view('containers/masterlist', ['conList'=>$conList, 'row'=>$row,'action'=>$action]);
+			$this->view('containers/masterlist', ['conList'=>$conList]);
 		}
 
 		

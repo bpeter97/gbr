@@ -24,7 +24,15 @@
 					$("#deleteModal").modal();
 				}
 
-			</script>
+            </script>
+            
+            <script type="text/javascript">
+
+                $(document).ready(function() {
+                    $('#maintable').DataTable();
+                } );
+
+            </script>
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
@@ -149,7 +157,7 @@
 
                                         echo '
                                         <div class="col-lg-10">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped table-hover" id="maintable">
                                             <thead>
                                                 <tr>
                                                     <th>Mod ID</th>

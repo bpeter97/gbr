@@ -28,6 +28,8 @@
     <script type="text/javascript" src="<?= $js . '/bootstrap-multiselect.js'; ?>"></script>
     <script type="text/javascript" src="<?= $js . '/alerts.js'; ?>"></script>
     <script src="<?= $js . '/printmap.js'; ?>"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
     <!-- Date Picker -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
