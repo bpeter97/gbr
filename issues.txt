@@ -73,3 +73,83 @@ SEARCH
 
 SETTINGS
 - None
+
+
+
+
+-------------------- NOTES FROM MEETING WITH DAD --------------------
+
+Dashboard
+- Change containers in stock to utilization, how many int total in the yard (rentals) compared to how many on rent.
+- Percentages up front and be able to go into detail on differences.
+- How many in on resale fleet, how many on rent vs how many are in the yard.
+
+Calendar
+- Set up full page calendar.
+- create custom calendar bthat lists the following:
+    - # of deliveries
+    - # of pickups
+    - # of relocations.
+- create spreadsheet for day containing information per dad’s sheet.
+- 
+
+products
+- price instead of cost
+- monthly rental instead of monthly cost
+- # of each product on hand
+- add green + button
+- when product purchased, remove one from inventory automatically
+- 
+
+Containers
+- Need to fix placeholder text for release number field.
+- When a container is created it is automatically a resale container
+- if bought for rental fleet then it becomes a rental
+- need to create a purchase for gbr button to make the container a rental and automatically assign the latest gbr number
+- make all containers resale automatically
+- If the container has been sold, also highlight the row, and alert that it is sold when clicked on.
+- sort containers by gbr number
+- have buttons to sort/filter by rental, resale, or none.
+
+Create Container (purchase order)
+- Vender invoice number
+- name of vender (selected list or new)
+- Purchase Price 
+- Container Cost (with delivery etc)
+- Quantity
+- Release #
+- Date it was picked up
+- Who picked it up
+
+Container View Info 
+- Add vender, container cost, and purchase cost.
+- have a sold image over part of it if sold
+
+FLAG
+- Red means no rent, something is wrong
+- yellow means special instructions (po required, rental fax, etc)
+
+Customer
+- Last, Name ( or company name )
+- Sort alphabetically
+
+Customer View Info
+- move buttons above history
+
+Search
+- Add clear search button
+- 
+
+- Tax rate needs to be entered in as a percentage, and converted to decimal in code to calculate
+- 
+
+- be able to change qty of item in quote/order cart
+- update qty if same item is added to cart
+
+change modifications to adding for rental orders
+be able to add notes to quotes/orders
+be able to save forms as pdf from views
+
+quote, after 30 days it turns yellow
+quote status, if ordered change to ordered and change to red.
+if open make it green and status is pending
