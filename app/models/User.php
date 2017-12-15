@@ -46,7 +46,6 @@ class User extends Model
         }
     }
     
-    //@TODO Code the get user info function.
     public function getUserInfo($id = null)
     {
 
